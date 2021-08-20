@@ -1,0 +1,15 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      # Installs the node package dependencies as defined by the `package.json` file
+      - cd ${CODEBUILD_SRC_DIR}/frontend
+      - npm audit fix
+  build:
+    commands:
+      # Synthesizes the CDK App and puts the resulting artifacts into `dist`
+      - npm run build
+artifacts:
+  # The output artifact is all the files in the `dist` directory
+  base-directory: ${CODEBUILD_SRC_DIR}/frontend/build
+  files: '**/*'
