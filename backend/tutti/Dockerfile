@@ -1,4 +1,6 @@
-FROM python:3.8-slim
+# Use ECR public-repo Due to DockerHub pull rate limit
+FROM public.ecr.aws/o6a6z8t5/python:3.8-slim
+# FROM python:3.8-slim
 
 # Download latest listing of available packages:
 RUN apt-get -y update
