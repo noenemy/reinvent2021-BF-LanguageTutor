@@ -3,15 +3,16 @@ FROM public.ecr.aws/o6a6z8t5/python:3.8-slim
 # FROM python:3.8-slim
 
 # Download latest listing of available packages:
-RUN apt-get -y update
 # Upgrade already installed packages:
-RUN apt-get -y upgrade
-RUN apt-get clean
-RUN rm -rf /var/lib/apt/lists/*
+RUN apt-get -y update \
+    && apt-get -y upgrade \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN mkdir /app
 WORKDIR /app
 ADD requirements.txt /app
-RUN pip3 install -r requirements.txt
+RUN pip3 install -r requirements.txt --no-cache-dir
 ADD . /app
 EXPOSE 80
 RUN chmod +x ./entrypoint.sh
