@@ -53,6 +53,9 @@ def create_app(script_info=None):
     app.logger.setLevel(logging.DEBUG)
 
     # register blueprints
+    from api.admin import admin
+    app.register_blueprint(admin, url_prefix='/admin')
+
     from api.student import student
     app.register_blueprint(student, url_prefix='/student')
 
