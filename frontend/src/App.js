@@ -9,14 +9,15 @@ import {
     Route,
     Link
 } from "react-router-dom";
+import logo from './assets/images/tutti-logo.png';
 
 function App() {
   return (
     <header>
       <Router>
-        <Navbar bg="dark" variant="dark" expand="lg">
+        <Navbar className="color-nav" variant="dark" expand="lg">
             <Navbar.Brand href="/">
-              <i fa name="home"></i> 1:1 Language Tutor using AWS AI/ML
+              <img src={logo} height="50px" alt="Logo" />
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
