@@ -63,7 +63,7 @@ def create_app(script_info=None):
     app.register_blueprint(tutor, url_prefix='/tutor')
 
     from api.languages import lanuages
-    app.register_blueprint(tutor, url_prefix='/lanuages')
+    app.register_blueprint(lanuages, url_prefix='/lanuages')
 
     # shell context for flask cli
     @app.shell_context_processor
