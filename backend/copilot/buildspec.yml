@@ -7,7 +7,7 @@ phases:
       ruby: 2.6
     commands:
       - echo "cd into $CODEBUILD_SRC_DIR"
-      - cd $CODEBUILD_SRC_DIR
+      - cd $CODEBUILD_SRC_DIR/backend
       # Download the copilot linux binary.
       - wget https://ecs-cli-v2-release.s3.amazonaws.com/copilot-linux-v1.10.0
       - mv ./copilot-linux-v1.10.0 ./copilot-linux
