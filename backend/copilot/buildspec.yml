@@ -68,7 +68,7 @@ phases:
       #     - Login and push the image.
       - >
         for workload in $WORKLOADS; do
-          manifest=$(cat $CODEBUILD_SRC_DIR/copilot/$workload/manifest.yml | ruby -ryaml -rjson -e 'puts JSON.pretty_generate(YAML.load(ARGF))')
+          manifest=$(cat $CODEBUILD_SRC_DIR/backend/copilot/$workload/manifest.yml | ruby -ryaml -rjson -e 'puts JSON.pretty_generate(YAML.load(ARGF))')
           image_location=$(echo $manifest | jq '.image.location')
           if [ ! "$image_location" = null ]; then
             echo "skipping image building because location is provided as $image_location";
@@ -111,7 +111,7 @@ phases:
           docker build -t $workload:$tag $build_args-f $df_path $df_dir_path;
           image_id=$(docker images -q $workload:$tag);
           for env in $pl_envs; do
-            repo=$(cat $CODEBUILD_SRC_DIR/infrastructure/$workload-$env.params.json | jq '.Parameters.ContainerImage' | sed 's/"//g');
+            repo=$(cat $CODEBUILD_SRC_DIR/backend/infrastructure/$workload-$env.params.json | jq '.Parameters.ContainerImage' | sed 's/"//g');
             region=$(echo $repo | cut -d'.' -f4);
             $(aws ecr get-login-password --region $region | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$region.amazonaws.com);
             docker tag $image_id $repo;
