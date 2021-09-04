@@ -10,9 +10,9 @@
 from flask import Blueprint, request
 from flask import current_app as app
 
-lanuages = Blueprint('lang', __name__)
+language = Blueprint('language', __name__)
 
 
-@lanuages.route('/', methods=['GET'], strict_slashes=False)
+@language.route('/', methods=['GET'], strict_slashes=False)
 def list_languages():
     return "list languages"
