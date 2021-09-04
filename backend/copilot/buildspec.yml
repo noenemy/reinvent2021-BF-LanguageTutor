@@ -120,4 +120,4 @@ phases:
         done;
 artifacts:
   files:
-    - "infrastructure/*"
+    - "backend/infrastructure/*"
