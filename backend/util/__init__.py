@@ -120,7 +120,3 @@ def get_graphql_client(api_url, api_key):
     client = Client(transport=transport, fetch_schema_from_transport=True)
 
     return client
-
-
-
-        

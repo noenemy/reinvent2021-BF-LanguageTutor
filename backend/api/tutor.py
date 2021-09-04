@@ -14,5 +14,5 @@ tutor = Blueprint('tutor', __name__)
 
 
 @tutor.route('/', methods=['GET'], strict_slashes=False)
-def list_student():
+def list_tutor():
     return "list tutor"

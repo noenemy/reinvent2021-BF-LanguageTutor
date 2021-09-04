@@ -43,5 +43,5 @@ def health_check():
 
     except Exception as e:
         app.logger.error('health_check failed: {0}'.format(e))
-        raise InternalServerError('Something went wrong..')
+        raise InternalServerError('Something went wrong.. (Check your API key)')
 
