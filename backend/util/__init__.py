@@ -24,6 +24,7 @@ def check_env_vars():
     MANDATORY_ENV_VARS = ["APPSYNC_STUDENT_KEY_SECRET_NAME", "APPSYNC_STUDENT_API_URL", "APP_SETTINGS", "AWS_REGION"]
 
     for var in MANDATORY_ENV_VARS:
+        print("{} : {}".format(var, os.getenv(var)))
         if var not in os.environ:
             raise EnvironmentError("Failed because {} is not set.".format(var))
 
