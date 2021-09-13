@@ -3,6 +3,7 @@ import { Button, Form, FormControl, Nav, Navbar, NavDropdown } from "react-boots
 import './App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from "react";
+import GameComponent from './components/game/GameComponent';
 import LeaderboardComponent from './components/leaderboard/LeaderBoardComponent';
 import TestComponent from './components/test/TestComponent';
 import DebugComponent from './components/debug/DebugComponent';
@@ -118,13 +119,7 @@ function Learning(){
 
 function Game(){
   return(
-    <div>
-      <h1>Game</h1>
-      <ul>
-        <li>Are you ready to join the game challenge?</li>
-        <li>Shall we go?</li>
-      </ul>
-    </div>
+    <GameComponent />
   )
 }
 
