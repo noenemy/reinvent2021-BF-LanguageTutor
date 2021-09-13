@@ -3,6 +3,8 @@ import { Button, Form, FormControl, Nav, Navbar, NavDropdown } from "react-boots
 import './App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from "react";
+import TestComponent from './components/test/TestComponent';
+import DebugComponent from './components/debug/DebugComponent';
 import {
     BrowserRouter as Router,
     Switch,
@@ -153,27 +155,14 @@ function Leaderboard(){
 
 function Debug(){
   return(
-    <div>
-      <h1>Debug</h1>
-      <ul>
-        <li>Debug information</li>
-      </ul>
-    </div>
+    <DebugComponent />
   )
 }
 
 function Test(){
+
   return(
-    <div>
-      <h1>Test</h1>
-      <ul>
-        <li>Rekognition Test</li>
-        <li>Textract Test</li>
-        <li>Transcribe Test</li>
-        <li>Polly Test</li>
-        <li>Sumerian</li>
-      </ul>
-    </div>
+    <TestComponent />
   )
 }
 
