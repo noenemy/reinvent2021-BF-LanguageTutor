@@ -3,6 +3,7 @@ import { Button, Form, FormControl, Nav, Navbar, NavDropdown } from "react-boots
 import './App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from "react";
+import LeaderboardComponent from './components/leaderboard/LeaderBoardComponent';
 import TestComponent from './components/test/TestComponent';
 import DebugComponent from './components/debug/DebugComponent';
 import {
@@ -129,27 +130,7 @@ function Game(){
 
 function Leaderboard(){
   return(
-    <div>
-      <h1>Leaderboard</h1>
-      <h3>English</h3>
-      <ul>
-        <li>AAA 10,000</li>
-        <li>BBB 90,000</li>
-        <li>CCC 80,000</li>
-      </ul>
-      <h3>Korean</h3>
-      <ul>
-        <li>DDD 10,000</li>
-        <li>EEE 90,000</li>
-        <li>FFF 80,000</li>
-      </ul>
-      <h3>Spanish</h3>
-      <ul>
-        <li>GGG 10,000</li>
-        <li>HHH 90,000</li>
-        <li>III 80,000</li>
-      </ul>
-    </div>
+      <LeaderboardComponent />
   )
 }
 
