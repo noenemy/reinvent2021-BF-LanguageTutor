@@ -3,6 +3,7 @@ import { Button, Form, FormControl, Nav, Navbar, NavDropdown } from "react-boots
 import './App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from "react";
+import LearningComponent from './components/learning/LearningComponent';
 import GameComponent from './components/game/GameComponent';
 import LeaderboardComponent from './components/leaderboard/LeaderBoardComponent';
 import TestComponent from './components/test/TestComponent';
@@ -97,23 +98,7 @@ function Home(){
 
 function Learning(){
   return(
-    <div>
-      <h1>Learning</h1>
-      <ul>
-        <li>Hi, my name is Tutty. </li>
-        <li>What is your name?</li>
-        Name: <input type="text" name="name" />
-        <li>What language do you want to learn?</li>
-        <Button>English</Button> 
-        <Button>Korean</Button> 
-        <Button>Spanish</Button> 
-        <li>What subject do you want to learn today?</li>
-        <Button>Fruits</Button> 
-        <Button>Animals</Button> 
-        <Button>Greetings</Button> 
-      </ul>
-      <Button>Meet the tutor!</Button> 
-    </div>
+    <LearningComponent />
   )
 }
 
