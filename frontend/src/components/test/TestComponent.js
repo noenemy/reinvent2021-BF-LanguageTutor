@@ -1,11 +1,23 @@
-import React from 'react';
+import React, { Component, Fragment } from 'react';
 
-const TestComponent = () => {
+class TestComponent extends Component {
 
-  const selectedItem = 'rekognitioon';
+  render() {
+    const selectedItem = 'rekognition';
 
-  return(
-      <div>
+    const renderTestComponent = (param) => {
+      switch (param) {
+        case 'rekognition':
+          return 'rekognition';
+        case 'textract':
+          return 'textract';
+        default:
+          return 'unknown';
+      }
+    };
+
+    return (
+      <Fragment>
         <h1>Test</h1>
         <div class="container">
           <nav>
@@ -18,24 +30,10 @@ const TestComponent = () => {
             </div>
           </nav>
         </div>
-        {
-          /*renderTestComponent('textract')*/
-        }
-      </div>
+        <div>{selectedItem ? renderTestComponent(selectedItem) : null}</div>
+      </Fragment>
     );
-
-  /*
-  renderTestComponent(param) ({
-    switch (param) {
-      case 'rekognition':
-        return 'rekognition';
-      case 'textract':
-        return 'textract';
-      default:
-        return 'unknown';
-    }
   }
-  */
 };
 
 export default TestComponent;
