@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, FormControl, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 const HomeComponent = () => {
 
@@ -8,7 +8,7 @@ const HomeComponent = () => {
             <h1>Welcome to 1:1 Language Tutor using AWS AI/ML!</h1>
             <p></p>
             <Button>Get Started!</Button>
-            <h3></h3>
+            <h3>&nbsp;</h3>
             <ul>
             <li>Boost your language learning with AWS AI/ML services.</li>
             <li>AWS AI / ML services are the perfect technologies to help users read, write, and speak foreign languages.</li>
