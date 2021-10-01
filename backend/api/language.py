@@ -16,3 +16,4 @@ language = Blueprint('language', __name__)
 @language.route('/', methods=['GET'], strict_slashes=False)
 def list_languages():
     return "list languages"
+
