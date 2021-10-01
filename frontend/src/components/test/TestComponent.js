@@ -1,36 +1,73 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment} from 'react';
 
 class TestComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { activeIndex: 0 }
+  }
 
   render() {
-    const selectedItem = 'rekognition';
-
-    const renderTestComponent = (param) => {
-      switch (param) {
-        case 'rekognition':
-          return 'rekognition';
-        case 'textract':
-          return 'textract';
-        default:
-          return 'unknown';
+    const tabContArr=[
+      {
+          tabTitle:(
+            <li className='nav-link {this.state.activeIndex===0 ? "active" : ""}' onClick={()=>tabClickHandler(0)} href="#"> Rekognition Test </li>
+          ),
+          tabCont:(
+              <div> Rekognition </div>
+          )
+      },
+      {
+          tabTitle:(
+            <li className='nav-link {this.state.activeIndex===1 ? "active" : ""}' onClick={()=>tabClickHandler(1)}> Textract Test </li>
+          ),
+          tabCont:(
+              <div> Textract </div>
+          )
+      },
+      {
+          tabTitle:(
+            <li className='nav-link {this.state.activeIndex===2 ? "active" : ""}' onClick={()=>tabClickHandler(2)}> Polly Test </li>
+          ),
+          tabCont:(
+              <div> Polly </div>
+          )
+      },
+      {
+          tabTitle:(
+            <li className='nav-link {this.state.activeIndex===3 ? "active" : ""}' onClick={()=>tabClickHandler(3)}> Transcribe Test </li>
+          ),
+          tabCont:(
+              <div> Transcribe </div>
+          )
+      },
+      {
+          tabTitle:(
+            <li className='nav-link {this.state.activeIndex===4 ? "active" : ""}' onClick={()=>tabClickHandler(4)}> Sumerian Test </li>
+          ),
+          tabCont:(
+              <div> Sumerian </div>
+          )
       }
-    };
+    ];
+
+    const tabClickHandler=(index)=>{
+      this.setState({activeIndex: index});
+    }
 
     return (
       <Fragment>
         <h1>Test</h1>
         <div class="container">
-          <nav>
-            <div className="nav nav-pills nav-justified" id="nav-tab" role="tablist">
-              <a className="nav-item nav-link" id="nav-rekognition-tab" data-toggle="tab" role="tab" aria-controls="nav-rekognition" aria-selected="true" href="/">Rekognition Test</a>
-              <a className="nav-item nav-link" id="nav-textract-tab" data-toggle="tab" role="tab" aria-controls="nav-textract" aria-selected="false" href="/">Textract Test</a>
-              <a className="nav-item nav-link" id="nav-polly-tab" data-toggle="tab" role="tab" aria-controls="nav-polly" aria-selected="false" href="/">Polly Test</a>
-              <a className="nav-item nav-link" id="nav-transcribe-tab" data-toggle="tab" role="tab" aria-controls="nav-transcribe" aria-selected="false" href="/">Transcribe Test</a>
-              <a className="nav-item nav-link" id="nav-sumerian-tab" data-toggle="tab" role="tab" aria-controls="nav-sumerian" aria-selected="false" href="/">Sumerian Test</a>
-            </div>
-          </nav>
+          <ul className="nav nav-pills nav-fill">
+            {tabContArr.map((section, index)=>{
+              return section.tabTitle
+            })}
+          </ul>
+
+          <div>
+            { tabContArr[this.state.activeIndex].tabCont }
+          </div>
         </div>
-        <div>{selectedItem ? renderTestComponent(selectedItem) : null}</div>
       </Fragment>
     );
   }
