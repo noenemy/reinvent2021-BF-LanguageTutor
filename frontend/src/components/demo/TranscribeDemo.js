@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class TranscribeTest extends Component {
+class TranscribeDemo extends Component {
     render() {
         return (
             <div>
@@ -12,4 +12,4 @@ class TranscribeTest extends Component {
     }
 }
 
-export default TranscribeTest;
+export default TranscribeDemo;

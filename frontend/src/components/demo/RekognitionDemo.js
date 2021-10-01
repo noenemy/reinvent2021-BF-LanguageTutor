@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Webcam from "react-webcam";
 
-class RekognitionTest extends Component {
+class RekognitionDemo extends Component {
     setRef = webcam => {
         this.webcam = webcam;
     };
@@ -48,4 +48,4 @@ class RekognitionTest extends Component {
     }
 }
 
-export default RekognitionTest;
+export default RekognitionDemo;

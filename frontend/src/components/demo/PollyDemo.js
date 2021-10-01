@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class PollyTest extends Component {
+class PollyDemo extends Component {
     render() {
         return (
             <div>
@@ -12,4 +12,4 @@ class PollyTest extends Component {
     }
 }
 
-export default PollyTest;
+export default PollyDemo;

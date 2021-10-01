@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class SumerianTest extends Component {
+class SumerianDemo extends Component {
     render() {
         return (
             <div>
@@ -12,4 +12,4 @@ class SumerianTest extends Component {
     }
 }
 
-export default SumerianTest;
+export default SumerianDemo;

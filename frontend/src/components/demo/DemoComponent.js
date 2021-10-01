@@ -1,9 +1,9 @@
 import React, { Component, Fragment} from 'react';
-import PollyTest from './PollyTest';
-import RekognitionTest from './RekognitionTest';
-import TextractTest from './TextractTest';
-import TranscribeTest from './TranscribeTest';
-import SumerianTest from './SumerianTest';
+import PollyDemo from './PollyDemo';
+import RekognitionDemo from './RekognitionDemo';
+import TextractDemo from './TextractDemo';
+import TranscribeDemo from './TranscribeDemo';
+import SumerianDemo from './SumerianDemo';
 
 class DemoComponent extends Component {
   constructor(props) {
@@ -15,42 +15,42 @@ class DemoComponent extends Component {
     const tabContArr=[
       {
           tabTitle:(
-            <li className='nav-link {this.state.activeIndex===0 ? "active" : ""}' onClick={()=>tabClickHandler(0)} href="#"> Rekognition Test </li>
+            <li className='nav-link {this.state.activeIndex===0 ? "active" : ""}' onClick={()=>tabClickHandler(0)} href="#"> Rekognition Demo </li>
           ),
           tabCont:(
-              <RekognitionTest></RekognitionTest>
+              <RekognitionDemo></RekognitionDemo>
           )
       },
       {
           tabTitle:(
-            <li className='nav-link {this.state.activeIndex===1 ? "active" : ""}' onClick={()=>tabClickHandler(1)}> Textract Test </li>
+            <li className='nav-link {this.state.activeIndex===1 ? "active" : ""}' onClick={()=>tabClickHandler(1)}> Textract Demo </li>
           ),
           tabCont:(
-              <TextractTest></TextractTest>
+              <TextractDemo></TextractDemo>
           )
       },
       {
           tabTitle:(
-            <li className='nav-link {this.state.activeIndex===2 ? "active" : ""}' onClick={()=>tabClickHandler(2)}> Polly Test </li>
+            <li className='nav-link {this.state.activeIndex===2 ? "active" : ""}' onClick={()=>tabClickHandler(2)}> Polly Demo </li>
           ),
           tabCont:(
-              <PollyTest></PollyTest>
+              <PollyDemo></PollyDemo>
           )
       },
       {
           tabTitle:(
-            <li className='nav-link {this.state.activeIndex===3 ? "active" : ""}' onClick={()=>tabClickHandler(3)}> Transcribe Test </li>
+            <li className='nav-link {this.state.activeIndex===3 ? "active" : ""}' onClick={()=>tabClickHandler(3)}> Transcribe Demo </li>
           ),
           tabCont:(
-              <TranscribeTest></TranscribeTest>
+              <TranscribeDemo></TranscribeDemo>
           )
       },
       {
           tabTitle:(
-            <li className='nav-link {this.state.activeIndex===4 ? "active" : ""}' onClick={()=>tabClickHandler(4)}> Sumerian Test </li>
+            <li className='nav-link {this.state.activeIndex===4 ? "active" : ""}' onClick={()=>tabClickHandler(4)}> Sumerian Demo </li>
           ),
           tabCont:(
-              <SumerianTest></SumerianTest>
+              <SumerianDemo></SumerianDemo>
           )
       }
     ];

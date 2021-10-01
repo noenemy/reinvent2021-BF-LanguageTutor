@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class TextractTest extends Component {
+class TextractDemo extends Component {
     render() {
         return (
             <div>
@@ -12,4 +12,4 @@ class TextractTest extends Component {
     }
 }
 
-export default TextractTest;
+export default TextractDemo;
