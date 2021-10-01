@@ -18,29 +18,30 @@ export class Navbar extends Component {
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
+
+                    <div className="collapse navbar-collapse" id="navbarResponsive">
+                        <ul className="navbar-nav ml-auto">
+                            <li className="nav-item">
+                                <a className="nav-link" href="/home">Home</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/learning">Learning</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/game">Game</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/leaderboard">Leaderboard</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/debug">Debug</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/test">Test</a>
+                            </li>
+                        </ul>
+                    </div>
                 </nav>
-                <div className="collapse navbar-collapse" id="navbarResponsive">
-                    <ul className="navbar-nav ml-auto">
-                        <li className="nav-item">
-                            <a className="nav-link" href="/home">Home</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/learning">Learning</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/game">Game</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/leaderboard">Leaderboard</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/debug">Debug</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/test">Test</a>
-                        </li>
-                    </ul>
-                </div>
             </div>
         )
     }
