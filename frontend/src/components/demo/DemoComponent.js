@@ -5,7 +5,7 @@ import TextractTest from './TextractTest';
 import TranscribeTest from './TranscribeTest';
 import SumerianTest from './SumerianTest';
 
-class TestComponent extends Component {
+class DemoComponent extends Component {
   constructor(props) {
     super(props);
     this.state = { activeIndex: 0 }
@@ -77,4 +77,4 @@ class TestComponent extends Component {
   }
 };
 
-export default TestComponent;
+export default DemoComponent;
