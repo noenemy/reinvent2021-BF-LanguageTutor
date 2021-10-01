@@ -6,7 +6,7 @@ import HomeComponent from './components/home/HomeComponent';
 import LearningComponent from './components/learning/LearningComponent';
 import GameComponent from './components/game/GameComponent';
 import LeaderboardComponent from './components/leaderboard/LeaderBoardComponent';
-import TestComponent from './components/test/TestComponent';
+import DemoComponent from './components/demo/DemoComponent';
 import DebugComponent from './components/debug/DebugComponent';
 import {
     BrowserRouter as Router,
@@ -36,8 +36,8 @@ function App() {
             <Route path="/debug">
               <Debug />
             </Route>
-            <Route path="/test">
-              <Test />
+            <Route path="/demo">
+              <Demo />
             </Route>
             <Route path="/">
               <Home />
@@ -78,10 +78,10 @@ function Debug(){
   )
 }
 
-function Test(){
+function Demo(){
 
   return(
-    <TestComponent />
+    <DemoComponent />
   )
 }
 
