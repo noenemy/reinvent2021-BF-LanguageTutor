@@ -65,6 +65,11 @@ def create_app(script_info=None):
     from api.language import language
     app.register_blueprint(language, url_prefix='/language')
 
+    from api.demo import demo
+    app.register_blueprint(demo, url_prefix='/demo')
+
+
+
     # shell context for flask cli
     @app.shell_context_processor
     def ctx():
