@@ -6,7 +6,10 @@ class SumerianDemo extends Component {
             <div>
                 <br></br>
                 <h1 class="text-secondary text-center">AR/VR with AWS Sumerian</h1>
-                <br></br>               
+                <br></br>
+                <embed src="https://b1c488ba24314be6853fb8448119ee65.us-west-2.sumerian.aws/?" 
+                    width="600" height="400">
+                </embed> 
             </div>
         );
     }
