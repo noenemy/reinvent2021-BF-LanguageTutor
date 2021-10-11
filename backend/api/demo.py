@@ -104,10 +104,39 @@ def getPollyLanguages():
                 }
                 languageList.append(dic)
 
-        print(languageList)
+        #print(languageList)
 
         app.logger.info('success!')
         res = make_response(jsonify(languageList), 200)
+        return res
+
+    except Exception as e:
+        app.logger.error(e)
+        raise BadRequest(e)
+
+@demo.route('/polly/voices', methods=['GET'], strict_slashes=False)
+def getPollyVoices():
+    try:
+        session = boto3.session.Session()
+        polly = session.client('polly')
+
+        languageCode = request.args.get('languageCode')
+
+        response = polly.describe_voices(LanguageCode=languageCode)
+        voiceList = []
+
+        for voice in response["Voices"]:
+            if voice["LanguageCode"] is not None:
+                dic = {
+                    "voiceName": voice["Name"],
+                    "gender": voice["Gender"]
+                }
+                voiceList.append(dic)
+
+        #print(voiceList)
+
+        app.logger.info('success!')
+        res = make_response(jsonify(voiceList), 200)
         return res
 
     except Exception as e:
