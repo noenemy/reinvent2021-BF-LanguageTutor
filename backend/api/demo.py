@@ -12,7 +12,7 @@ import boto3
 import base64
 import config
 import io
-from flask import Blueprint, make_response, request
+from flask import Blueprint, make_response, request, jsonify
 from flask import current_app as app
 from util import get_appsync_secret, get_graphql_client
 from werkzeug.exceptions import BadRequest
@@ -80,6 +80,34 @@ def textract():
         )
         app.logger.info('success!')
         res = make_response(response, 200)
+        return res
+
+    except Exception as e:
+        app.logger.error(e)
+        raise BadRequest(e)
+
+
+@demo.route('/polly/languages', methods=['GET'], strict_slashes=False)
+def getPollyLanguages():
+    try:
+        session = boto3.session.Session()
+        polly = session.client('polly')
+
+        response = polly.describe_voices()
+        languageList = []
+
+        for voice in response["Voices"]:
+            if voice["LanguageCode"] is not None:
+                dic = {
+                    "languageCode": voice["LanguageCode"],
+                    "languageName": voice["LanguageName"]
+                }
+                languageList.append(dic)
+
+        print(languageList)
+
+        app.logger.info('success!')
+        res = make_response(jsonify(languageList), 200)
         return res
 
     except Exception as e:
