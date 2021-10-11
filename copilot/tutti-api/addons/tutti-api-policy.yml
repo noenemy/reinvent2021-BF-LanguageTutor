@@ -42,6 +42,8 @@ Resources:
               - appsync:*
               - secretsmanager:Get*
               - sumerian:*
+              - textract:*
+              - polly:*
             Resource: "*"
 
 Outputs:
