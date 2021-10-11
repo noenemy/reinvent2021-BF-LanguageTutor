@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Webcam from "react-webcam";
+import axios from "axios";
 
 class RekognitionDemo extends Component {
     constructor(props) {
@@ -7,19 +8,36 @@ class RekognitionDemo extends Component {
         this.webcamRef = React.createRef()
         this.state = {
             screenshot: null,
-            labels: null
+            labels: null,
+            loading: false
         }
     }
 
     capture = () => {
-        console.log(this.webcamRef);
+
         const screenshot = this.webcamRef.current.getScreenshot();
         this.setState({ screenshot });
         this.postImage();
     }
 
-    postImage = () => {
+    async postImage() {
         // call a demo API here
+        const formData = new FormData();
+        formData.append('image', this.state.screenshot);
+        // console.log(this.state.screenshot);
+
+        this.setState({ loading: true });
+        const res = await axios.post('http://192.168.0.70:5000/demo/rekognition', formData);
+        this.setState({ loading: false });
+
+        if (res !== null) {
+            // console.log(res.data);
+            this.setState({ labels: res.data.Labels });
+        }
+        else {
+            // TODO: something wrong
+            console.log("something wrong! try again.");
+        }
     }
 
     render() {
@@ -45,7 +63,7 @@ class RekognitionDemo extends Component {
                                 ref={this.webcamRef}
                                 audio={false}
                                 height={350}
-                                screenshotFormat="image/jpeg"
+                                screenshotFormat="image/png"
                                 width={350}
                                 videoConstraints={videoConstraints}
                             />
@@ -55,7 +73,7 @@ class RekognitionDemo extends Component {
                                 <br/>
                             
                             </div>
-                            {this.state.screenshot ? <img src={this.state.screenshot} /> : null}
+                            {this.state.loading ? <h1>Loading...</h1> : <h1>&nbsp;</h1>}
                         </div>
 
                         {this.state.labels && 
@@ -72,8 +90,8 @@ class RekognitionDemo extends Component {
                                 {this.state.labels.map(( label, index) => {
                                     return (
                                     <tr key={index}>
-                                        <td>{ label.name }</td>
-                                        <td>{ label.confidence }</td>
+                                        <td>{ label.Name }</td>
+                                        <td>{ label.Confidence }</td>
                                     </tr>
                                 );
                                 })}
