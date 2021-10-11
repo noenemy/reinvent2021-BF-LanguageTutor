@@ -31,7 +31,7 @@ def rekognition():
         session = boto3.session.Session()
         rekog = session.client('rekognition')
 
-        base64Image = request.form["image"]
+        base64Image = request.form['image']
         base64Image = base64.b64decode(base64Image.split(',')[1])
         receivedImage = Image.open(io.BytesIO(base64Image))
 
@@ -62,7 +62,7 @@ def textract():
         session = boto3.session.Session()
         textract = session.client('textract')
 
-        base64Image = request.form["image"]
+        base64Image = request.form['image']
         base64Image = base64.b64decode(base64Image.split(',')[1])
         receivedImage = Image.open(io.BytesIO(base64Image))
 
@@ -88,7 +88,7 @@ def textract():
 
 
 @demo.route('/polly/languages', methods=['GET'], strict_slashes=False)
-def getPollyLanguages():
+def get_polly_language():
     try:
         session = boto3.session.Session()
         polly = session.client('polly')
@@ -96,11 +96,11 @@ def getPollyLanguages():
         response = polly.describe_voices()
         languageList = []
 
-        for voice in response["Voices"]:
-            if voice["LanguageCode"] is not None:
+        for voice in response['Voices']:
+            if voice['LanguageCode'] is not None:
                 dic = {
-                    "languageCode": voice["LanguageCode"],
-                    "languageName": voice["LanguageName"]
+                    'languageCode': voice['LanguageCode'],
+                    'languageName': voice['LanguageName']
                 }
                 languageList.append(dic)
 
@@ -114,8 +114,9 @@ def getPollyLanguages():
         app.logger.error(e)
         raise BadRequest(e)
 
+
 @demo.route('/polly/voices', methods=['GET'], strict_slashes=False)
-def getPollyVoices():
+def get_polly_voices():
     try:
         session = boto3.session.Session()
         polly = session.client('polly')
@@ -125,11 +126,11 @@ def getPollyVoices():
         response = polly.describe_voices(LanguageCode=languageCode)
         voiceList = []
 
-        for voice in response["Voices"]:
-            if voice["LanguageCode"] is not None:
+        for voice in response['Voices']:
+            if voice['LanguageCode'] is not None:
                 dic = {
-                    "voiceName": voice["Name"],
-                    "gender": voice["Gender"]
+                    'voiceName': voice['Name'],
+                    'gender': voice['Gender']
                 }
                 voiceList.append(dic)
 
