@@ -97,7 +97,8 @@ def get_polly_language():
         languageList = []
 
         for voice in response['Voices']:
-            if voice['LanguageCode'] is not None:
+            # add only none-duplicate language codes
+            if next((item for item in languageList if item['languageCode'] == voice['LanguageCode']), False) == False:
                 dic = {
                     'languageCode': voice['LanguageCode'],
                     'languageName': voice['LanguageName']
