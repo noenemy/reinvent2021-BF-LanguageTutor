@@ -62,9 +62,9 @@ class RekognitionDemo extends Component {
                             <Webcam
                                 ref={this.webcamRef}
                                 audio={false}
-                                height={350}
+                                height={520}
                                 screenshotFormat="image/png"
-                                width={350}
+                                width={650}
                                 videoConstraints={videoConstraints}
                             />
                             

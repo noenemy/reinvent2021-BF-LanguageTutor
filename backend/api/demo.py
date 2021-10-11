@@ -54,3 +54,34 @@ def rekognition():
     except Exception as e:
         app.logger.error(e)
         raise BadRequest(e)
+
+
+@demo.route('/textract', methods=['POST'], strict_slashes=False)
+def textract():
+    try:
+        session = boto3.session.Session()
+        textract = session.client('textract')
+
+        base64Image = request.form["image"]
+        base64Image = base64.b64decode(base64Image.split(',')[1])
+        receivedImage = Image.open(io.BytesIO(base64Image))
+
+        byteArrImage = io.BytesIO()
+        receivedImage.save(byteArrImage, format='PNG')
+        byteArrImage = byteArrImage.getvalue()
+
+        # app.logger.debug(req_data)
+        # fileContent = base64.b64decode(req_data.replace('data:image/png;base64,', ''))
+        #fileContent = base64.b64decode(req_data)
+        response = textract.detect_document_text(
+            Document={
+                'Bytes': byteArrImage,
+            }
+        )
+        app.logger.info('success!')
+        res = make_response(response, 200)
+        return res
+
+    except Exception as e:
+        app.logger.error(e)
+        raise BadRequest(e)
