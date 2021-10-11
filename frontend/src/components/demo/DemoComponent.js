@@ -61,7 +61,7 @@ class DemoComponent extends Component {
 
     return (
       <Fragment>
-        <div class="container">
+        <div className="container">
           <ul className="nav nav-pills nav-fill">
             {tabContArr.map((section, index)=>{
               return section.tabTitle
