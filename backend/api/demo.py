@@ -16,6 +16,7 @@ from flask import Blueprint, make_response, request, jsonify
 from flask import current_app as app
 from util import get_appsync_secret, get_graphql_client
 from werkzeug.exceptions import BadRequest
+from contextlib import closing
 from PIL import Image
 
 demo = Blueprint('demo', __name__)
@@ -139,6 +140,46 @@ def get_polly_voices():
 
         app.logger.info('success!')
         res = make_response(jsonify(voiceList), 200)
+        return res
+
+    except Exception as e:
+        app.logger.error(e)
+        raise BadRequest(e)
+
+
+@demo.route('/polly', methods=['GET'], strict_slashes=False)
+def polly():
+    try:
+        session = boto3.session.Session()
+        polly = session.client('polly')
+        response = polly.synthesize_speech(VoiceId='Joanna',
+                        OutputFormat='mp3', 
+                        Text = 'This is a sample text to be synthesized.')
+
+        if "AudioStream" in response:
+            with closing(response["AudioStream"]) as stream:
+                
+                bucket_name = "reinvent-language-tutor"
+                key = "pollydemo"
+
+                # upload audio stream to s3 bucket
+                s3 = session.client('s3')
+                output = io.BytesIO()
+                output.write(response['AudioStream'].read())
+                s3.put_object(Body=output.getvalue(), Bucket=bucket_name, Key=key)
+                output.close()
+
+                # get signed url for the uploaded audio file
+                signedUrl = s3.generate_presigned_url(
+                    ClientMethod='get_object',
+                    Params={
+                        'Bucket': bucket_name,
+                        'Key': key
+                    }
+                )
+
+        app.logger.info('success!')
+        res = make_response(jsonify({'mediaUrl':signedUrl}), 200)
         return res
 
     except Exception as e:
