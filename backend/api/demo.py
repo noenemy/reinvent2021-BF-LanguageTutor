@@ -147,14 +147,20 @@ def get_polly_voices():
         raise BadRequest(e)
 
 
-@demo.route('/polly', methods=['GET'], strict_slashes=False)
+@demo.route('/polly', methods=['POST'], strict_slashes=False)
 def polly():
     try:
         session = boto3.session.Session()
         polly = session.client('polly')
-        response = polly.synthesize_speech(VoiceId='Joanna',
+
+        languageCode = request.form['language']
+        voiceId = request.form['voice']
+        text = request.form['text']
+
+        response = polly.synthesize_speech(LanguageCode=languageCode,
+                        VoiceId=voiceId,
                         OutputFormat='mp3', 
-                        Text = 'This is a sample text to be synthesized.')
+                        Text = text)
 
         if "AudioStream" in response:
             with closing(response["AudioStream"]) as stream:

@@ -6,19 +6,24 @@ class PollyDemo extends Component {
         super(props);
         this.state = {
             selectedLanguage: 'en-US',
+            selectedVoice: null,
             languages: null,
+            text: '1:1 Learn Tutor using AWS AI/ML',
             voices: null,
-            loading: false
+            loading: false,
+            playing: false
         }
     }
+    audio = new Audio();
 
     componentDidMount() {
         this.getPollyLanguages();
         this.getPollyVoices('en-US');
+        this.audio.addEventListener('ended', () => this.setState({ playing: false }));
     }
 
     componentWillUnmount() {
-
+        this.audio.removeEventListener('ended', () => this.setState({ playing: false })); 
     }
 
     async getPollyLanguages() {
@@ -48,7 +53,7 @@ class PollyDemo extends Component {
 
         if (res !== null) {
             // console.log(res.data);
-            this.setState({ voices: res.data });
+            this.setState({ voices: res.data, selectedVoice: res.data[0].voiceName });
         }
         else {
             // TODO: something wrong
@@ -57,14 +62,39 @@ class PollyDemo extends Component {
     }
 
     languageChanged = (event) => {
-        // console.log(event.target.value)
         this.setState({ voices: null });
         this.setState({ selectedLanguage: event.target.value});
         this.getPollyVoices(event.target.value);
     }
 
-    speech() {
+    voiceChanged = (event) => {
+        this.setState({ selectedVoice: event.target.value});
+    }
 
+    textChanged = (event) => {
+        this.setState({ text: event.target.value});
+    }
+
+    speech = (event) => {
+        this.pollyDemo()
+    }
+
+    async pollyDemo() {
+        const formData = new FormData();
+        formData.append('language', this.state.selectedLanguage);
+        formData.append('voice', this.state.selectedVoice);
+        formData.append('text',this.state.text);
+        // console.log(formData);
+
+        this.setState({ loading: true });
+        const res = await axios.post('http://192.168.0.70:5000/demo/polly', formData);
+        this.setState({ loading: false });
+
+        const mediaUrl = res.data.mediaUrl;
+        console.log(mediaUrl);
+
+        this.audio = new Audio(mediaUrl);
+        this.audio.play();
     }
 
     render() {
@@ -82,7 +112,7 @@ class PollyDemo extends Component {
                                     <div className="input-group-prepend tts-text">
                                     <span className="input-group-text">Text</span>
                                     </div>
-                                    <textarea id="texttospeech" className="form-control" aria-label="With textarea" defaultValue="Learn languages with AWS AI/ML" />
+                                    <textarea id="texttospeech" className="form-control" aria-label="With textarea" value={this.state.text} onChange={this.textChanged} />
                                 </div>
                                 
                                 <br/><br/>
@@ -107,10 +137,10 @@ class PollyDemo extends Component {
                                 {this.state.voices && <div className="container">
 
                                     {this.state.voices.map(({ voiceName, gender }, index) =>
-                                    <div className="radio">
+                                    <div className="radio" onChange={this.voiceChanged}>
                                         <label>
                                         <input type="radio" name="radioVoices" id={voiceName} value={voiceName} defaultChecked={index === 0} />
-                                        {voiceName}, {gender}
+                                        &nbsp;{voiceName}, {gender}
                                         </label>
                                     </div>
                                     )}
