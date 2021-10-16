@@ -18,7 +18,7 @@ source:
     branch: main
     repository: https://github.com/noenemy/reinvent2021-BF-LanguageTutor
     # Optional: specify the name of an existing CodeStar Connections connection.
-    connection_name: frontend-bf21
+    connection_name: reinvent2021-BF-LanguageTutor
 
 # This section defines the order of the environments your pipeline will deploy to.
 stages:
