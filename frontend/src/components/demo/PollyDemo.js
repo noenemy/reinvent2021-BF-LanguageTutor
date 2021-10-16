@@ -28,18 +28,14 @@ class PollyDemo extends Component {
 
     async getPollyLanguages() {
         this.setState({ loading: true });
-        const backendAPI = process.env.REACT_APP_BACKEND_SERVER + '/demo/polly/languages';
+        const backendAPI = `${process.env.REACT_APP_BACKEND_SERVER}/demo/polly/languages`;
         const res = await axios.get(backendAPI);        
         this.setState({ loading: false });
 
-        // console.log(res);
-
         if (res !== null) {
-            // console.log(res.data);
             this.setState({ languages: res.data });
         }
         else {
-            // TODO: something wrong
             console.log("something wrong! try again.");
         }
     }
@@ -47,34 +43,30 @@ class PollyDemo extends Component {
     async getPollyVoices(languageCode) {
 
         this.setState({ loading: true });
-        const backendAPI = process.env.REACT_APP_BACKEND_SERVER + '/demo/polly/voices?languageCode=' + languageCode;
+        const backendAPI = `${process.env.REACT_APP_BACKEND_SERVER}/demo/polly/voices?languageCode=${languageCode}`;
         const res = await axios.get(backendAPI);
         this.setState({ loading: false });
 
-        // console.log(res);
-
         if (res !== null) {
-            // console.log(res.data);
             this.setState({ voices: res.data, selectedVoice: res.data[0].voiceName });
         }
         else {
-            // TODO: something wrong
             console.log("something wrong! try again.");
         }
     }
 
     languageChanged = (event) => {
         this.setState({ voices: null });
-        this.setState({ selectedLanguage: event.target.value});
+        this.setState({ selectedLanguage: event.target.value });
         this.getPollyVoices(event.target.value);
     }
 
     voiceChanged = (event) => {
-        this.setState({ selectedVoice: event.target.value});
+        this.setState({ selectedVoice: event.target.value });
     }
 
     textChanged = (event) => {
-        this.setState({ text: event.target.value});
+        this.setState({ text: event.target.value });
     }
 
     speech = (event) => {
@@ -89,7 +81,7 @@ class PollyDemo extends Component {
         // console.log(formData);
 
         this.setState({ loading: true });
-        const backendAPI = process.env.REACT_APP_BACKEND_SERVER + '/demo/polly';         
+        const backendAPI = `${process.env.REACT_APP_BACKEND_SERVER}/demo/polly`;         
         const res = await axios.post(backendAPI, formData);
         this.setState({ loading: false });
 

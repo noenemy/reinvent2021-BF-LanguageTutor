@@ -25,19 +25,16 @@ class TextractDemo extends Component {
         // call a demo API here
         const formData = new FormData();
         formData.append('image', this.state.screenshot);
-        // console.log(this.state.screenshot);
 
         this.setState({ loading: true });
-        const backendAPI = process.env.REACT_APP_BACKEND_SERVER + '/demo/textract';
+        const backendAPI = `${process.env.REACT_APP_BACKEND_SERVER}/demo/textract`;
         const res = await axios.post(backendAPI, formData);
         this.setState({ loading: false });
 
         if (res !== null) {
-            // console.log(res.data);
             this.setState({ blocks: res.data.Blocks });
         }
         else {
-            // TODO: something wrong
             console.log("something wrong! try again.");
         }
     }

@@ -22,7 +22,7 @@ class TranscribeDemo extends Component {
 
     async getTranscribeLanguages() {
         this.setState({ loading: true });
-        const backendAPI = process.env.REACT_APP_BACKEND_SERVER + '/demo/transcribe/languages';
+        const backendAPI = `${process.env.REACT_APP_BACKEND_SERVER}/demo/transcribe/languages`;
         const res = await axios.get(backendAPI);        
         this.setState({ loading: false });
 
@@ -61,7 +61,6 @@ class TranscribeDemo extends Component {
             return;
         }
 
-        //this.eventStreamMarshaller = new marshaller.EventStreamMarshaller(util_utf8_node.toUtf8, util_utf8_node.fromUtf8);
         //let's get the mic input from the browser, via the microphone-stream module
         micStream = new mic();
 
@@ -71,8 +70,7 @@ class TranscribeDemo extends Component {
 
         micStream.setStream(mediaStream);        
 
-        const backendAPI = process.env.REACT_APP_BACKEND_SERVER + '/demo/transcribe';
-        console.log(backendAPI);
+        const backendAPI = `${process.env.REACT_APP_BACKEND_SERVER}/demo/transcribe`;
         const res = await axios.get(backendAPI);
         const transcribeUrl = res.data.transcribeUrl;
         console.log(transcribeUrl);
