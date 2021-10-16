@@ -12,11 +12,13 @@ import boto3
 import base64
 import config
 import io
+from . import transcribe_util
 from flask import Blueprint, make_response, request, jsonify
 from flask import current_app as app
 from util import get_appsync_secret, get_graphql_client
 from werkzeug.exceptions import BadRequest
 from contextlib import closing
+from datetime import date
 from PIL import Image
 
 demo = Blueprint('demo', __name__)
@@ -186,6 +188,44 @@ def polly():
 
         app.logger.info('success!')
         res = make_response(jsonify({'mediaUrl':signedUrl}), 200)
+        return res
+
+    except Exception as e:
+        app.logger.error(e)
+        raise BadRequest(e)
+
+@demo.route('/transcribe', methods=['GET'], strict_slashes=False)
+def get_presigned_url():
+    try:
+
+        presigned_url = transcribe_util.get_presigned_url()
+
+        app.logger.info('success!')
+        res = make_response(jsonify({'transcribeUrl':presigned_url}), 200)
+        return res
+
+    except Exception as e:
+        app.logger.error(e)
+        raise BadRequest(e)
+
+@demo.route('/transcribe/languages', methods=['GET'], strict_slashes=False)
+def get_transcribe_language():
+    try:
+
+        # Streaming type only. See 
+        # https://docs.aws.amazon.com/transcribe/latest/dg/supported-languages.html#table-language-matrix
+        languages = [('English, US', 'en-US'), ('Chinese, CN', 'zh-CN'), ('English, AU', 'en-AU'), ('English, UK', 'en-GB'), ('French, CA', 'fr-CA'), ('French, FR', 'fr-FR'), ('German, DE', 'de-DE'), ('Italian, IT', 'it-IT'), ('Japanese, JP', 'ja-JP'), ('Korean, KR', 'ko-KR'), ('Portuguese, BR', 'pt-BR'), ('Spanish, US', 'es-US')]
+        languageList = []
+
+        for language in languages:
+            dic = {
+                'language': language[0],
+                'languageCode': language[1]
+            }
+            languageList.append(dic)
+
+        app.logger.info('success!')
+        res = make_response(jsonify(languageList), 200)
         return res
 
     except Exception as e:
