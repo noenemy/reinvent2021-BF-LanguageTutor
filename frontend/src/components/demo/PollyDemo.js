@@ -28,7 +28,8 @@ class PollyDemo extends Component {
 
     async getPollyLanguages() {
         this.setState({ loading: true });
-        const res = await axios.get('http://192.168.0.70:5000/demo/polly/languages');
+        const backendAPI = process.env.REACT_APP_BACKEND_SERVER + '/demo/polly/languages';
+        const res = await axios.get(backendAPI);        
         this.setState({ loading: false });
 
         // console.log(res);
@@ -46,7 +47,8 @@ class PollyDemo extends Component {
     async getPollyVoices(languageCode) {
 
         this.setState({ loading: true });
-        const res = await axios.get('http://192.168.0.70:5000/demo/polly/voices?languageCode=' + languageCode);
+        const backendAPI = process.env.REACT_APP_BACKEND_SERVER + '/demo/polly/voices?languageCode=' + languageCode;
+        const res = await axios.get(backendAPI);
         this.setState({ loading: false });
 
         // console.log(res);
@@ -87,7 +89,8 @@ class PollyDemo extends Component {
         // console.log(formData);
 
         this.setState({ loading: true });
-        const res = await axios.post('http://192.168.0.70:5000/demo/polly', formData);
+        const backendAPI = process.env.REACT_APP_BACKEND_SERVER + '/demo/polly';         
+        const res = await axios.post(backendAPI, formData);
         this.setState({ loading: false });
 
         const mediaUrl = res.data.mediaUrl;
