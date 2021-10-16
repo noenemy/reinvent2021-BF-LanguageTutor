@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 
 class PollyDemo extends Component {
@@ -36,7 +38,7 @@ class PollyDemo extends Component {
             this.setState({ languages: res.data });
         }
         else {
-            console.log("something wrong! try again.");
+            toast.error("something wrong! try again.");
         }
     }
 
@@ -51,7 +53,7 @@ class PollyDemo extends Component {
             this.setState({ voices: res.data, selectedVoice: res.data[0].voiceName });
         }
         else {
-            console.log("something wrong! try again.");
+            toast.error("something wrong! try again.");
         }
     }
 
@@ -78,7 +80,6 @@ class PollyDemo extends Component {
         formData.append('language', this.state.selectedLanguage);
         formData.append('voice', this.state.selectedVoice);
         formData.append('text',this.state.text);
-        // console.log(formData);
 
         this.setState({ loading: true });
         const backendAPI = `${process.env.REACT_APP_BACKEND_SERVER}/demo/polly`;         
@@ -86,7 +87,6 @@ class PollyDemo extends Component {
         this.setState({ loading: false });
 
         const mediaUrl = res.data.mediaUrl;
-        console.log(mediaUrl);
 
         this.audio = new Audio(mediaUrl);
         this.audio.play();
@@ -98,6 +98,7 @@ class PollyDemo extends Component {
                 <br />
                 <h1 className="text-secondary text-center">TTS with AWS Polly</h1>
                 <br />
+                <ToastContainer position="bottom-right" autoClose="3000" />
                 
                 <div className="container">
                     <div className="row">

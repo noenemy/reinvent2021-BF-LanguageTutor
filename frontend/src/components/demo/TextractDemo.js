@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Webcam from "react-webcam";
 import axios from "axios";
 
@@ -17,6 +19,7 @@ class TextractDemo extends Component {
 
         const screenshot = this.webcamRef.current.getScreenshot();
         this.setState({ screenshot }, () => {
+            toast.success("Captured!");
             this.postImage();
         });
     }
@@ -35,7 +38,7 @@ class TextractDemo extends Component {
             this.setState({ blocks: res.data.Blocks });
         }
         else {
-            console.log("something wrong! try again.");
+            toast.error("something wrong! try again.");
         }
     }
 
@@ -51,6 +54,7 @@ class TextractDemo extends Component {
                 <br></br>
                 <h1 className="text-secondary text-center">OCR with AWS Textract</h1>
                 <br></br>
+                <ToastContainer position="bottom-right" autoClose="3000" />
 
                 <div className="container">
                     <div className="row">

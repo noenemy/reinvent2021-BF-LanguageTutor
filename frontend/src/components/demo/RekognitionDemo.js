@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Webcam from "react-webcam";
 import axios from "axios";
 
@@ -20,6 +22,7 @@ class RekognitionDemo extends Component {
 
         const screenshot = this.webcamRef.current.getScreenshot();
         this.setState({ screenshot }, () => {
+            toast.success("Captured!");
             this.postImage();
         });
     }
@@ -38,7 +41,7 @@ class RekognitionDemo extends Component {
             this.setState({ labels: res.data.Labels });
         }
         else {
-            console.log("something wrong! try again.");
+            toast.error("something wrong! try again.");
         }
     }
 
@@ -55,6 +58,7 @@ class RekognitionDemo extends Component {
                 <br></br>
                 <h1 className="text-secondary text-center">Object Detection with AWS Rekognition</h1>
                 <br></br>
+                <ToastContainer position="bottom-right" autoClose="3000" />
 
                 <div className="container">
                     <div className="row">
