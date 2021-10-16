@@ -15,7 +15,7 @@ class DemoComponent extends Component {
     const tabContArr=[
       {
           tabTitle:(
-            <li className='nav-link {this.state.activeIndex===0 ? "active" : ""}' onClick={()=>tabClickHandler(0)} href="#"> Rekognition Demo </li>
+            <li className='nav-link {this.state.activeIndex===0 ? "active" : ""}' onClick={()=>tabClickHandler(0)} key="0"> Rekognition Demo </li>
           ),
           tabCont:(
               <RekognitionDemo></RekognitionDemo>
@@ -23,7 +23,7 @@ class DemoComponent extends Component {
       },
       {
           tabTitle:(
-            <li className='nav-link {this.state.activeIndex===1 ? "active" : ""}' onClick={()=>tabClickHandler(1)}> Textract Demo </li>
+            <li className='nav-link {this.state.activeIndex===1 ? "active" : ""}' onClick={()=>tabClickHandler(1)} key="1"> Textract Demo </li>
           ),
           tabCont:(
               <TextractDemo></TextractDemo>
@@ -31,7 +31,7 @@ class DemoComponent extends Component {
       },
       {
           tabTitle:(
-            <li className='nav-link {this.state.activeIndex===2 ? "active" : ""}' onClick={()=>tabClickHandler(2)}> Polly Demo </li>
+            <li className='nav-link {this.state.activeIndex===2 ? "active" : ""}' onClick={()=>tabClickHandler(2)} key="2"> Polly Demo </li>
           ),
           tabCont:(
               <PollyDemo></PollyDemo>
@@ -39,7 +39,7 @@ class DemoComponent extends Component {
       },
       {
           tabTitle:(
-            <li className='nav-link {this.state.activeIndex===3 ? "active" : ""}' onClick={()=>tabClickHandler(3)}> Transcribe Demo </li>
+            <li className='nav-link {this.state.activeIndex===3 ? "active" : ""}' onClick={()=>tabClickHandler(3)} key="3"> Transcribe Demo </li>
           ),
           tabCont:(
               <TranscribeDemo></TranscribeDemo>
@@ -47,7 +47,7 @@ class DemoComponent extends Component {
       },
       {
           tabTitle:(
-            <li className='nav-link {this.state.activeIndex===4 ? "active" : ""}' onClick={()=>tabClickHandler(4)}> Sumerian Demo </li>
+            <li className='nav-link {this.state.activeIndex===4 ? "active" : ""}' onClick={()=>tabClickHandler(4)} key="4"> Sumerian Demo </li>
           ),
           tabCont:(
               <SumerianDemo></SumerianDemo>
