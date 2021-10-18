@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import mic from 'microphone-stream';
 import { pcmEncode, downsampleBuffer } from '../../util/audioUtils.js';
 import { EventStreamMarshaller, Message } from '@aws-sdk/eventstream-marshaller';
@@ -13,6 +15,8 @@ class TranscribeDemo extends Component {
             selectedLanguage: 'en-US',
             languages: null,            
             text: '',
+            streaming: false,
+            socket: null
         };
     }
 
@@ -30,7 +34,7 @@ class TranscribeDemo extends Component {
             this.setState({ languages: res.data });
         }
         else {
-            console.log("something wrong! try again.");
+            toast.error("something wrong! try again.");
         }
     }
 
@@ -40,12 +44,17 @@ class TranscribeDemo extends Component {
     
     async transcribe() {
 
+        if (this.state.streaming) {
+            this.socket.close();
+            this.setState({ streaming: false });
+            return;
+        }
+
         var micStream = null;
         var mediaStream = null;
         var inputSampleRate = 0;
-        const transcribeSampleRate = 16000;
-        const transcribeLanguageCode = 'en-US';
-        const sampleRate = 44100;
+        var transcription = "";
+        const transcribeSampleRate = 44100;
         const eventStreamMarshaller = new EventStreamMarshaller(toUtf8, fromUtf8);
 
 
@@ -57,10 +66,11 @@ class TranscribeDemo extends Component {
         }
         catch (error) {
             console.log(error);
-            alert("Error. Please make sure you allow this website to access your microphone");
+            toast.error("Error. Please make sure you allow this website to access your microphone");
             return;
         }
 
+        this.eventStreamMarshaller = new EventStreamMarshaller(toUtf8, fromUtf8);
         //let's get the mic input from the browser, via the microphone-stream module
         micStream = new mic();
 
@@ -73,13 +83,14 @@ class TranscribeDemo extends Component {
         const backendAPI = `${process.env.REACT_APP_BACKEND_SERVER}/demo/transcribe`;
         const res = await axios.get(backendAPI);
         const transcribeUrl = res.data.transcribeUrl;
-        console.log(transcribeUrl);
 
         //open up Websocket connection
         var websocket = new WebSocket(transcribeUrl);
         websocket.binaryType = 'arraybuffer';
 
         websocket.onopen = () => {
+            this.setState({ socket: websocket, streaming: true });
+
             //Make the spinner disappear
             micStream.on('data', rawAudioChunk => {
                 // the audio stream is raw audio bytes. Transcribe expects PCM with additional metadata, encoded as binary
@@ -99,20 +110,50 @@ class TranscribeDemo extends Component {
             var messageBody = JSON.parse(String.fromCharCode.apply(String, messageWrapper.body)); 
 
             //THIS IS WHERE YOU DO SOMETHING WITH WHAT YOU GET FROM TRANSCRIBE
-            console.log("Got something from Transcribe!:");
-            console.log(messageBody);
+            //console.log("Got something from Transcribe!:");
+
+            const results = messageBody.Transcript.Results;
+            if (results.length > 0) {
+                if (results[0].Alternatives.length > 0) {
+                    var transcript = results[0].Alternatives[0].Transcript;
+                    transcript = decodeURIComponent(escape(transcript));
+
+                    this.setState({ text: this.state.text + transcript + '\n' });
+
+                    if (!results[0].IsPartial) {
+                        transcription += transcript + '\n';
+                    }
+                }
+            }
         }
 
-        // FUNCTIONS
+        websocket.onerror = () => {
+            toast.error("Websocket connection error. Try again.");
+            // toggle button
+        }
+
+        websocket.onclose = () => {
+            micStream.stop();
+            this.setState({ streaming: false, socket: null})
+            // toggle button
+        }
+
         function convertAudioToBinaryMessage(audioChunk) {
-            var raw = mic.toRaw(audioChunk);
-            if (raw == null) return; // downsample and convert the raw audio bytes to PCM
-            var downsampledBuffer = downsampleBuffer(raw, inputSampleRate, transcribeSampleRate);
-            var pcmEncodedBuffer = pcmEncode(downsampledBuffer); // add the right JSON headers and structure to the message
+            let raw = mic.toRaw(audioChunk);
         
-            var audioEventMessage = getAudioEventMessage(Buffer.from(pcmEncodedBuffer)); //convert the JSON object + headers into a binary event stream message
+            if (raw == null)
+                return;
         
-            var binary = eventStreamMarshaller.marshall(audioEventMessage);
+            // downsample and convert the raw audio bytes to PCM
+            let downsampledBuffer = downsampleBuffer(raw, inputSampleRate, transcribeSampleRate);
+            let pcmEncodedBuffer = pcmEncode(downsampledBuffer);
+        
+            // add the right JSON headers and structure to the message
+            let audioEventMessage = getAudioEventMessage(Buffer.from(pcmEncodedBuffer));
+        
+            //convert the JSON object + headers into a binary event stream message
+            let binary = eventStreamMarshaller.marshall(audioEventMessage);
+        
             return binary;
         }
 
@@ -140,6 +181,7 @@ class TranscribeDemo extends Component {
                 <br></br>
                 <h1 className="text-secondary text-center">Speech Recognition with AWS Transcribe</h1>
                 <br></br>
+                <ToastContainer position="bottom-right" autoClose="3000" />
 
                 <div className="container">
                     <div className="row">
@@ -154,7 +196,7 @@ class TranscribeDemo extends Component {
                                 
                                 <br/><br/>
 
-                                <button onClick={this.transcribe}>Transcribe</button>
+                                <button onClick={this.transcribe.bind(this)}>{!this.state.streaming ? 'Start streaming' : 'Stop streaming'}</button>
                                 <br/>
                                 
                             </div>
