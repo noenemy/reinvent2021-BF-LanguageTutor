@@ -1,12 +1,3 @@
-html,
-body {
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  border-color: black;
-}
 
 .tab {
   background-color: rgb(219, 219, 219);
@@ -54,7 +45,7 @@ body {
 
 #textToSpeech {
   padding: 2.5px;
-  position: fixed;
+
   top: 0;
   left: 0;
   display: none;
@@ -64,14 +55,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;
+  width: 600px;
+  height: 400px;
   background-image: url('../../assets/images/load_screen.png');
   background-color: gray;
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-attachment: local;
   background-position: center;
-  background-size: contain;
+  background-size: 50%;
   z-index: 9999;
 }
 
