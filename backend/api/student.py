@@ -8,7 +8,7 @@
     :license: BSD 3-Clause License, see LICENSE for more details.
 """
 import config
-from flask import Blueprint, make_response
+from flask import Blueprint, make_response, request
 from flask import current_app as app
 from gql import gql
 from util import get_appsync_secret, get_graphql_client
@@ -44,4 +44,79 @@ def list_student():
         app.logger.error('Retrieve student list failed: {0}'.format(e))
         raise InternalServerError('Something went wrong..')
 
+
+@student.route('/', methods=['PUT'], strict_slashes=False)
+def create_student():
+
+    data = request.get_json()
+    app.logger.info(data)
+
+    query = gql(
+        """
+        mutation createTuttiStudent($data: CreateTuttiStudentInput!) {
+          createTuttiStudent(input: $data) {
+            id
+            nickname
+          }
+        }
+        """
+    )
+    try:
+        result = client.execute(query, variable_values=data)
+        response = make_response(result, 200)
+        return response
+
+    except Exception as e:
+        app.logger.error('Create student: {0}'.format(e))
+        raise InternalServerError('Something went wrong..')
+
+
+
+@student.route('/', methods=['POST'], strict_slashes=False)
+def update_student():
+    data = request.get_json()
+    app.logger.info(data)
+
+    query = gql(
+        """
+        mutation updateTuttiStudent($data: UpdateTuttiStudentInput!) {
+          updateTuttiStudent(input: $data) {
+            id
+            nickname
+          }
+        }
+        """
+    )
+    try:
+        result = client.execute(query, variable_values=data)
+        response = make_response(result, 200)
+        return response
+
+    except Exception as e:
+        app.logger.error('Update student: {0}'.format(e))
+        raise InternalServerError('Something went wrong..')
+
+
+@student.route('/', methods=['DELETE'], strict_slashes=False)
+def delete_student():
+    data = request.get_json()
+    app.logger.info(data)
+
+    query = gql(
+        """
+        mutation deleteTuttiStudent($data: DeleteTuttiStudentInput!) {
+          deleteTuttiStudent(input: $data) {
+            id
+          }
+        }
+        """
+    )
+    try:
+        result = client.execute(query, variable_values=data)
+        response = make_response(result, 200)
+        return response
+
+    except Exception as e:
+        app.logger.error('Delete student: {0}'.format(e))
+        raise InternalServerError('Something went wrong..')
 
