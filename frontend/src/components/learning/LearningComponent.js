@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import { Button } from "react-bootstrap";
 import LoadScreen from '../../assets/images/load_screen.png'
 
 class LearningComponent extends Component {
+    state = {
+        language: "english"
+    };
 
-    routeChange = () => {
-        // todo
+    selectLanguage = () => {
+        this.setState({ language: 'english' });
+    }
+
+    enterClassroom = (classId) => {
+        window.location.href = `/classroom?language=${this.state.language}&class=${classId}`;
     }
 
     render() {
@@ -23,14 +29,14 @@ class LearningComponent extends Component {
                             <br /><br />
     
                             <h2>What language do you want to learn?</h2>
-                            <Button>English</Button> 
-                            <Button>Korean</Button> 
-                            <Button>Spanish</Button> 
+                            <Button onClick={this.selectLanguage}>English</Button> 
+                            <Button onClick={this.selectLanguage}>Korean</Button> 
+                            <Button onClick={this.selectLanguage}>Spanish</Button> 
                             <br /><br />
                             <h2>What subject do you want to learn today?</h2>
-                            <Button onClick={this.routeChange}>Fruits</Button> 
-                            <Button>Animals</Button> 
-                            <Button>Greetings</Button> 
+                            <Button onClick={this.enterClassroom}>Fruits</Button> 
+                            <Button onClick={this.enterClassroom}>Animals</Button> 
+                            <Button onClick={this.enterClassroom}>Greetings</Button> 
                         </div>
                     </div>
                     <div className="row"> 
