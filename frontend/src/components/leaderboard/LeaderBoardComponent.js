@@ -1,30 +1,63 @@
-import React from 'react';
+import React, { Component } from 'react';
+import Trophy from '../../assets/images/trophy.jpeg';
+import LeaderboardFooter from '../../assets/images/leaderboard-footer.jpg';
 
-const LeaderBoardComponent = () => {
+class LeaderBoardComponent extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            rankings: null
+        }
+    }
 
-    return(
-        <div>
-            <h1>Leaderboard</h1>
-            <h3>English</h3>
-            <ul>
-            <li>AAA 10,000</li>
-            <li>BBB 90,000</li>
-            <li>CCC 80,000</li>
-            </ul>
-            <h3>Korean</h3>
-            <ul>
-            <li>DDD 10,000</li>
-            <li>EEE 90,000</li>
-            <li>FFF 80,000</li>
-            </ul>
-            <h3>Spanish</h3>
-            <ul>
-            <li>GGG 10,000</li>
-            <li>HHH 90,000</li>
-            <li>III 80,000</li>
-            </ul>
+    render() {
+        return(
+            <div>
+                <br />
+                <h1 className="text-secondary text-center">Leaderboard</h1>
+                <br />
+            
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-3 text-right mr-2">
+                            <img src={Trophy} />
+                        </div>
+                
+                        <div className="col-7 mt-3">
+                        <div className="row">
+                            <table className="table">
+                            <tr className="thead-light h4">
+                                <th className="text-center">Ranking</th>
+                                <th className="text-center">Name</th>
+                                <th className="text-center">Found Cards</th>
+                                <th className="text-center">Total Playtime</th>
+                                <th className="text-center">Total Score</th>
+                            </tr>
+                            {this.state.rankings && this.state.rankings.map((ranking, index) => {
+                                return (
+                                    <tr key={index} className="h4">
+                                        <td className="text-center"><kbd>{{ ranking }}</kbd></td>
+                                        <td>{{ ranking }}</td>
+                                        <td className="text-center">{{ ranking }}</td>
+                                        <td className="text-center">{{ ranking }}"</td>
+                                        <td className="text-center">{{ ranking }}</td>
+                                    </tr>
+                                );
+                            })}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            
+                <br />
+            
+                <div id="footer" class="footer container navbar-fixed-bottom text-right">
+                    <img src={LeaderboardFooter} height="150" width="800" />
+                </div>
+            </div>
         </div>
       );
+    }
 };
 
 export default LeaderBoardComponent;
