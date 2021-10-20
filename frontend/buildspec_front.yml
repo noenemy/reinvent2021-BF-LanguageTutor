@@ -5,6 +5,9 @@ phases:
       # Installs the node package dependencies as defined by the `package.json` file
       - cd ${CODEBUILD_SRC_DIR}/frontend
       - npm audit fix
+      - echo REACT_APP_BACKEND_SERVER=${REACT_APP_BACKEND_SERVER} > .env
+      - echo REACT_APP_COGNITO_POOL_ID=${REACT_APP_COGNITO_POOL_ID} >> .env
+      - cat .env
   build:
     commands:
       # Synthesizes the CDK App and puts the resulting artifacts into `dist`
