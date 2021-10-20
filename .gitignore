@@ -211,3 +211,4 @@ venv.bak/
 # pycharm
 .idea
 
+backend/backend_env.sh
