@@ -25,15 +25,15 @@ class LearningComponent extends Component {
                         </div>
                         <div className="col-6">
                             <br />
-                            <h2>Hi, my name is Tutty. I'm your language tutor.</h2>
+                            <h2>Hi, we are your language tutors.</h2>
                             <br /><br />
     
-                            <h2>What language do you want to learn?</h2>
+                            <h2>Which language do you want to learn?</h2>
                             <Button onClick={this.selectLanguage}>English</Button> 
                             <Button onClick={this.selectLanguage}>Korean</Button> 
                             <Button onClick={this.selectLanguage}>Spanish</Button> 
                             <br /><br />
-                            <h2>What subject do you want to learn today?</h2>
+                            <h2>Which subject do you want to learn today?</h2>
                             <Button onClick={this.enterClassroom}>Fruits</Button> 
                             <Button onClick={this.enterClassroom}>Animals</Button> 
                             <Button onClick={this.enterClassroom}>Greetings</Button> 
