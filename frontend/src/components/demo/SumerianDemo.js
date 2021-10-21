@@ -6,8 +6,6 @@ import ControlPanel from "./ControlPanel";
 
 const SumerianDemo = () => {
 
-  console.log('SumerianDemoFC')
-
   return (
     <div>
       <br></br>
