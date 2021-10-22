@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
-import { Button } from "react-bootstrap";
+import './home.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faInfoCircle, faPlayCircle, faCamera } from '@fortawesome/free-solid-svg-icons'
 
 class HomeComponent extends Component {
 
 
-    playGame = () => {
-
+    goLearning = () => {
+        window.location.href = '/learning';
     }
     
     render() {
         return ( 
             <div>
 
-                <div className="jumbotron jumbotron-fluid" id="banner">
+                <div className="jumbotron jumbotron-fluid" id="banner" >
                     <div className="container text-center text-md-left">
                         <header>
                             <div className="row justify-content-between">
@@ -39,11 +41,12 @@ class HomeComponent extends Component {
                                 </div>
                                 <br />
                                 &nbsp;
-                                <button className="btn btn-primary btn-lg" aria-label="Left" onClick={this.playGame}>
-                                    <i fa name="play-circle"></i> Get Started
+                                <button className="btn btn-primary btn-lg" aria-label="Left" onClick={this.goLearning}>
+                                    <FontAwesomeIcon icon={faPlayCircle} /> Get Started
                                 </button>
+                                &nbsp;
                                 <button className="btn btn-primary btn-lg ml-4" aria-label="Left" onClick={this.playTrailer}>
-                                    <i fa name="video-camera"></i> Watch Trailer
+                                    <FontAwesomeIcon icon={faCamera} /> <i fa name="video-camera"></i> Watch Trailer
                                 </button>
                             </div>
                         </div>
@@ -105,7 +108,8 @@ class HomeComponent extends Component {
                                 <div data-aos="fade-right" data-aos-duration="1000" data-aos-once="true" class="col-md-6">
                                     <h2 className="font-weight-bold">Amazon Rekognition</h2>
                                     <h4 className="my-4">With Amazon Rekognition, you can identify thousands of objects (e.g. bike, telephone, building) and scenes (e.g. parking lot, beach, city). When analyzing video, you can also identify specific activities happening in the frame, such as "delivering a package" or "playing soccer".</h4>
-                                    <a href="https://aws.amazon.com/rekognition/" target="_blank" class="btn btn-primary btn-lg"><i fa name="info"></i> Learn More</a>
+                                    <a href="https://aws.amazon.com/rekognition/" target="_blank" class="btn btn-primary btn-lg">
+                                        <FontAwesomeIcon icon={faInfoCircle} />&nbsp; Learn More</a>
                                 </div>
                                 <div data-aos="fade-left" data-aos-duration="1000" data-aos-once="true" class="col-md-6 align-self-center">
                                     <img src="../../assets/images/label-detection-sample.png" width="600" alt="label detection" class="mx-auto d-block" />
@@ -137,7 +141,9 @@ class HomeComponent extends Component {
                             <h2 className="text-center font-weight-bold">Meet the Team</h2>
                             <br />
                             <div className="row">
-                                <div className="col">
+                                <div className="col-2"></div>
+
+                                <div className="col-2">
                                     <div className="card">
                                     <img src="../../assets/images/team/skkim.jpeg" alt="Jane" />
                                     <div className="container">
@@ -147,8 +153,9 @@ class HomeComponent extends Component {
                                     </div>
                                     </div>
                                 </div>
+                                <div className="col-1"></div>
 
-                                <div className="col">
+                                <div className="col-2">
                                     <div className="card">
                                     <img src="../../assets/images/team/ssjou.jpeg" alt="Sungshik" />
                                     <div className="container">
@@ -157,9 +164,9 @@ class HomeComponent extends Component {
                                         <p>The yak shaver.<br />Contribution for architecture design, game ranking and deployment.</p>
                                     </div>
                                     </div>
-                                </div>                                
-                                
-                                <div className="col">
+                                </div>   
+                                <div className="col-1"></div>                             
+                                <div className="col-2">
                                     <div className="card">
                                     <img src="../../assets/images/team/jwcho.jpeg" alt="Jiwoon" />
                                     <div className="container">
@@ -169,6 +176,7 @@ class HomeComponent extends Component {
                                     </div>
                                     </div>
                                 </div>
+                                <div className="col-2"></div>
 
                             </div>
                         </div>
