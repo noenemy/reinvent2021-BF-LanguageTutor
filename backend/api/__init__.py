@@ -65,6 +65,9 @@ def create_app(script_info=None):
     from api.language import language
     app.register_blueprint(language, url_prefix='/language')
 
+    from api.course import course
+    app.register_blueprint(course, url_prefix='/course')   
+
     from api.demo import demo
     app.register_blueprint(demo, url_prefix='/demo')
 
