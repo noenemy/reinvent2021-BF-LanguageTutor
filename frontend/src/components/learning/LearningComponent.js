@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBook, faQuoteLeft, faQuoteRight } from '@fortawesome/free-solid-svg-icons'
@@ -6,11 +9,32 @@ import LoadScreen from '../../assets/images/load_screen.png'
 
 class LearningComponent extends Component {
     state = {
-        language: "english"
+        language: "english",
+        lectures: null,
+        loading: false
     };
+
+    componentDidMount() {
+        this.getLectures();
+    }
 
     selectLanguage = () => {
         this.setState({ language: 'english' });
+    }
+
+    async getLectures(courseId=1) {
+        this.setState({ loading: true });
+        const backendAPI = `${process.env.REACT_APP_BACKEND_SERVER}/course/lectures?courseId=${courseId}`;
+        const res = await axios.get(backendAPI);        
+        this.setState({ loading: false });
+
+        if (res !== null) {
+            this.setState({ lectures: res.data.lectures });
+            console.log(res.data.lectures);
+        }
+        else {
+            toast.error("something wrong! try again.");
+        }
     }
 
     enterClassroom = (classId) => {
@@ -52,26 +76,15 @@ class LearningComponent extends Component {
                                 <button type="button" className="list-group-item list-group-item-action active" aria-current="true">
                                     Course content
                                 </button>
-                                <button type="button" className="list-group-item list-group-item-action" onClick={this.enterClassroom}>
-                                    <FontAwesomeIcon icon={faBook} />&nbsp;
-                                    Unit 1. Day 1
-                                </button>
-                                <button type="button" className="list-group-item list-group-item-action" disabled>
-                                    <FontAwesomeIcon icon={faBook} />&nbsp;
-                                    Unit 2. Day 2
-                                </button>
-                                <button type="button" className="list-group-item list-group-item-action" disabled>
-                                    <FontAwesomeIcon icon={faBook} />&nbsp;
-                                    Unit 3. Day 3
-                                </button>
-                                <button type="button" className="list-group-item list-group-item-action" disabled>
-                                    <FontAwesomeIcon icon={faBook} />&nbsp;
-                                    Unit 4. Day 4
-                                </button>
-                                <button type="button" className="list-group-item list-group-item-action" disabled>
-                                    <FontAwesomeIcon icon={faBook} />&nbsp;
-                                    Unit 5. Day 5
-                                </button>
+                                {this.state.lectures && this.state.lectures.map(( lecture, index) => {
+                                    return (
+                                        <button type="button" className="list-group-item list-group-item-action" key={lecture.lecture_id} onClick={this.enterClassroom}>
+                                            <FontAwesomeIcon icon={faBook} />&nbsp;
+                                            Lecture { lecture.lecture_id}. { lecture.lecture_title }
+                                        </button>
+                                        );
+                                })}
+
                             </div>
                         </div>
                     </div>
