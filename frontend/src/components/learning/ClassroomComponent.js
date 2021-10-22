@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import TutorImage from '../../assets/images/classroom-tutor-sample.png'
+import UnitList from './UnitList';
 
 class ClassroomComponent extends Component {
     static propTypes = {
@@ -42,13 +43,7 @@ class ClassroomComponent extends Component {
                         <br /><br />
                     </div>
                     <div className="row">
-                        <ul className="list-group list-group-horizontal">
-                            <li className="list-group-item flex-fill list-group-item-secondary"><strong>1. Introduction</strong></li>
-                            <li className="list-group-item flex-fill">2. Expressions</li>
-                            <li className="list-group-item flex-fill">3. Vocabulary</li>
-                            <li className="list-group-item flex-fill">4. Quiz</li>
-                            <li className="list-group-item flex-fill">5. Summary</li>
-                        </ul>
+                        <UnitList />
                     </div>
                 </div>
             </div>
