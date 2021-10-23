@@ -212,3 +212,4 @@ venv.bak/
 .idea
 
 backend/backend_env.sh
+/backend/playground.ipynb
