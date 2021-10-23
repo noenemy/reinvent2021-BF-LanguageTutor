@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import './home.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faInfoCircle, faPlayCircle, faCamera } from '@fortawesome/free-solid-svg-icons'
 
 class HomeComponent extends Component {
 
@@ -14,7 +12,7 @@ class HomeComponent extends Component {
         return ( 
             <div>
 
-                <div className="jumbotron jumbotron-fluid" id="banner" >
+                <div className="jumbotron jumbotron-fluid" id="banner">
                     <div className="container text-center text-md-left">
                         <header>
                             <div className="row justify-content-between">
@@ -42,11 +40,11 @@ class HomeComponent extends Component {
                                 <br />
                                 &nbsp;
                                 <button className="btn btn-primary btn-lg" aria-label="Left" onClick={this.goLearning}>
-                                    <FontAwesomeIcon icon={faPlayCircle} /> Get Started
+                                    <i className="fas fa-play-circle" /> Get Started
                                 </button>
                                 &nbsp;
                                 <button className="btn btn-primary btn-lg ml-4" aria-label="Left" onClick={this.playTrailer}>
-                                    <FontAwesomeIcon icon={faCamera} /> <i fa name="video-camera"></i> Watch Trailer
+                                    <i className="fas fa-video"></i> Watch Trailer
                                 </button>
                             </div>
                         </div>
@@ -109,7 +107,7 @@ class HomeComponent extends Component {
                                     <h2 className="font-weight-bold">Amazon Rekognition</h2>
                                     <h4 className="my-4">With Amazon Rekognition, you can identify thousands of objects (e.g. bike, telephone, building) and scenes (e.g. parking lot, beach, city). When analyzing video, you can also identify specific activities happening in the frame, such as "delivering a package" or "playing soccer".</h4>
                                     <a href="https://aws.amazon.com/rekognition/" target="_blank" class="btn btn-primary btn-lg">
-                                        <FontAwesomeIcon icon={faInfoCircle} />&nbsp; Learn More</a>
+                                    <i class="fas fa-info-circle" />&nbsp; Learn More</a>
                                 </div>
                                 <div data-aos="fade-left" data-aos-duration="1000" data-aos-once="true" class="col-md-6 align-self-center">
                                     <img src="../../assets/images/label-detection-sample.png" width="600" alt="label detection" class="mx-auto d-block" />

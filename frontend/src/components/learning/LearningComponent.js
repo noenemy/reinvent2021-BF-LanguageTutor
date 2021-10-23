@@ -3,8 +3,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 import { Button } from "react-bootstrap";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBook, faQuoteLeft, faQuoteRight } from '@fortawesome/free-solid-svg-icons'
 import LoadScreen from '../../assets/images/load_screen.png'
 
 class LearningComponent extends Component {
@@ -55,31 +53,35 @@ class LearningComponent extends Component {
                         <div className="col-6">
                             <br /><br />
                             <h2>
-                                <FontAwesomeIcon icon={faQuoteLeft} />&nbsp;
+                                <i class="fas fa-quote-left" />&nbsp;
                                 Hi, we are your language tutors.
                             </h2>
                             <h2>Learning a language is fun. </h2>
-                            <h2>We will help you. <FontAwesomeIcon icon={faQuoteRight} />&nbsp;
+                            <h2>We will help you. <i class="fas fa-quote-right" />&nbsp;
                             </h2>
                             <br /><br />
     
                             <h2>Which language do you want to learn?</h2>
-                            <Button onClick={this.selectLanguage} disabled>English</Button> 
+                            <Button onClick={this.selectLanguage}><i class="fas fa-globe-asia" />&nbsp;Korean</Button> 
+                            &nbsp;                            
+                            <Button onClick={this.selectLanguage} disabled className="btn-secondary"><i class="fas fa-globe-americas" />&nbsp;English</Button> 
                             &nbsp;
-                            <Button onClick={this.selectLanguage}>Korean</Button> 
+                            <Button onClick={this.selectLanguage} disabled className="btn-secondary"><i class="fas fa-globe-europe" />&nbsp;Spanish</Button> 
+                            &nbsp; 
+                            <Button onClick={this.selectLanguage} disabled className="btn-secondary"><i class="fas fa-globe-asia" />&nbsp;Chinese</Button> 
                             &nbsp;
-                            <Button onClick={this.selectLanguage} disabled>Spanish</Button> 
+                            <Button onClick={this.selectLanguage} disabled className="btn-secondary"><i class="fas fa-globe-asia" />&nbsp;Japanese</Button>     
                             <br /><br />
                             <h2>Which subject do you want to learn today?</h2>
 
                             <div className="list-group">
-                                <button type="button" className="list-group-item list-group-item-action active" aria-current="true">
+                                <button type="button" className="list-group-item list-group-item-action list-group-item-secondary" aria-current="true">
                                     Course content
                                 </button>
                                 {this.state.lectures && this.state.lectures.map(( lecture, index) => {
                                     return (
                                         <button type="button" className="list-group-item list-group-item-action" key={lecture.lecture_id} onClick={this.enterClassroom}>
-                                            <FontAwesomeIcon icon={faBook} />&nbsp;
+                                            <i class="fas fa-book" />&nbsp;
                                             Lecture { lecture.lecture_id}. { lecture.lecture_title }
                                         </button>
                                         );
