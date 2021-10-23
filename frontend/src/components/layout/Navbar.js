@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Logo from '../../assets/images/tutti-logo.png'
 
 export class Navbar extends Component {
     static defaultProps = {
@@ -12,8 +11,8 @@ export class Navbar extends Component {
             <div>
                 <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                     <a className="navbar-brand" href="/">
-                        &nbsp;&nbsp;
-                        <i className={this.props.icon} /> {this.props.title}
+                        &nbsp;&nbsp;&nbsp;
+                        <i className={this.props.icon} /> &nbsp;&nbsp;{this.props.title}
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </a>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
