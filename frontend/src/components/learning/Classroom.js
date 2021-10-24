@@ -19,6 +19,9 @@ class ClassroomComponent extends Component {
 
     state = {
         units: null,
+        currentUnit: null,
+        steps: null,
+        currentStep: null,
         language: "english",
         lectures: null,
         loading: false
@@ -26,6 +29,8 @@ class ClassroomComponent extends Component {
 
     componentDidMount() {
         this.getLectureUnits();
+        if (this.state.currentUnit == null)
+            this.setState({ currentUnit: 1 }); // set default unit
     }
 
     async getLectureUnits(courseId=1, lectureId=1) {
@@ -36,6 +41,7 @@ class ClassroomComponent extends Component {
 
         if (res !== null) {
             this.setState({ units: res.data.units });
+            this.setState({ steps: [1, 2, 3], currentStep: 1 });
             console.log(res.data.units);
         }
         else {
@@ -43,23 +49,50 @@ class ClassroomComponent extends Component {
         }
     }
 
-    onClickNext() {
+    selectCurrentUnit = (unit_id) => {
+        this.setState({ currentUnit: unit_id });
+        this.setState({ steps: [1, 2, 3, 4], currentStep: 1 });
+    }
+
+    onClickNext = () => {
         // 현재 Unit에서 다음 Step이 있으면 -> 다음 Step으로 이동
         // 현재 Unit에서 다음 Step이 없으면 -> 다음 Unit으로 이동.
         // 다음 Unit이 없으면 강의 끝
-        alert("onClickNext");
+        toast.info("onClickNext");
+
+        if  (this.state.currentStep === this.state.steps.length) {
+            if (this.state.currentUnit === this.state.units.length) {
+                toast.info("Nothing to do.");
+            } else {
+                toast.info("need to go to the next unit.");
+                this.selectCurrentUnit(this.state.currentUnit + 1);
+            }
+        } else {
+            this.setState({ currentStep : this.state.currentStep + 1 }); 
+        }      
     }
 
-    onClickPrevious() {
+    onClickPrevious = () => {
         // 현재 Unit에서 이전 Step이 있으면 -> 이전 Step으로 이동
         // 현재 Unit에 이전 Step이 없으면 -> 이전 Unit으로 이동
         // 이전 Unit도 없으면 do nothing
-        alert("onClickPrevious");
+        toast.info("onClickPrevious");
+        if  (this.state.currentStep === 1) {
+            if (this.state.currentUnit === 1) {
+                toast.info("Nothing to do.");
+            } else {
+                toast.info("need to go to the previous unit.");
+                this.selectCurrentUnit(this.state.currentUnit - 1);
+            }
+        } else {
+            this.setState({ currentStep : this.state.currentStep - 1 }); 
+        }
     }
 
     onClickUnit = (event) => {
         // TODO: need to get which unit is clicked
-        alert("onClickUnit:" + event.target.value);
+        toast.info("onClickUnit:" + event.target.value);
+        this.setState({ currentUnit: event.target.value });
     }
 
     render() {
@@ -73,12 +106,14 @@ class ClassroomComponent extends Component {
                             <TutorViewer />
                         </div>
                         <div className="col-6">
+                            <div>{this.state.steps && this.state.currentStep + '/' + this.state.steps.length} </div>
                             <TextbookViewer />
                         </div>
                     </div>
                     <Navigator onClickNext={this.onClickNext} onClickPrevious={this.onClickPrevious} />
-                    <UnitList onClickUnit={this.onClickUnit} units={this.state.units} loading={this.state.loading} />
+                    <UnitList onClickUnit={this.onClickUnit} units={this.state.units} loading={this.state.loading} selectedUnit={this.state.currentUnit} />
                 </div>
+                <ToastContainer position="bottom-right" autoClose="3000" />
             </div>
         );
     }
