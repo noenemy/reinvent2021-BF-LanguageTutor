@@ -2,8 +2,8 @@ import "./LoadScreen.css"
 
 const LoadScreen = () => {
     return (
-      <div id="loadScreen">
-        <div id="loader"></div>
+      <div>
+        <embed src="http://localhost:3000/three.html" width="600" height="400" />
       </div>
     )
   }
