@@ -40,3 +40,12 @@
 .color-nav {
   background-color: #131b47;
 }
+
+footer, footer a {
+  color: #61dafb;
+  text-decoration: none;
+}
+
+#footer {
+  padding-bottom: 30px;
+}
