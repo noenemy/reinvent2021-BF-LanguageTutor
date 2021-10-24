@@ -24,12 +24,14 @@ const ControlPannel = () => {
       </speak>
     `);
 
+  // send data to iframe
   function sendToIframe(iframe, msg) {
     if (iframe === null) return;
     iframe.contentWindow.postMessage(msg, '*');
   }
 
   function togglePlay () {
+    // set data
     sendToIframe(sumerian, {
       'type': 'play',
       'host': host,
@@ -49,11 +51,13 @@ const ControlPannel = () => {
     sendToIframe(sumerian, {type: 'stop'})
   }
 
+  // load iframe element
   useEffect(() => {
     setSumerian(document.getElementById('sumerianHost'));
     console.log('ready to start')
   }, [])
 
+  // fetch data from iframe
   useEffect(() => {
     const id = window.addEventListener('message', function (e) {
       console.log(e.data);

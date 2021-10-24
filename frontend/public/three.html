@@ -1005,10 +1005,12 @@
     <!-- script for message from parent to iframe-->
         window.addEventListener('message', receiveMsgFromParent);
 
+        // receiving data from parent
         function receiveMsgFromParent(e) {
           dataSwitch(e.data);
         }
 
+        // doing something by type
         function dataSwitch(data) {
           switch (data.type) {
             case 'play':
@@ -1025,6 +1027,8 @@
       window.addEventListener('click', function (e) {
         sendMsgToParent();
       })
+
+      // example: send data from iframe to parent
       function sendMsgToParent() {
         window.parent.postMessage('message from iframe', '*');
       }
