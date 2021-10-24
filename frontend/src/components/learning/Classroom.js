@@ -54,15 +54,13 @@ class ClassroomComponent extends Component {
         }
             
         // TODO : 첫번째 강의를 시작해본다.
-        this.speakTeacher('Hello, My name is Cristine');
-        await sleep(2500);
+        this.speakTeacher(`<amazon:domain name="news">Hello, My name is Cristine.</amazon:domain>`);
+        await sleep(2000);
         this.speakGuest('안녕하세요. 저는 서연이에요.');
-        await sleep(3800);
-        this.speakTeacher('Do you wanna learn Korean language fun?We will bring you an exiting Korean lesson.');
-        await sleep(5000);
-        this.speakTeacher('This class is not only easy and fun. but also you can learn practical expressions and vocabulary.');
-        await sleep(6000);
-        this.speakGuest('같이 재밌게 공부해봐요.');
+        await sleep(3500);
+        this.speakTeacher(`<amazon:domain name="news">Do you wanna learn Korean language fun? We will bring you an exiting Korean lesson.You can learn practical expressions and vocabulary.</amazon:domain>`);
+        await sleep(8200);
+        this.speakGuest('자. 시작해봅시다.');
     }
     
     
