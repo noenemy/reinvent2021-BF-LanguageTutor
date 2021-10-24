@@ -17,6 +17,7 @@ from util import check_env_vars
 from aws_xray_sdk.core import xray_recorder, patch_all, patch
 from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
 
+
 def create_app(script_info=None):
 
     check_env_vars()
@@ -71,6 +72,8 @@ def create_app(script_info=None):
     from api.demo import demo
     app.register_blueprint(demo, url_prefix='/demo')
 
+    from api.game import game
+    app.register_blueprint(game, url_prefix='/game')
 
     # shell context for flask cli
     @app.shell_context_processor
