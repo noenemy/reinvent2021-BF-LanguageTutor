@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import Logo from '../../assets/images/tutti-logo.png'
 
 export class Navbar extends Component {
     static defaultProps = {
         title: 'Hello There',
-        icon: 'fab fa-github'
+        icon: 'fas fa-chalkboard-teacher'
     };
 
     render() {
@@ -12,8 +11,9 @@ export class Navbar extends Component {
             <div>
                 <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                     <a className="navbar-brand" href="/">
-                        <img src={Logo} height="50px" alt="Logo" />
-                        <i className={this.props.icon} /> {this.props.title}
+                        &nbsp;&nbsp;&nbsp;
+                        <i className={this.props.icon} /> &nbsp;&nbsp;{this.props.title}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </a>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
@@ -25,7 +25,7 @@ export class Navbar extends Component {
                                 <a className="nav-link" href="/home">Home</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="/learning">Learning</a>
+                                <a className="nav-link" href="/learning">My Learning</a>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="/game">Game</a>

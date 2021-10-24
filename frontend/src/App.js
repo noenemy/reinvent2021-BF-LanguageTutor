@@ -4,7 +4,7 @@ import React from "react";
 import Navbar from './components/layout/Navbar';
 import HomeComponent from './components/home/HomeComponent';
 import LearningComponent from './components/learning/LearningComponent';
-import ClassroomComponent from './components/learning/ClassroomComponent';
+import ClassroomComponent from './components/learning/Classroom';
 import GameComponent from './components/game/GameComponent';
 import LeaderboardComponent from './components/leaderboard/LeaderBoardComponent';
 import DemoComponent from './components/demo/DemoComponent';
