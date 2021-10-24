@@ -3,13 +3,14 @@ import React, { Component } from 'react';
 class TitleBar extends Component {
     render() {
         return (
-            <div>
+            <div className="row">
                 <div className="col-3">
-                    <a href="#" onClick={this.goLearningHome}>Home</a> - 
-                    Class: {this.props.language} {this.props.class}
+                    <i class="fas fa-book" />
+                    <a href="/learning" onClick={this.goLearningHome}>My Learning</a>
+                    /&nbsp;&nbsp;{this.props.className}
                 </div>
                 <div className="col-9">
-                    <h3>Unit {this.props.unit} 1. Title here</h3>
+                    <h3>{this.props.lectureTitle}</h3>
                 </div>
             </div>
         );
