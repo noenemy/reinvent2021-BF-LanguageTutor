@@ -29,8 +29,63 @@ class ClassroomComponent extends Component {
 
     componentDidMount() {
         this.getLectureUnits();
-        if (this.state.currentUnit == null)
+        if (this.state.currentUnit == null) {
             this.setState({ currentUnit: 1 }); // set default unit
+        
+            const id = window.addEventListener('message', this.handleChildMessage);
+        }
+    }
+
+    componentWillUnmount() {
+        // Make sure to remove the DOM listener when the component is unmounted.
+        window.removeEventListener("message", this.handleChildMessage);
+    }
+
+    handleChildMessage = (event) => {
+        toast.info(event.data);
+        if (event.data === "SUMERIAN_LOAD_COMPLETED") {
+            this.startLearning();
+        }
+    }
+
+    async startLearning() {
+        const sleep = (milliseconds) => {
+            return new Promise(resolve => setTimeout(resolve, milliseconds))
+        }
+            
+        // TODO : 첫번째 강의를 시작해본다.
+        this.speakTeacher('Hello, My name is Cristine');
+        await sleep(2500);
+        this.speakGuest('안녕하세요. 저는 서연이에요.');
+        await sleep(3800);
+        this.speakTeacher('Do you wanna learn Korean language fun?We will bring you an exiting Korean lesson.');
+        await sleep(5000);
+        this.speakTeacher('This class is not only easy and fun. but also you can learn practical expressions and vocabulary.');
+        await sleep(6000);
+        this.speakGuest('같이 재밌게 공부해봐요.');
+    }
+    
+    
+    speakTeacher(message) {
+        const msg = {
+            'type': 'play',
+            'host': 'Alien',
+            'dialog': message
+        };
+
+        const sumerian = document.getElementById('sumerianHost');
+        sumerian.contentWindow.postMessage(msg, '*');
+    }
+
+    speakGuest(message) {
+        const msg = {
+            'type': 'play',
+            'host': 'Luke',
+            'dialog': message
+        };
+
+        const sumerian = document.getElementById('sumerianHost');
+        sumerian.contentWindow.postMessage(msg, '*');
     }
 
     async getLectureUnits(courseId=1, lectureId=1) {

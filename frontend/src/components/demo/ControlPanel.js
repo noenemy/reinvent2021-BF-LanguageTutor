@@ -1,4 +1,6 @@
 import {useEffect, useState,} from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ControlPannel = () => {
   const [host, setHost] = useState('Luke');
@@ -60,7 +62,7 @@ const ControlPannel = () => {
   // fetch data from iframe
   useEffect(() => {
     const id = window.addEventListener('message', function (e) {
-      console.log(e.data);
+      toast.info(e.data);
     })
 
     return (
@@ -71,6 +73,7 @@ const ControlPannel = () => {
   return (
 
     <div id="textToSpeech">
+      <ToastContainer position="bottom-right" autoClose="3000" />
       <button className={ host === 'Luke' ? 'tab current' : 'tab'} onClick={() => setHost('Luke')}>Luke</button>
       <button className={ host === 'Alien' ? 'tab current' : 'tab'} onClick={() => setHost('Alien')}>Alien</button>
       <div>
