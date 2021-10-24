@@ -1,19 +1,15 @@
 import { useState, useEffect } from "react";
 
 const ControlPannel = () => {
-
+  const [host, setHost] = useState();
   const [leftTextBoxContent, setLeftTextBoxContent] = useState();
   const [rightTextBoxContent, setRightTextBoxContent] = useState();
-
-  function toggleHost (event) {
-    console.log(event)
-  }
 
   return (
 
     <div id="textToSpeech">
-      <button className="tab current" onClick={toggleHost}>Luke</button>
-      <button className="tab" onClick={toggleHost}>Alien</button>
+      <button className="tab current" onClick={() => setHost('Luke')}>Luke</button>
+      <button className="tab" onClick={() => setHost('Alien')}>Alien</button>
       <div>
         <textarea autoFocus size="23" type="text" className="textEntry Luke" value={leftTextBoxContent} onChange={() => {}}></textarea>
         <textarea autoFocus size="23" type="text" className="textEntry Alien" value={rightTextBoxContent} onChange={() => {}}></textarea>
