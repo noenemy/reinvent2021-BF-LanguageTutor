@@ -54,6 +54,16 @@ const ControlPannel = () => {
     console.log('ready to start')
   }, [])
 
+  useEffect(() => {
+    const id = window.addEventListener('message', function (e) {
+      console.log(e.data);
+    })
+
+    return (
+      window.removeEventListener('click', id)
+    )
+  }, [])
+
   return (
 
     <div id="textToSpeech">

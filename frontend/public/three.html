@@ -1002,6 +1002,7 @@
       }
     </script>
     <script>
+    <!-- script for message from parent to iframe-->
         window.addEventListener('message', receiveMsgFromParent);
 
         function receiveMsgFromParent(e) {
@@ -1018,6 +1019,15 @@
               console.log(data.type)
           }
         }
+    </script>
+    <script>
+      <!-- script for message from iframe to parent-->
+      window.addEventListener('click', function (e) {
+        sendMsgToParent();
+      })
+      function sendMsgToParent() {
+        window.parent.postMessage('message from iframe', '*');
+      }
     </script>
   </body>
 </html>
