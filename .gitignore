@@ -218,3 +218,4 @@ backend/backend_env.sh
 /backend/notebook/.ipynb_checkpoints/playground-checkpoint.ipynb
 /backend/notebook/playground.ipynb
 /backend/notebook/tb_object2.csv
+/frontend/public/three-js-config.js

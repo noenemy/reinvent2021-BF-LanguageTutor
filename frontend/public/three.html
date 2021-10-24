@@ -124,6 +124,7 @@
     <script src="https://threejs.org/build/three.min.js"></script>
     <!--Host build file-->
     <script type="text/javascript" src="./host.three.js"></script>
+
   </head>
 
   <body>
@@ -179,6 +180,7 @@
     <script type="module">
       import {OrbitControls} from 'https://threejs.org/examples/jsm/controls/OrbitControls.js';
       import {GLTFLoader} from 'https://threejs.org/examples/jsm/loaders/GLTFLoader.js';
+      import {TARGET_REGION, POOL_ID} from '/three-js-config.js'
 
       const renderFn = [];
       const speakers = new Map([
@@ -189,10 +191,11 @@
       main();
 
       async function main() {
+
         // Initialize AWS and create Polly service objects
-        window.AWS.config.region = 'us-west-2';
+        window.AWS.config.region = TARGET_REGION
         window.AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-          IdentityPoolId: '{APPLICATION_POOL_ID}',
+          IdentityPoolId: POOL_ID,
         });
         const polly = new AWS.Polly();
         const presigner = new AWS.Polly.Presigner();
