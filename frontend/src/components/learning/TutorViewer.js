@@ -5,7 +5,7 @@ class TutorViewer extends Component {
     render() {
         return (
             <div>
-                <img className="img-fluid" src={TutorImage}></img>
+                <embed src="/three.html" width="640" height="400" />
             </div>
         );
     }
