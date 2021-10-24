@@ -1001,5 +1001,12 @@
         }
       }
     </script>
+    <script>
+        window.addEventListener('message', receiveMsgFromParent);
+
+        function receiveMsgFromParent(e) {tig
+          console.log('from parent', e.data)
+        }
+    </script>
   </body>
 </html>

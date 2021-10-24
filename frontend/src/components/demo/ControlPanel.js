@@ -1,9 +1,36 @@
-import { useState, useEffect } from "react";
+import {useEffect, useState,} from "react";
 
 const ControlPannel = () => {
   const [host, setHost] = useState('Luke');
+  const [sumerian, setSumerian] = useState(null);
   const [leftTextBoxContent, setLeftTextBoxContent] = useState();
   const [rightTextBoxContent, setRightTextBoxContent] = useState();
+
+  function sendToIframe(iframe, msg) {
+    if (iframe === null) return;
+    iframe.contentWindow.postMessage(msg, '*');
+  }
+
+  function togglePlay () {
+    sendToIframe(sumerian, 'play')
+  }
+
+  function togglePause() {
+    sendToIframe(sumerian, 'pause')
+  }
+
+  function toggleResume() {
+    sendToIframe(sumerian, 'resume')
+  }
+
+  function toggleStop() {
+    sendToIframe(sumerian, 'stop')
+  }
+
+  useEffect(() => {
+    setSumerian(document.getElementById('sumerianHost'));
+    console.log('ready to start')
+  }, [])
 
   return (
 
@@ -15,10 +42,10 @@ const ControlPannel = () => {
         <textarea autoFocus size="23" type="text" className="textEntry Alien" value={rightTextBoxContent} onChange={() => {}}></textarea>
       </div>
       <div>
-        <button id="play" className="speechButton">Play</button>
-        <button id="pause" className="speechButton">Pause</button>
-        <button id="resume" className="speechButton">Resume</button>
-        <button id="stop" className="speechButton">Stop</button>
+        <button id="play" className="speechButton" onClick={togglePlay}>Play</button>
+        <button id="pause" className="speechButton" onClick={togglePause}>Pause</button>
+        <button id="resume" className="speechButton" onClick={toggleResume}>Resume</button>
+        <button id="stop" className="speechButton" onClick={toggleStop}>Stop</button>
       </div>
       <div>
         <button id="gestures" className="gestureButton">Generate Gestures</button>
