@@ -37,9 +37,11 @@ const ControlPannel = () => {
     );
 
     // Define the glTF assets that will represent the host
-    const characterFile1 = '/assets/glTF/characters/adult_male/luke/luke.gltf';
+    //const characterFile1 = '/assets/glTF/characters/adult_male/luke/luke.gltf';
+    const characterFile1 = '/assets/glTF/characters/adult_female/grace/grace.gltf';
     const characterFile2 = '/assets/glTF/characters/alien/alien.gltf';
-    const animationPath1 = '/assets/glTF/animations/adult_male';
+    //const animationPath1 = '/assets/glTF/animations/adult_male';
+    const animationPath1 = '/assets/glTF/animations/adult_female';
     const animationPath2 = '/assets/glTF/animations/alien';
     const animationFiles = [
       'stand_idle.glb',
