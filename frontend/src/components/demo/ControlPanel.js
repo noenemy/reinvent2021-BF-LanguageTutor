@@ -74,8 +74,8 @@ const ControlPannel = () => {
       <button className={ host === 'Luke' ? 'tab current' : 'tab'} onClick={() => setHost('Luke')}>Luke</button>
       <button className={ host === 'Alien' ? 'tab current' : 'tab'} onClick={() => setHost('Alien')}>Alien</button>
       <div>
-        <textarea autoFocus style={{display:  host === 'Luke' ? 'block' : 'none'}} size="23" type="text" className="textEntry Luke" value={leftTextBoxContent} onChange={() => {}}></textarea>
-        <textarea autoFocus style={{display: host === 'Alien' ? 'block' : 'none'}} size="23" type="text" className="textEntry Alien" value={rightTextBoxContent} onChange={() => {}}></textarea>
+        <textarea autoFocus style={{display:  host === 'Luke' ? 'block' : 'none'}} size="23" type="text" className="textEntry Luke" value={leftTextBoxContent} onChange={(e) => setLeftTextBoxContent(e.target.value)}></textarea>
+        <textarea autoFocus style={{display: host === 'Alien' ? 'block' : 'none'}} size="23" type="text" className="textEntry Alien" value={rightTextBoxContent} onChange={(e) => setRightTextBoxContent(e.target.value)}></textarea>
       </div>
       <div>
         <button id="play" className="speechButton" onClick={togglePlay}>Play</button>
