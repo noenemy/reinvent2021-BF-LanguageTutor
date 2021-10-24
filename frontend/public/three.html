@@ -1004,8 +1004,19 @@
     <script>
         window.addEventListener('message', receiveMsgFromParent);
 
-        function receiveMsgFromParent(e) {tig
-          console.log('from parent', e.data)
+        function receiveMsgFromParent(e) {
+          dataSwitch(e.data);
+        }
+
+        function dataSwitch(data) {
+          switch (data.type) {
+            case 'play':
+              console.log(data.host)
+              console.log(data.dialog)
+              break;
+            default:
+              console.log(data.type)
+          }
         }
     </script>
   </body>

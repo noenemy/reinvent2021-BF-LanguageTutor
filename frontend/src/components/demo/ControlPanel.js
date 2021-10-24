@@ -3,8 +3,26 @@ import {useEffect, useState,} from "react";
 const ControlPannel = () => {
   const [host, setHost] = useState('Luke');
   const [sumerian, setSumerian] = useState(null);
-  const [leftTextBoxContent, setLeftTextBoxContent] = useState();
-  const [rightTextBoxContent, setRightTextBoxContent] = useState();
+  const [leftTextBoxContent, setLeftTextBoxContent] = useState(`
+        <speak>
+          <amazon:domain name="conversational">
+            Hello, my name is Luke. I used to only be a host inside Amazon Sumerian, but
+            now you can use me in other Javascript runtime environments like three js
+            and Babylon js. Right now,
+            <mark name='{"feature":"PointOfInterestFeature","method":"setTargetByName","args":["chargaze"]}'/>
+            my friend and I here are in three js.
+          </amazon:domain>
+        </speak>
+    `);
+  const [rightTextBoxContent, setRightTextBoxContent] = useState(`
+      <speak>
+        Hi there! As you can see I'm set up to be a host too, although I don't use
+        the same type of skeleton as any of the original Amazon Sumerian hosts. With
+        open source hosts, you can apply host functionality to any custom animated
+        character you'd like. I'm excited to see what kinds of interesting host
+        characters you'll bring to life!
+      </speak>
+    `);
 
   function sendToIframe(iframe, msg) {
     if (iframe === null) return;
@@ -12,19 +30,23 @@ const ControlPannel = () => {
   }
 
   function togglePlay () {
-    sendToIframe(sumerian, 'play')
+    sendToIframe(sumerian, {
+      'type': 'play',
+      'host': host,
+      'dialog': host === 'Luke' ? leftTextBoxContent : rightTextBoxContent
+    })
   }
 
   function togglePause() {
-    sendToIframe(sumerian, 'pause')
+    sendToIframe(sumerian, {type: 'pause'})
   }
 
   function toggleResume() {
-    sendToIframe(sumerian, 'resume')
+    sendToIframe(sumerian, {type: 'resume'})
   }
 
   function toggleStop() {
-    sendToIframe(sumerian, 'stop')
+    sendToIframe(sumerian, {type: 'stop'})
   }
 
   useEffect(() => {
@@ -38,8 +60,8 @@ const ControlPannel = () => {
       <button className={ host === 'Luke' ? 'tab current' : 'tab'} onClick={() => setHost('Luke')}>Luke</button>
       <button className={ host === 'Alien' ? 'tab current' : 'tab'} onClick={() => setHost('Alien')}>Alien</button>
       <div>
-        <textarea autoFocus size="23" type="text" className="textEntry Luke" value={leftTextBoxContent} onChange={() => {}}></textarea>
-        <textarea autoFocus size="23" type="text" className="textEntry Alien" value={rightTextBoxContent} onChange={() => {}}></textarea>
+        <textarea autoFocus style={{display:  host === 'Luke' ? 'block' : 'none'}} size="23" type="text" className="textEntry Luke" value={leftTextBoxContent} onChange={() => {}}></textarea>
+        <textarea autoFocus style={{display: host === 'Alien' ? 'block' : 'none'}} size="23" type="text" className="textEntry Alien" value={rightTextBoxContent} onChange={() => {}}></textarea>
       </div>
       <div>
         <button id="play" className="speechButton" onClick={togglePlay}>Play</button>
