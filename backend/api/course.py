@@ -17,7 +17,7 @@ from util import get_appsync_secret, get_graphql_client
 from werkzeug.exceptions import BadRequest, InternalServerError, Conflict
 
 
-course = Blueprint('course', __name__)
+course = Blueprint('courses', __name__)
 
 api_url = config.APPSYNC_STUDENT_API_URL
 api_key = get_appsync_secret(config.APPSYNC_STUDENT_KEY_SECRET_NAME, config.AWS_REGION)
@@ -50,7 +50,7 @@ def list_courses():
         raise InternalServerError('Something went wrong..')
 
 
-@course.route('course/<id>/lectures', methods=['GET'], strict_slashes=False)
+@course.route('/<id>/lectures', methods=['GET'], strict_slashes=False)
 def list_lectures(id):
 
     app.logger.info(id)
