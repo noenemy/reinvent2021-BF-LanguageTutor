@@ -8,6 +8,7 @@ import Navigator from './Navigator';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
+import queryString from 'query-string';
 
 class ClassroomComponent extends Component {
     static propTypes = {
@@ -29,7 +30,13 @@ class ClassroomComponent extends Component {
     };
 
     componentDidMount() {
-        this.getLectureUnits();
+        const current = decodeURI(window.location.href);
+        const search = current.split("?")[1];
+        const params = new URLSearchParams(search);
+        const courseId = params.get('courseId');
+        const lectureId = params.get('lectureId');
+
+        this.getLectureUnits(courseId, lectureId);
         if (this.state.currentUnit == null) {
             this.setState({ currentUnit: 1 }); // set default unit
         
@@ -102,13 +109,15 @@ class ClassroomComponent extends Component {
     }
 
     async getLectureUnits(courseId=1, lectureId=1) {
+
         this.setState({ loading: true });
-        const backendAPI = `${process.env.REACT_APP_BACKEND_SERVER}/course/lectures/units?courseId=${courseId}&lectureId=${lectureId}`;
+        const backendAPI = `${process.env.REACT_APP_BACKEND_SERVER}/courses/${courseId}/lectures/${lectureId}/units`;
+        console.log(backendAPI);
         const res = await axios.get(backendAPI);        
         this.setState({ loading: false });
 
-        if (res !== null) {
-            this.setState({ units: res.data.units });
+        if (res != null && res.data.listCourses != null) {
+            this.setState({ units: res.data.listCourses.items });
             this.setState({ steps: [1, 2, 3], currentStep: 1 });
             console.log(res.data.units);
         }
@@ -184,10 +193,13 @@ class ClassroomComponent extends Component {
                             <TextbookViewer />
                         </div>
                     </div>
+                    <br /><br />
                     <Navigator onClickNext={this.onClickNext} onClickPrevious={this.onClickPrevious} />
+                    <br /><br />
                     <UnitList onClickUnit={this.onClickUnit} units={this.state.units} loading={this.state.loading} selectedUnit={this.state.currentUnit} />
                 </div>
                 <ToastContainer position="bottom-right" autoClose="3000" />
+                <br /><br />
             </div>
         );
     }
