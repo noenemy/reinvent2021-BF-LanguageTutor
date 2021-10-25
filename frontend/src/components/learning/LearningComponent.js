@@ -7,36 +7,50 @@ import LoadScreen from '../../assets/images/load_screen.png'
 
 class LearningComponent extends Component {
     state = {
-        language: "english",
+        selectedCourseId: "afd21924-34d2-11ec-8030-acde48001122", // Korean 101
+        courses: null,
         lectures: null,
         loading: false
     };
 
     componentDidMount() {
-        this.getLectures();
+        this.getLectures(this.state.selectedCourseId);
     }
 
-    selectLanguage = () => {
-        this.setState({ language: 'english' });
+    selectCourse = (courseId) => {
+        this.setState({ selectedCourseId: courseId });
     }
 
-    async getLectures(courseId=1) {
+    async getCourses() {
         this.setState({ loading: true });
-        const backendAPI = `${process.env.REACT_APP_BACKEND_SERVER}/course/lectures?courseId=${courseId}`;
+        const backendAPI = `${process.env.REACT_APP_BACKEND_SERVER}/courses`;
         const res = await axios.get(backendAPI);        
         this.setState({ loading: false });
 
-        if (res !== null) {
-            this.setState({ lectures: res.data.lectures });
-            console.log(res.data.lectures);
+        if (res != null && res.data.listCourses != null) {
+            this.setState({ courses: res.data.listCourses.items });
         }
         else {
             toast.error("something wrong! try again.");
         }
     }
 
-    enterClassroom = (classId) => {
-        window.location.href = `/classroom?language=${this.state.language}&class=${classId}`;
+    async getLectures(courseId=1) {
+        this.setState({ loading: true });
+        const backendAPI = `${process.env.REACT_APP_BACKEND_SERVER}/courses/${courseId}/lectures`;
+        const res = await axios.get(backendAPI);        
+        this.setState({ loading: false });
+
+        if (res != null && res.data.listCourses != null) {
+            this.setState({ lectures: res.data.listCourses.items });
+        }
+        else {
+            toast.error("something wrong! try again.");
+        }
+    }
+
+    enterClassroom = (lectureId) => {
+        window.location.href = `/classroom?courseId=${this.state.selectedCourseId}&lectureId=${lectureId}`;
     }
 
     render() {
@@ -62,15 +76,15 @@ class LearningComponent extends Component {
                             <br /><br />
     
                             <h2>Which language do you want to learn?</h2>
-                            <Button onClick={this.selectLanguage}><i class="fas fa-globe-asia" />&nbsp;Korean</Button> 
+                            <Button onClick={this.selectCourse}><i class="fas fa-globe-asia" />&nbsp;Korean</Button> 
                             &nbsp;                            
-                            <Button onClick={this.selectLanguage} disabled className="btn-secondary"><i class="fas fa-globe-americas" />&nbsp;English</Button> 
+                            <Button onClick={this.selectCourse} disabled className="btn-secondary"><i class="fas fa-globe-americas" />&nbsp;English</Button> 
                             &nbsp;
-                            <Button onClick={this.selectLanguage} disabled className="btn-secondary"><i class="fas fa-globe-europe" />&nbsp;Spanish</Button> 
+                            <Button onClick={this.selectCourse} disabled className="btn-secondary"><i class="fas fa-globe-europe" />&nbsp;Spanish</Button> 
                             &nbsp; 
-                            <Button onClick={this.selectLanguage} disabled className="btn-secondary"><i class="fas fa-globe-asia" />&nbsp;Chinese</Button> 
+                            <Button onClick={this.selectCourse} disabled className="btn-secondary"><i class="fas fa-globe-asia" />&nbsp;Chinese</Button> 
                             &nbsp;
-                            <Button onClick={this.selectLanguage} disabled className="btn-secondary"><i class="fas fa-globe-asia" />&nbsp;Japanese</Button>     
+                            <Button onClick={this.selectCourse} disabled className="btn-secondary"><i class="fas fa-globe-asia" />&nbsp;Japanese</Button>     
                             <br /><br />
                             <h2>Which subject do you want to learn today?</h2>
 
@@ -80,9 +94,8 @@ class LearningComponent extends Component {
                                 </button>
                                 {this.state.lectures && this.state.lectures.map(( lecture, index) => {
                                     return (
-                                        <button type="button" className="list-group-item list-group-item-action" key={lecture.lecture_id} onClick={this.enterClassroom}>
-                                            <i class="fas fa-book" />&nbsp;
-                                            Lecture { lecture.lecture_id}. { lecture.lecture_title }
+                                        <button type="button" className="list-group-item list-group-item-action" key={lecture.id} onClick={() => this.enterClassroom(lecture.id)}>
+                                            <i class="fas fa-book" />&nbsp;{ lecture.lecture_title }
                                         </button>
                                         );
                                 })}
