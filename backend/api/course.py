@@ -7,86 +7,74 @@
     :copyright: © 2021 written by soonkeunkim (noenemy@gmail.com)
     :license: BSD 3-Clause License, see LICENSE for more details.
 """
+import json
+import config
 from flask import Blueprint, make_response, request, jsonify
 from flask import current_app as app
 from werkzeug.exceptions import BadRequest
-import json
+from gql import gql
+from util import get_appsync_secret, get_graphql_client
+from werkzeug.exceptions import BadRequest, InternalServerError, Conflict
+
 
 course = Blueprint('course', __name__)
+
+api_url = config.APPSYNC_STUDENT_API_URL
+api_key = get_appsync_secret(config.APPSYNC_STUDENT_KEY_SECRET_NAME, config.AWS_REGION)
+client = get_graphql_client(api_url, api_key)
 
 
 @course.route('/', methods=['GET'], strict_slashes=False)
 def list_courses():
 
+    query = gql(
+        """
+        query {
+          listCourses (limit: 10) {
+            items {
+              id
+              type
+              course_title
+            }
+          }
+        }
+        """
+    )
     try:
-        courseList = {
-            "courses": [
-                {
-                    "course_id": "1",
-                    "course_title": "Basic Korean",
-                    "language": "Korean"
-                },
-                {
-                    "course_id": "2",
-                    "course_title": "Basic English",
-                    "language": "English"
+        result = client.execute(query)
+        response = make_response(result, 200)
+        return response
+
+    except Exception as e:
+        app.logger.error('Retrieve student list failed: {0}'.format(e))
+        raise InternalServerError('Something went wrong..')
+
+
+@course.route('course/<id>/lectures', methods=['GET'], strict_slashes=False)
+def list_lectures(id):
+
+    app.logger.info(id)
+
+    query = gql(
+        """
+        query {
+                  listCourses (filter: {type: {contains: "lecture"}}, limit: 10) {
+                    items {
+                      lecture_order
+                      lecture_title
+                    }
+                  }
                 }
-            ]
-        }
-
-        app.logger.info('success!')
-        res = make_response(jsonify(courseList), 200)
-        return res
-
-    except Exception as e:
-        app.logger.error(e)
-        raise BadRequest(e)
-
-
-@course.route('/lectures', methods=['GET'], strict_slashes=False)
-def list_lectures():
-
+        """
+    )
     try:
-        courseId = request.args.get('courseId')
-
-        lectureList = {
-            "lectures": [
-                {
-                    "lecture_id": "1",
-                    "lecture_title": "Lesson 1",
-                    "lecture_length": "5"
-                },
-                {
-                    "lecture_id": "2",
-                    "lecture_title": "Lesson 2",
-                    "lecture_length": "15"
-                },
-                {
-                    "lecture_id": "3",
-                    "lecture_title": "Lesson 3",
-                    "lecture_length": "12"
-                },
-                {
-                    "lecture_id": "4",
-                    "lecture_title": "Lesson 4",
-                    "lecture_length": "17"
-                },
-                {
-                    "lecture_id": "5",
-                    "lecture_title": "Lesson 5",
-                    "lecture_length": "13"
-                },
-
-            ]
-        }
-
-        app.logger.info('success!')
-        res = make_response(jsonify(lectureList), 200)
-        return res
+        result = client.execute(query)
+        response = make_response(result, 200)
+        return response
 
     except Exception as e:
-        app.logger.error(e)
-        raise BadRequest(e)
+        app.logger.error('Retrieve student list failed: {0}'.format(e))
+        raise InternalServerError('Something went wrong..')
 
 
 @course.route('/lectures/units', methods=['GET'], strict_slashes=False)
