@@ -30,7 +30,7 @@ def list_courses():
     query = gql(
         """
         query {
-          listCourses (limit: 10) {
+          listCourses (filter: {type: {contains: "course"}}, limit: 10) {
             items {
               id
               type
