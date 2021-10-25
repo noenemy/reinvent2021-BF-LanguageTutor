@@ -78,42 +78,31 @@ def list_lectures(id):
         raise InternalServerError('Something went wrong..')
 
 
-@course.route('/lectures/units', methods=['GET'], strict_slashes=False)
-def list_units():
+@course.route('/<id>/lectures/<lec_id>/units', methods=['GET'], strict_slashes=False)
+def list_units(id, lec_id):
 
+
+    app.logger.info(id)
+    app.logger.info(lec_id)
+
+    query = gql(
+        """
+        query {
+                  listCourses (filter: {type: {contains: "unit"}}, limit: 100) {
+                    items {
+                      id
+                      unit_order
+                      unit_title
+                    }
+                  }
+                }
+        """
+    )
     try:
-        courseId = request.args.get('courseId')
-        lectureId = request.args.get('lectureId')
-
-        unitList = {
-            "units": [
-                {
-                    "unit_id": "1",
-                    "unit_title": "1. Introduction"
-                },
-                {
-                    "unit_id": "2",
-                    "unit_title": "2. Expressions"
-                },
-                {
-                    "unit_id": "3",
-                    "unit_title": "3. Vocabulary"
-                },
-                {
-                    "unit_id": "4",
-                    "unit_title": "4. Exercises"
-                },
-                 {
-                    "unit_id": "5",
-                    "unit_title": "5. Summary"
-                }                             
-            ]
-        }
-
-        app.logger.info('success!')
-        res = make_response(jsonify(unitList), 200)
-        return res
+        result = client.execute(query)
+        response = make_response(result, 200)
+        return response
 
     except Exception as e:
-        app.logger.error(e)
-        raise BadRequest(e)
+        app.logger.error('Retrieve student list failed: {0}'.format(e))
+        raise InternalServerError('Something went wrong..')
