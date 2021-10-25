@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import UnitList from './UnitList';
 import TitleBar from './TitleBar';
-import TutorViewer from './TutorViewer';
-import TextbookViewer from './TextbookViewer';
+import Sumerian from './Sumerian';
+import Whiteboard from './Whiteboard';
 import Navigator from './Navigator';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -29,7 +29,13 @@ class ClassroomComponent extends Component {
     };
 
     componentDidMount() {
-        this.getLectureUnits();
+        const current = decodeURI(window.location.href);
+        const search = current.split("?")[1];
+        const params = new URLSearchParams(search);
+        const courseId = params.get('courseId');
+        const lectureId = params.get('lectureId');
+
+        this.getLectureUnits(courseId, lectureId);
         if (this.state.currentUnit == null) {
             this.setState({ currentUnit: 1 }); // set default unit
         
@@ -102,13 +108,15 @@ class ClassroomComponent extends Component {
     }
 
     async getLectureUnits(courseId=1, lectureId=1) {
+
         this.setState({ loading: true });
-        const backendAPI = `${process.env.REACT_APP_BACKEND_SERVER}/course/lectures/units?courseId=${courseId}&lectureId=${lectureId}`;
+        const backendAPI = `${process.env.REACT_APP_BACKEND_SERVER}/courses/${courseId}/lectures/${lectureId}/units`;
+        console.log(backendAPI);
         const res = await axios.get(backendAPI);        
         this.setState({ loading: false });
 
-        if (res !== null) {
-            this.setState({ units: res.data.units });
+        if (res != null && res.data.listCourses != null) {
+            this.setState({ units: res.data.listCourses.items });
             this.setState({ steps: [1, 2, 3], currentStep: 1 });
             console.log(res.data.units);
         }
@@ -144,6 +152,8 @@ class ClassroomComponent extends Component {
         }      
     }
 
+    onCorrect
+
     onClickPrevious = () => {
         // 현재 Unit에서 이전 Step이 있으면 -> 이전 Step으로 이동
         // 현재 Unit에 이전 Step이 없으면 -> 이전 Unit으로 이동
@@ -177,17 +187,20 @@ class ClassroomComponent extends Component {
                     <div className="row"><br /></div>
                     <div className="row">
                         <div className="col-6">
-                            <TutorViewer />
+                            <Sumerian />
                         </div>
                         <div className="col-6">
                             <div>{this.state.steps && this.state.currentUnitTitle + ' ' + this.state.currentStep + '/' + this.state.steps.length} </div>
-                            <TextbookViewer />
+                            <Whiteboard type={"textbook"} />
                         </div>
                     </div>
+                    <br /><br />
                     <Navigator onClickNext={this.onClickNext} onClickPrevious={this.onClickPrevious} />
+                    <br /><br />
                     <UnitList onClickUnit={this.onClickUnit} units={this.state.units} loading={this.state.loading} selectedUnit={this.state.currentUnit} />
                 </div>
                 <ToastContainer position="bottom-right" autoClose="3000" />
+                <br /><br />
             </div>
         );
     }

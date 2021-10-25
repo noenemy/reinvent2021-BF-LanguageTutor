@@ -12,7 +12,7 @@ class UnitList extends Component {
                 {this.props.units && this.props.units.map(( unit, index) => {
                     return (
                         <li className={ this.props.selectedUnit===index+1 ? 'list-group-item flex-fill list-group-item-success' : 'list-group-item flex-fill' }
-                            key={unit.unit_id} value={unit.unit_id} onClick={this.props.onClickUnit}>
+                            key={unit.id} value={index+1} onClick={this.props.onClickUnit}>
                             { unit.unit_title }
                         </li>
                         );
