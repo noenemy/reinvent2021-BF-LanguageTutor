@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import UnitList from './UnitList';
 import TitleBar from './TitleBar';
-import TutorViewer from './TutorViewer';
-import TextbookViewer from './TextbookViewer';
+import Sumerian from './Sumerian';
+import Whiteboard from './Whiteboard';
 import Navigator from './Navigator';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -186,11 +186,11 @@ class ClassroomComponent extends Component {
                     <div className="row"><br /></div>
                     <div className="row">
                         <div className="col-6">
-                            <TutorViewer />
+                            <Sumerian />
                         </div>
                         <div className="col-6">
                             <div>{this.state.steps && this.state.currentUnitTitle + ' ' + this.state.currentStep + '/' + this.state.steps.length} </div>
-                            <TextbookViewer />
+                            <Whiteboard />
                         </div>
                     </div>
                     <br /><br />
