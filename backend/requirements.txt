@@ -14,3 +14,4 @@ pytest-cov==2.12.1
 requests-aws4auth==1.1.1
 aiohttp==3.7.4.post0
 pillow==8.3.2
+pynamodb==5.1.0
