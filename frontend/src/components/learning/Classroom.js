@@ -8,7 +8,6 @@ import Navigator from './Navigator';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
-import queryString from 'query-string';
 
 class ClassroomComponent extends Component {
     static propTypes = {
@@ -153,6 +152,8 @@ class ClassroomComponent extends Component {
         }      
     }
 
+    onCorrect
+
     onClickPrevious = () => {
         // 현재 Unit에서 이전 Step이 있으면 -> 이전 Step으로 이동
         // 현재 Unit에 이전 Step이 없으면 -> 이전 Unit으로 이동
@@ -190,7 +191,7 @@ class ClassroomComponent extends Component {
                         </div>
                         <div className="col-6">
                             <div>{this.state.steps && this.state.currentUnitTitle + ' ' + this.state.currentStep + '/' + this.state.steps.length} </div>
-                            <Whiteboard />
+                            <Whiteboard type={"textbook"} />
                         </div>
                     </div>
                     <br /><br />

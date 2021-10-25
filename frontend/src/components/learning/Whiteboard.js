@@ -5,8 +5,11 @@ class Whiteboard extends Component {
     render() {
         return (
             <div>
-                <Vocabulary />
-
+                { this.props.type === "textbook" && <Textbook /> }
+                { this.props.type === "vocabulary" && <Vocabulary /> }
+                { this.props.type === "transcribe" && <Transcribe /> }
+                { this.props.type === "rekognition" && <Rekognition /> }
+                { this.props.type === "textract" && <Textract /> }
             </div>
         );
     }
@@ -49,6 +52,30 @@ function Vocabulary(){
             <br /><br />
 
 
+        </div>
+    )
+}
+
+function Transcribe(){
+    return(
+        <div>
+            <h1>Transcribe</h1>
+        </div>
+    )
+}
+
+function Rekognition(){
+    return(
+        <div>
+            <h1>Rekognition</h1>
+        </div>
+    )
+}
+
+function Textract(){
+    return(
+        <div>
+            <h1>Textract</h1>
         </div>
     )
 }
