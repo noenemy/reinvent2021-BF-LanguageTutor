@@ -60,6 +60,7 @@ def list_lectures(id):
         query {
                   listCourses (filter: {type: {contains: "lecture"}}, limit: 10) {
                     items {
+                      id
                       lecture_order
                       lecture_title
                     }
