@@ -20,7 +20,7 @@ class LeaderBoardComponent extends Component {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-3 text-right mr-2">
-                            <img src={Trophy} />
+                            <img src={Trophy} alt="trophy" />
                         </div>
                 
                         <div className="col-7 mt-3">
@@ -52,7 +52,7 @@ class LeaderBoardComponent extends Component {
                 <br />
             
                 <div id="footer" class="footer container navbar-fixed-bottom text-right">
-                    <img src={LeaderboardFooter} height="150" width="800" />
+                    <img src={LeaderboardFooter} alt="footer" height="150" width="800" />
                 </div>
             </div>
         </div>

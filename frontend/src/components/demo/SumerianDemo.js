@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import React from 'react';
+import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LoadScreen from "./LoadScreen";
 import ControlPanel from "./ControlPanel";

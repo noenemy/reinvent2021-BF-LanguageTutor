@@ -4,7 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import mic from 'microphone-stream';
 import { pcmEncode, downsampleBuffer } from '../../util/audioUtils.js';
-import { EventStreamMarshaller, Message } from '@aws-sdk/eventstream-marshaller';
+import { EventStreamMarshaller } from '@aws-sdk/eventstream-marshaller';
 import { toUtf8, fromUtf8 } from '@aws-sdk/util-utf8-node';
 
 class TranscribeDemo extends Component {
@@ -122,6 +122,9 @@ class TranscribeDemo extends Component {
 
                     if (!results[0].IsPartial) {
                         transcription += transcript + '\n';
+                    }
+                    else {
+                        console.log("isPartial is false. " + transcription);
                     }
                 }
             }

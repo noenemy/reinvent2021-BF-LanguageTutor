@@ -54,7 +54,7 @@ class HomeComponent extends Component {
                         <h2 className="text-center font-weight-bold my-3">Project Abstract</h2>
                         <div className="row text-center">
                             <div>
-                                <h4></h4>
+                                <h4>&nbsp;</h4>
                                 <h4>Boost your language learning with AWS AI/ML services.</h4>
                                 <h4>AWS AI / ML services are the perfect technologies to help users read, write, and speak foreign languages.</h4>
                                 <br />
@@ -106,7 +106,7 @@ class HomeComponent extends Component {
                                 <div data-aos="fade-right" data-aos-duration="1000" data-aos-once="true" class="col-md-6">
                                     <h2 className="font-weight-bold">Amazon Rekognition</h2>
                                     <h4 className="my-4">With Amazon Rekognition, you can identify thousands of objects (e.g. bike, telephone, building) and scenes (e.g. parking lot, beach, city). When analyzing video, you can also identify specific activities happening in the frame, such as "delivering a package" or "playing soccer".</h4>
-                                    <a href="https://aws.amazon.com/rekognition/" target="_blank" class="btn btn-primary btn-lg">
+                                    <a href="https://aws.amazon.com/rekognition/" target="_blank" rel="noreferrer" class="btn btn-primary btn-lg">
                                     <i class="fas fa-info-circle" />&nbsp; Learn More</a>
                                 </div>
                                 <div data-aos="fade-left" data-aos-duration="1000" data-aos-once="true" class="col-md-6 align-self-center">

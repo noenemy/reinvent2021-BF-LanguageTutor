@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import UnitList from './UnitList';
 import TitleBar from './TitleBar';
 import Sumerian from './Sumerian';
@@ -11,7 +10,6 @@ import axios from "axios";
 
 class ClassroomComponent extends Component {
     static propTypes = {
-        language: "English",
         class: "Basic",
         unit: "1", 
         step: "1"
@@ -39,7 +37,7 @@ class ClassroomComponent extends Component {
         if (this.state.currentUnit == null) {
             this.setState({ currentUnit: 1 }); // set default unit
         
-            const id = window.addEventListener('message', this.handleChildMessage);
+            window.addEventListener('message', this.handleChildMessage);
         }
     }
 
@@ -117,7 +115,7 @@ class ClassroomComponent extends Component {
 
         if (res != null && res.data.listCourses != null) {
             this.setState({ units: res.data.listCourses.items });
-            this.setState({ steps: [1, 2, 3], currentStep: 1 });
+            //this.setState({ steps: [1, 2, 3], currentStep: 1 });
             console.log(res.data.units);
         }
         else {
@@ -126,12 +124,25 @@ class ClassroomComponent extends Component {
     }
 
     async getUnitSteps(courseId=1, lectureId=1, unitId=1) {
-        // TODO: get lecture steps here!
+
+        this.setState({ loading: true });
+        const backendAPI = `${process.env.REACT_APP_BACKEND_SERVER}/courses/${courseId}/lectures/${lectureId}/units/${unitId}`;
+        console.log(backendAPI);
+        const res = await axios.get(backendAPI);        
+        this.setState({ loading: false });
+
+        if (res != null && res.data.steps != null) {
+            this.setState({ steps: res.data.steps, currentStep: res.data.steps[0].step_id });
+            console.log(res.data.steps);
+        }
+        else {
+            toast.error("something wrong! try again.");
+        }
     }
 
     selectCurrentUnit = (unit_id) => {
         this.setState({ currentUnit: unit_id });
-        this.setState({ steps: [1, 2, 3, 4], currentStep: 1 });
+        this.getUnitSteps(this.state.courseId, this.state.lectureId, unit_id);
     }
 
     onClickNext = () => {
