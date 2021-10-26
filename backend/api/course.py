@@ -4,8 +4,10 @@
     :created date: 10/22/21
     :description:
     :copyright: © 2021 written by soonkeunkim (noenemy@gmail.com)
+    :copyright: © 2021 updated by sungshik (liks79@gmail.com)
     :license: BSD 3-Clause License, see LICENSE for more details.
 """
+import json
 from flask import current_app as app
 from flask import Blueprint, make_response, jsonify
 from werkzeug.exceptions import InternalServerError
@@ -61,8 +63,9 @@ def list_steps(req_id, lec_id, unit_id):
 
     try:
         steps = CourseModel.get(unit_id, 'unit')
-        response = make_response(steps.steps, 200)
-        response.headers['Content-Type'] = 'application/json; text/xml; charset=utf-8'
+        json_ = json.loads(steps.steps)
+
+        response = make_response(json_, 200)
         return response
 
     except Exception as e:
