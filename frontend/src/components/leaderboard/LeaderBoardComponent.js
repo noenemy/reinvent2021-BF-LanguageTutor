@@ -51,7 +51,7 @@ class LeaderBoardComponent extends Component {
             
                 <br />
             
-                <div id="footer" class="footer container navbar-fixed-bottom text-right">
+                <div id="footer" className="footer container navbar-fixed-bottom text-right">
                     <img src={LeaderboardFooter} alt="footer" height="150" width="800" />
                 </div>
             </div>

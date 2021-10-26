@@ -9,11 +9,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 
 class ClassroomComponent extends Component {
-    static propTypes = {
-        class: "Basic",
-        unit: "1", 
-        step: "1"
-    }
 
     state = {
         units: null,
