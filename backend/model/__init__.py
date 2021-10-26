@@ -103,6 +103,5 @@ def unit_deserialize(unit):
     return unit_json
 
 
-
 if not CourseModel.exists():
     CourseModel.create_table(read_capacity_units=10, write_capacity_units=10, wait=True)
