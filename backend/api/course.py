@@ -62,6 +62,7 @@ def list_steps(req_id, lec_id, unit_id):
     try:
         steps = CourseModel.get(unit_id, 'unit')
         response = make_response(steps.steps, 200)
+        response.headers['Content-Type'] = 'application/json; text/xml; charset=utf-8'
         return response
 
     except Exception as e:
