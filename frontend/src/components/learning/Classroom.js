@@ -11,8 +11,10 @@ import axios from "axios";
 class ClassroomComponent extends Component {
 
     state = {
+        courseId: null,
+        lectureId: null,
         units: null,
-        currentUnit: null,
+        currentUnitIndex: null,
         currentUnitTitle: null,
         steps: null,
         currentStep: null,
@@ -27,13 +29,15 @@ class ClassroomComponent extends Component {
         const params = new URLSearchParams(search);
         const courseId = params.get('courseId');
         const lectureId = params.get('lectureId');
+        this.setState({ courseId: courseId });
+        this.setState({ lectureId: lectureId }, () => {
 
-        this.getLectureUnits(courseId, lectureId);
-        if (this.state.currentUnit == null) {
-            this.setState({ currentUnit: 1 }); // set default unit
-        
-            window.addEventListener('message', this.handleChildMessage);
-        }
+            this.getLectureUnits(courseId, lectureId);
+            if (this.state.currentUnitIndex == null) {
+                window.addEventListener('message', this.handleChildMessage);
+            }
+        });
+
     }
 
     componentWillUnmount() {
@@ -104,14 +108,14 @@ class ClassroomComponent extends Component {
 
         this.setState({ loading: true });
         const backendAPI = `${process.env.REACT_APP_BACKEND_SERVER}/courses/${courseId}/lectures/${lectureId}/units`;
-        console.log(backendAPI);
+        //console.log(backendAPI);
         const res = await axios.get(backendAPI);        
         this.setState({ loading: false });
 
         if (res != null && res.data.listCourses != null) {
-            this.setState({ units: res.data.listCourses.items });
-            //this.setState({ steps: [1, 2, 3], currentStep: 1 });
-            console.log(res.data.units);
+            this.setState({ units: res.data.listCourses.items }, () => {
+                this.selectCurrentUnit(1); // set default unit
+            });
         }
         else {
             toast.error("something wrong! try again.");
@@ -121,23 +125,34 @@ class ClassroomComponent extends Component {
     async getUnitSteps(courseId=1, lectureId=1, unitId=1) {
 
         this.setState({ loading: true });
-        const backendAPI = `${process.env.REACT_APP_BACKEND_SERVER}/courses/${courseId}/lectures/${lectureId}/units/${unitId}`;
+        const backendAPI = `${process.env.REACT_APP_BACKEND_SERVER}/courses/${courseId}/lectures/${lectureId}/units/${unitId}/steps`;
         console.log(backendAPI);
         const res = await axios.get(backendAPI);        
         this.setState({ loading: false });
 
         if (res != null && res.data.steps != null) {
             this.setState({ steps: res.data.steps, currentStep: res.data.steps[0].step_id });
-            console.log(res.data.steps);
         }
         else {
             toast.error("something wrong! try again.");
         }
     }
 
-    selectCurrentUnit = (unit_id) => {
-        this.setState({ currentUnit: unit_id });
-        this.getUnitSteps(this.state.courseId, this.state.lectureId, unit_id);
+    selectCurrentUnit = (unit_order) => {
+
+        var unitTitle = "";
+        var unitId = "";
+        for (var i in this.state.units) {
+            if (this.state.units[i].unit_order === unit_order) {
+                unitId = this.state.units[i].id;
+                unitTitle = this.state.units[i].unit_title;
+                break;
+            }
+        }
+
+        this.setState({ currentUnitIndex: unit_order });
+        this.setState({ currentUnitTitle: unitTitle });
+        this.getUnitSteps(this.state.courseId, this.state.lectureId, unitId);
     }
 
     onClickNext = () => {
@@ -147,18 +162,16 @@ class ClassroomComponent extends Component {
         toast.info("onClickNext");
 
         if  (this.state.currentStep === this.state.steps.length) {
-            if (this.state.currentUnit === this.state.units.length) {
+            if (this.state.currentUnitIndex === this.state.units.length) {
                 toast.info("Nothing to do.");
             } else {
                 toast.info("need to go to the next unit.");
-                this.selectCurrentUnit(this.state.currentUnit + 1);
+                this.selectCurrentUnit(this.state.currentUnitIndex + 1);
             }
         } else {
             this.setState({ currentStep : this.state.currentStep + 1 }); 
         }      
     }
-
-    onCorrect
 
     onClickPrevious = () => {
         // 현재 Unit에서 이전 Step이 있으면 -> 이전 Step으로 이동
@@ -170,7 +183,7 @@ class ClassroomComponent extends Component {
                 toast.info("Nothing to do.");
             } else {
                 toast.info("need to go to the previous unit.");
-                this.selectCurrentUnit(this.state.currentUnit - 1);
+                this.selectCurrentUnit(this.state.currentUnitIndex - 1);
             }
         } else {
             this.setState({ currentStep : this.state.currentStep - 1 }); 
@@ -180,9 +193,7 @@ class ClassroomComponent extends Component {
     onClickUnit = (event) => {
         // TODO: need to get which unit is clicked
         toast.info("onClickUnit:" + event.target.value);
-        this.setState({ currentUnit: event.target.value });
-        const unitTitle = this.state.units[event.target.value-1].unit_title;
-        this.setState({ currentUnitTitle: unitTitle });
+        this.selectCurrentUnit(event.target.value);
     }
 
     render() {
@@ -203,7 +214,7 @@ class ClassroomComponent extends Component {
                     <br /><br />
                     <Navigator onClickNext={this.onClickNext} onClickPrevious={this.onClickPrevious} />
                     <br /><br />
-                    <UnitList onClickUnit={this.onClickUnit} units={this.state.units} loading={this.state.loading} selectedUnit={this.state.currentUnit} />
+                    <UnitList onClickUnit={this.onClickUnit} units={this.state.units} loading={this.state.loading} currentUnitIndex={this.state.currentUnitIndex} />
                 </div>
                 <ToastContainer position="bottom-right" autoClose="3000" />
                 <br /><br />
