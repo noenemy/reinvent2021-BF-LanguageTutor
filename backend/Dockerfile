@@ -11,9 +11,9 @@ RUN apt-get -y update \
 
 RUN mkdir /app
 WORKDIR /app
-ADD requirements.txt /app
+COPY requirements.txt /app
 RUN pip3 install -r requirements.txt --no-cache-dir
-ADD . /app
+COPY . /app
 EXPOSE 80
 RUN chmod +x ./entrypoint.sh
 #CMD python3 -m http.server 8000
