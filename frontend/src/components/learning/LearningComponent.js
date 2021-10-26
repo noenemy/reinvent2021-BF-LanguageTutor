@@ -7,7 +7,7 @@ import LoadScreen from '../../assets/images/load_screen.png'
 
 class LearningComponent extends Component {
     state = {
-        selectedCourseId: "afd21924-34d2-11ec-8030-acde48001122", // Korean 101
+        selectedCourseId: "ef717ea27fc4426b99e484343a493e5a", // Korean 101
         courses: null,
         lectures: null,
         loading: false
