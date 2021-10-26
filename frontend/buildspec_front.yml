@@ -8,6 +8,9 @@ phases:
       - echo REACT_APP_BACKEND_SERVER=${REACT_APP_BACKEND_SERVER} > .env
       - echo REACT_APP_COGNITO_POOL_ID=${REACT_APP_COGNITO_POOL_ID} >> .env
       - cat .env
+      - echo "export const TARGET_REGION = 'us-west-2';" > ./public/thres-js-config.js
+      - echo "export const POOL_ID = 'us-west-2:82ab18cc-6daf-44f4-b2ca-6c31c8766c9d';" >> ./public/thres-js-config.js
+      - cat ./public/thres-js-config.js
   build:
     commands:
       # Synthesizes the CDK App and puts the resulting artifacts into `dist`

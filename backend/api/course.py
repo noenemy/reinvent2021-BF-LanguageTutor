@@ -63,16 +63,10 @@ def list_steps(req_id, lec_id, unit_id):
 
     try:
         steps = CourseModel.get(unit_id, 'unit')
-
         json_ = json.loads(steps.steps)
-
-        # response = make_response(steps.steps, 200)
-        # response.headers['Content-Type'] = 'application/json; text/xml; charset=utf-8'
-        # return response
 
         response = make_response(json_, 200)
         return response
-
 
     except Exception as e:
         app.logger.error('Retrieve unit list failed: {0}'.format(e))
