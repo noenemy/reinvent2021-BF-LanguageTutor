@@ -125,7 +125,9 @@ class ClassroomComponent extends Component {
 
         console.log(res.data);
         if (res != null && res.data.steps != null) {
-            this.setState({ steps: res.data.steps, currentStep: 0 });
+            this.setState({ steps: res.data.steps, currentStep: 0 }, ()=> {
+                this.startLearning();
+            });
         }
         else {
             toast.error("something wrong! try again.");
@@ -163,7 +165,9 @@ class ClassroomComponent extends Component {
                 this.selectCurrentUnit(this.state.currentUnitIndex + 1);
             }
         } else {
-            this.setState({ currentStep : this.state.currentStep + 1 }); 
+            this.setState({ currentStep : this.state.currentStep + 1 }, () => {
+                this.startLearning();
+            }); 
         }      
     }
 
@@ -180,7 +184,9 @@ class ClassroomComponent extends Component {
                 this.selectCurrentUnit(this.state.currentUnitIndex - 1);
             }
         } else {
-            this.setState({ currentStep : this.state.currentStep - 1 }); 
+            this.setState({ currentStep : this.state.currentStep - 1 }, () => {
+                this.startLearning();
+            }); 
         }
     }
 
