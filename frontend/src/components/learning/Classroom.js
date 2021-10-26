@@ -56,30 +56,23 @@ class ClassroomComponent extends Component {
         const sleep = (milliseconds) => {
             return new Promise(resolve => setTimeout(resolve, milliseconds))
         }
-            
-        // TODO : 첫번째 강의를 시작해본다.
-        this.speakTeacher(`<speak><amazon:domain name="news"><prosody rate="110%"><amazon:effect name="drc">Hello, My name is Joanna. nice to meet you!</amazon:effect></prosody></amazon:domain></speak>`);
-        await sleep(3100);
-        this.speakGuest(`<speak><prosody rate="125%" pitch ="10%"><amazon:effect vocal-tract-length="+10%"><amazon:effect name="drc">
-        <amazon:breath duration="medium" volume="x-loud"/>안녕하세요! 저는 한국어 선생님<break time="50ms"/>
-        <amazon:breath duration="medium" volume="soft"/>
-        <emphasis level="moderate">김서현이에요! </emphasis>
-        <amazon:breath duration="medium" volume="soft"/>
-        만나서 반갑습니다!</amazon:effect></amazon:effect></prosody></speak>`);
-        await sleep(6500);
-        this.speakTeacher(`<speak><amazon:domain name="news"><prosody rate="110%"><amazon:effect name="drc">Do you wanna learn Korean language fun?
-        We will bring you an exciting Korean lesson.</amazon:effect></prosody></amazon:domain></speak>`);
-        await sleep(5000);
-        this.speakGuest(`<speak>
-        <prosody rate="125%" pitch ="10%"><amazon:effect vocal-tract-length="+10%"><amazon:effect name="drc">
-        <amazon:breath duration="medium" volume="soft"/>
-        <p><prosody rate="120%"> 이제 저희와 함께?</prosody></p> <break time="10ms"/> 한국어를 배워봐요?
-        <break time="100ms"/>
-        <amazon:breath duration="medium" volume="soft"/>
-        </amazon:effect></amazon:effect></prosody>
-        </speak>`);
-        await sleep(5200);
-        this.speakTeacher(`<speak><amazon:domain name="news"><prosody rate="110%"><amazon:effect name="drc">Let's get start it.</amazon:effect></prosody></amazon:domain></speak>`);
+
+        //console.log(this.state.steps);
+        //console.log(this.state.currentStep);
+        const step = this.state.steps[this.state.currentStep];
+        //console.log('current step:' + step);
+        for (var i in step.dialogs) {
+            const dialog = step.dialogs[i].dialog;
+            if (step.dialogs[i].host == "1") {
+                console.log("speak Teacher" + dialog);
+                this.speakTeacher(dialog);
+            } else if (step.dialogs[i].host == "2") {
+                console.log("speak guest" + dialog);
+                this.speakGuest(dialog);
+            }
+            await sleep(step.dialogs[i].time);
+        }
+
     }
     
     speakTeacher(message) {
@@ -130,8 +123,9 @@ class ClassroomComponent extends Component {
         const res = await axios.get(backendAPI);        
         this.setState({ loading: false });
 
+        console.log(res.data);
         if (res != null && res.data.steps != null) {
-            this.setState({ steps: res.data.steps, currentStep: res.data.steps[0].step_id });
+            this.setState({ steps: res.data.steps, currentStep: 0 });
         }
         else {
             toast.error("something wrong! try again.");
