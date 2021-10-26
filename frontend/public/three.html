@@ -1020,13 +1020,13 @@
           function dataSwitch(data) {
             switch (data.type) {
               case 'play':
-                console.log(data.host);
-                console.log(data.dialog);
-                console.log(speakers);
+                //console.log(data.host);
+                //console.log(data.dialog);
+                //console.log(speakers);
                 const {name, host} = getHost(data.host);
 
-                console.log(name);
-                console.log(host);
+                //console.log(name);
+                //console.log(host);
                 host.TextToSpeechFeature['play'](data.dialog);
                 break;
               default:

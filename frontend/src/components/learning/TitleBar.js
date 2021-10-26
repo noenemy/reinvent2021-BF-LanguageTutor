@@ -5,7 +5,7 @@ class TitleBar extends Component {
         return (
             <div className="row">
                 <div className="col-3">
-                    <i class="fas fa-book" />
+                    <i className="fas fa-book" />
                     <a href="/learning" onClick={this.goLearningHome}>My Learning</a>
                     /&nbsp;&nbsp;{this.props.className}
                 </div>

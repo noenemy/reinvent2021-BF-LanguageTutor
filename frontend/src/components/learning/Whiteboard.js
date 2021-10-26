@@ -40,7 +40,7 @@ function Vocabulary(){
 
             <div className="row align-items-center" >
                 <div className="col-6">
-                    <img src="/assets/images/apple.png" />
+                    <img src="/assets/images/apple.png" alt="apple" />
                 </div>
                 <div className="col-6">
                     <h2 className="text-primary">사과</h2>
