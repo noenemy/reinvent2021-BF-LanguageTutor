@@ -44,6 +44,22 @@ def list_lectures(req_id):
         raise InternalServerError('Something went wrong..')
 
 
+@course.route('/<req_id>/lectures/<lec_id>', methods=['GET'], strict_slashes=False)
+def get_lecture(req_id, lec_id):
+
+    try:
+        lecture = CourseModel.get(lec_id, 'lecture')
+        response = make_response(jsonify({'listCourses': {'items': lecture_deserialize(lecture)}}), 200)
+        return response
+
+    except Exception as e:
+        app.logger.error('Retrieve lecture item failed: {0}'.format(e))
+        raise InternalServerError('Something went wrong..')
+
+
+
+
+
 @course.route('/<req_id>/lectures/<lec_id>/units', methods=['GET'], strict_slashes=False)
 def list_units(req_id, lec_id):
 
