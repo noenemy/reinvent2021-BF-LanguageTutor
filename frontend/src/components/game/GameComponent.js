@@ -9,6 +9,7 @@ const GameComponent = () => {
                 </div>
                 <div class="col-8">
                     <div id="section_2">
+                    <br />
                     <h1 className="text-black">How to play game</h1>
 
                     <div className="card-group">
@@ -39,8 +40,9 @@ const GameComponent = () => {
                 </div>
             </div>
             <div className="row text-center">
-                <br /><br /><br /><br /><br /><br />
+                <div><br /><br /><br /></div>
                 <h3>Will be migrated soon.</h3>
+                <div><br /><br /><br /></div>
             </div>
         </div>
       );
