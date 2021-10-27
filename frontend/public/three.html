@@ -347,10 +347,12 @@
         // Set up each host to look at the other when the other speaks and at the
         // camera when speech ends
         const onHost1StartSpeech = () => {
-          host2.PointOfInterestFeature.setTarget(lookTracker1);
+          //host2.PointOfInterestFeature.setTarget(lookTracker1);
+          host2.PointOfInterestFeature.setTarget(camera);
         };
         const onHost2StartSpeech = () => {
-          host1.PointOfInterestFeature.setTarget(lookTracker2);
+          //host1.PointOfInterestFeature.setTarget(lookTracker2);
+          host1.PointOfInterestFeature.setTarget(camera);
         };
         const onStopSpeech = () => {
           host1.PointOfInterestFeature.setTarget(camera);
