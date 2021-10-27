@@ -58,8 +58,10 @@ class ClassroomComponent extends Component {
             return new Promise(resolve => setTimeout(resolve, milliseconds))
         }
 
-        //console.log(this.state.steps);
-        //console.log(this.state.currentStep);
+        // stop previous speaking 
+        this.muteTeacher();
+        this.muteGuest();
+
         const step = this.state.steps[this.state.currentStep];
         //console.log('current step content:' + step.content);
         this.setState({ content: step.content });
@@ -76,7 +78,29 @@ class ClassroomComponent extends Component {
         }
 
     }
-    
+
+    muteTeacher() {
+        const msg = {
+            'type': 'stop',
+            'host': 'Alien',
+            'dialog': ''
+        };
+
+        const sumerian = document.getElementById('sumerianHost');
+        sumerian.contentWindow.postMessage(msg, '*');
+    }
+
+    muteGuest() {
+        const msg = {
+            'type': 'stop',
+            'host': 'Luke',
+            'dialog': ''
+        };
+
+        const sumerian = document.getElementById('sumerianHost');
+        sumerian.contentWindow.postMessage(msg, '*');
+    }
+
     speakTeacher(message) {
         const msg = {
             'type': 'play',

@@ -1018,16 +1018,13 @@
 
           // doing something by type
           function dataSwitch(data) {
+            const {name, host} = getHost(data.host);
             switch (data.type) {
               case 'play':
-                //console.log(data.host);
-                //console.log(data.dialog);
-                //console.log(speakers);
-                const {name, host} = getHost(data.host);
-
-                //console.log(name);
-                //console.log(host);
                 host.TextToSpeechFeature['play'](data.dialog);
+                break;
+              case 'stop':
+                host.TextToSpeechFeature['stop'](data.dialog);
                 break;
               default:
                 console.log(data.type);
