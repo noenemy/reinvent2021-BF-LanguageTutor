@@ -39,32 +39,26 @@ function Textbook(props){
     )
 }
 
-function Test(){
-    return(
-        <div>
-
-            <div className="row align-items-center" >
-                <div className="col-6">
-                    <img src="/assets/images/apple.png" alt="apple" />
-                </div>
-                <div className="col-6">
-                    <h2 className="text-primary">사과</h2>
-                    <h4 className="text-muted">apple</h4>
-                </div>
-            </div>
-
-
-            <br /><br />
-
-
-        </div>
-    )
-}
-
 function Transcribe(){
     return(
         <div>
-            <h1>Transcribe</h1>
+            <div>
+                <br />
+                <h6><i className="fas fa-question-circle"></i> &nbsp; 
+                Listen and repeat</h6>
+            </div>
+                <div className="text-center">
+                <br />
+                <div className='row text-center'>
+                    <h1 className='text-primary'>안녕하세요.</h1>
+                    <h4 className='text-muted'>[annyeonghaseyo]</h4>
+                    <h4 className='text-muted'>Hello</h4>
+                </div>
+                <br /><br />
+                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="">
+                    <h1><i className="fas fa-microphone"></i></h1>
+                </button>
+            </div>
         </div>
     )
 }
