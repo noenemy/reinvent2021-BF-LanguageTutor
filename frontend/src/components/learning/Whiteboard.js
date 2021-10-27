@@ -30,9 +30,10 @@ class Whiteboard extends Component {
 }
 
 function Textbook(props){
+    const RAWHTML = props.content;
     return(
         <div>
-            {props.content}
+            <div dangerouslySetInnerHTML={{ __html: RAWHTML.replace(/\n/g, '<br />')}} />
         </div>
     )
 }
