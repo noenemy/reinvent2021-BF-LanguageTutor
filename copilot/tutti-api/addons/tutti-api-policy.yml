@@ -45,6 +45,7 @@ Resources:
               - textract:*
               - polly:*
               - transcribe:*
+              - dynamodb:*
             Resource: "*"
 
 Outputs:
