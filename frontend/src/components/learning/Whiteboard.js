@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Rekognition from './Rekognition';
+import Textract from './Textract';
 
 class Whiteboard extends Component {
 
@@ -15,9 +16,9 @@ class Whiteboard extends Component {
             } else if (content.type === "transcribe") {
                 component = <Transcribe content={content.body} onCorrect={this.props.onCorrect} onWrong={this.props.onWrong} />;
             } else if (content.type === "rekognition") {
-                component = <Rekognition content={content}  onCorrect={this.props.onCorrect} onWrong={this.props.onWrong} />;
+                component = <Rekognition content={content} onCorrect={this.props.onCorrect} onWrong={this.props.onWrong} />;
             } else if (content.type === "textract" ) {
-                component = <Textract content={content.body}  onCorrect={this.props.onCorrect} onWrong={this.props.onWrong} />;
+                component = <Textract content={content} onCorrect={this.props.onCorrect} onWrong={this.props.onWrong} />;
             }
         }
         return (
@@ -62,14 +63,6 @@ function Transcribe(){
     return(
         <div>
             <h1>Transcribe</h1>
-        </div>
-    )
-}
-
-function Textract(){
-    return(
-        <div>
-            <h1>Textract</h1>
         </div>
     )
 }
