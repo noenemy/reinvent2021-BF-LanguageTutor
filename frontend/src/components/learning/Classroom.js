@@ -13,14 +13,13 @@ class ClassroomComponent extends Component {
     state = {
         courseId: null,
         lectureId: null,
+        lectureTitle: "",
         units: null,
         currentUnitIndex: null,
         currentUnitTitle: null,
         content: null,
         steps: null,
         currentStep: null,
-        language: "english",
-        lectures: null,
         loading: false
     };
 
@@ -30,6 +29,7 @@ class ClassroomComponent extends Component {
         const params = new URLSearchParams(search);
         const courseId = params.get('courseId');
         const lectureId = params.get('lectureId');
+        this.getLectureInfo(courseId, lectureId);
         this.setState({ courseId: courseId });
         this.setState({ lectureId: lectureId }, () => {
 
@@ -121,6 +121,20 @@ class ClassroomComponent extends Component {
 
         const sumerian = document.getElementById('sumerianHost');
         sumerian.contentWindow.postMessage(msg, '*');
+    }
+
+    async getLectureInfo(courseId=1, lectureId=1) {
+        this.setState({ loading: true });
+        const backendAPI = `${process.env.REACT_APP_BACKEND_SERVER}/courses/${courseId}/lectures/${lectureId}`;
+        const res = await axios.get(backendAPI);        
+        this.setState({ loading: false });
+
+        if (res != null && res.data.listCourses != null) {
+            this.setState({ lectureTitle: res.data.listCourses.items.lecture_title });
+        }
+        else {
+            toast.error("something wrong! try again.");
+        }
     }
 
     async getLectureUnits(courseId=1, lectureId=1) {
@@ -241,7 +255,7 @@ class ClassroomComponent extends Component {
         return (
             <div>
                 <div className="container">
-                    <TitleBar className="Basic Korean 101" lectureId="1" lectureTitle="Lecture 01" />
+                    <TitleBar className="Basic Korean 101" lectureId="1" lectureTitle={this.state.lectureTitle} />
                     <div className="row"><br /></div>
                     <div className="row">
                         <div className="col-6">
