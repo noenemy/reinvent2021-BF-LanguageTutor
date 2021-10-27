@@ -190,12 +190,12 @@ class ClassroomComponent extends Component {
     }
 
     onCorrect = () => {
-        this.speakTeacher("Good job! You're awesome.");
-        toast.info("Good job! You're awesome.");
+        this.speakTeacher(`<speak><amazon:domain name="news"><prosody rate="110%" volume="loud"><amazon:effect name="drc">Nice!!! That's correct.</amazon:effect></prosody></amazon:domain></speak>`);
+        toast.info("Nice!!! That's correct.");
     }
 
     onWrong = () => {
-        this.speakTeacher("Sorry. Try again!");
+        this.speakTeacher(`<speak><amazon:domain name="news"><prosody rate="110%" volume="loud"><amazon:effect name="drc">Sorry. Try again!</amazon:effect></prosody></amazon:domain></speak>`);
         toast.info("Sorry. Try again!");
     }
 
