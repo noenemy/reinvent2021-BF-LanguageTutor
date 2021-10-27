@@ -164,11 +164,13 @@ class ClassroomComponent extends Component {
         }
     }
 
-    onCorrect() {
-        toast.info("Good job!");
+    onCorrect = () => {
+        this.speakTeacher("Good job! You're awesome.");
+        toast.info("Good job! You're awesome.");
     }
 
-    onWrong() {
+    onWrong = () => {
+        this.speakTeacher("Sorry. Try again!");
         toast.info("Sorry. Try again!");
     }
 
