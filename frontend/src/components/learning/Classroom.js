@@ -133,7 +133,7 @@ class ClassroomComponent extends Component {
 
         if (res != null && res.data.listCourses != null) {
             this.setState({ units: res.data.listCourses.items }, () => {
-                this.selectCurrentUnit(1); // set default unit
+                this.selectCurrentUnit(1, true); // set default unit
             });
         }
         else {
@@ -141,7 +141,7 @@ class ClassroomComponent extends Component {
         }
     }
 
-    async getUnitSteps(courseId=1, lectureId=1, unitId=1) {
+    async getUnitSteps(courseId=1, lectureId=1, unitId=1, forward=true) {
 
         this.setState({ loading: true });
         const backendAPI = `${process.env.REACT_APP_BACKEND_SERVER}/courses/${courseId}/lectures/${lectureId}/units/${unitId}/steps`;
@@ -151,7 +151,11 @@ class ClassroomComponent extends Component {
 
         console.log(res.data);
         if (res != null && res.data.steps != null) {
-            this.setState({ steps: res.data.steps, currentStep: 0 }, ()=> {
+            var step = 0;
+            if (forward == false) {
+                step = res.data.steps.length - 1;
+            }
+            this.setState({ steps: res.data.steps, currentStep: step }, ()=> {
                 this.startLearning();
             });
         }
@@ -168,7 +172,7 @@ class ClassroomComponent extends Component {
         toast.info("Sorry. Try again!");
     }
 
-    selectCurrentUnit = (unit_order) => {
+    selectCurrentUnit = (unit_order, forward=true) => {
 
         var unitTitle = "";
         var unitId = "";
@@ -182,21 +186,21 @@ class ClassroomComponent extends Component {
 
         this.setState({ currentUnitIndex: unit_order });
         this.setState({ currentUnitTitle: unitTitle });
-        this.getUnitSteps(this.state.courseId, this.state.lectureId, unitId);
+        this.getUnitSteps(this.state.courseId, this.state.lectureId, unitId, forward);
     }
 
     onClickNext = () => {
         // 현재 Unit에서 다음 Step이 있으면 -> 다음 Step으로 이동
         // 현재 Unit에서 다음 Step이 없으면 -> 다음 Unit으로 이동.
         // 다음 Unit이 없으면 강의 끝
-        toast.info("onClickNext");
+        //console.log(`onClickNext currentStep:${this.state.currentStep} steps.length:${this.state.steps.length} currentUnitIndex:${this.state.currentUnitIndex}`);
 
-        if  (this.state.currentStep === this.state.steps.length) {
+        if  (this.state.currentStep === this.state.steps.length - 1) {
             if (this.state.currentUnitIndex === this.state.units.length) {
                 toast.info("Nothing to do.");
             } else {
                 toast.info("need to go to the next unit.");
-                this.selectCurrentUnit(this.state.currentUnitIndex + 1);
+                this.selectCurrentUnit(this.state.currentUnitIndex + 1, true);
             }
         } else {
             this.setState({ currentStep : this.state.currentStep + 1 }, () => {
@@ -209,13 +213,14 @@ class ClassroomComponent extends Component {
         // 현재 Unit에서 이전 Step이 있으면 -> 이전 Step으로 이동
         // 현재 Unit에 이전 Step이 없으면 -> 이전 Unit으로 이동
         // 이전 Unit도 없으면 do nothing
-        toast.info("onClickPrevious");
-        if  (this.state.currentStep === 1) {
+        console.log(`onClickPrevious currentStep:${this.state.currentStep} steps.length:${this.state.steps.length} currentUnitIndex:${this.state.currentUnitIndex}`);
+
+        if  (this.state.currentStep === 0) {
             if (this.state.currentUnit === 1) {
                 toast.info("Nothing to do.");
             } else {
                 toast.info("need to go to the previous unit.");
-                this.selectCurrentUnit(this.state.currentUnitIndex - 1);
+                this.selectCurrentUnit(this.state.currentUnitIndex - 1, false);
             }
         } else {
             this.setState({ currentStep : this.state.currentStep - 1 }, () => {
@@ -227,7 +232,7 @@ class ClassroomComponent extends Component {
     onClickUnit = (event) => {
         // TODO: need to get which unit is clicked
         toast.info("onClickUnit:" + event.target.value);
-        this.selectCurrentUnit(event.target.value);
+        this.selectCurrentUnit(event.target.value, true);
     }
 
     render() {
