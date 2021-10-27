@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Rekognition from './Rekognition';
 import Textract from './Textract';
+import Vocabulary from './Vocabulary';
 
 class Whiteboard extends Component {
 
@@ -12,7 +13,7 @@ class Whiteboard extends Component {
             if (content.type === "textbook") {
                 component = <Textbook content={content.body} />;
             } else if (content.type === "vocabulary") {
-                component = <Vocabulary content={content.body} />;
+                component = <Vocabulary content={content} />;
             } else if (content.type === "transcribe") {
                 component = <Transcribe content={content.body} onCorrect={this.props.onCorrect} onWrong={this.props.onWrong} />;
             } else if (content.type === "rekognition") {
@@ -38,7 +39,7 @@ function Textbook(props){
     )
 }
 
-function Vocabulary(){
+function Test(){
     return(
         <div>
 
