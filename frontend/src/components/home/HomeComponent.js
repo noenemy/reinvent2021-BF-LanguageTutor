@@ -49,7 +49,8 @@ class HomeComponent extends Component {
                             </div>
                         </div>
                     </div>
-
+                    <br /><br />
+                    <hr />
                     <div className="container my-4 py-2">
                         <h2 className="text-center font-weight-bold my-3">Project Abstract</h2>
                         <div className="row text-center">
@@ -98,7 +99,8 @@ class HomeComponent extends Component {
                             </div>
                         </div>
                     </div>
-
+                    <br /><br />
+                    <hr />
 
                     <div className="jumbotron jumbotron-fluid feature" id="feature-first">
                         <div className="container my-5">
@@ -115,7 +117,8 @@ class HomeComponent extends Component {
                             </div>
                         </div>
                     </div>
-
+                    <br /><br />
+                    <hr />
 
                     <div>
                         <div className="container">
@@ -127,12 +130,13 @@ class HomeComponent extends Component {
                                     <img src="../../assets/images/diagram.png" alt="Architecture Diagram" height="750" class="mx-auto text-center" />
                                 </div>
                             </div>
-                            <br /><br />
                         </div>
                     </div>
 
-
-
+                    <br /><br />
+                    <hr />
+                    <br /><br />
+                    
                     <div className="jumbotron jumbotron-fluid">
                         <div className="container">
 
@@ -179,6 +183,8 @@ class HomeComponent extends Component {
                             </div>
                         </div>
                     </div>
+
+                    <br /><br />
 
                 </div>  
             </div>
