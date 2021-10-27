@@ -1,33 +1,37 @@
 import React, { Component } from 'react';
+import Rekognition from './Rekognition';
 
 class Whiteboard extends Component {
 
     render() {
+        const content = this.props.content;
+
+        let component;
+        if (content) {
+            if (content.type === "textbook") {
+                component = <Textbook content={content.body} />;
+            } else if (content.type === "vocabulary") {
+                component = <Vocabulary content={content.body} />;
+            } else if (content.type === "transcribe") {
+                component = <Transcribe content={content.body} onCorrect={this.props.onCorrect} onWrong={this.props.onWrong} />;
+            } else if (content.type === "rekognition") {
+                component = <Rekognition content={content}  onCorrect={this.props.onCorrect} onWrong={this.props.onWrong} />;
+            } else if (content.type === "textract" ) {
+                component = <Textract content={content.body}  onCorrect={this.props.onCorrect} onWrong={this.props.onWrong} />;
+            }
+        }
         return (
             <div>
-                { this.props.type === "textbook" && <Textbook /> }
-                { this.props.type === "vocabulary" && <Vocabulary /> }
-                { this.props.type === "transcribe" && <Transcribe /> }
-                { this.props.type === "rekognition" && <Rekognition /> }
-                { this.props.type === "textract" && <Textract /> }
+                { component }
             </div>
         );
     }
 }
 
-function Textbook(){
+function Textbook(props){
     return(
         <div>
-            <h1>Introduction</h1>
-            <hr />
-
-            <h2 className="text-primary">안녕하세요.</h2>
-            <h4 className="text-muted">Hello. How are you?</h4>
-
-            <br /><br />
-
-            <h2 className="text-primary">안녕.</h2>
-            <h4 className="text-muted">Hi?</h4>
+            {props.content}
         </div>
     )
 }
@@ -35,8 +39,6 @@ function Textbook(){
 function Vocabulary(){
     return(
         <div>
-            <h1>Vocabulary</h1>
-            <hr />
 
             <div className="row align-items-center" >
                 <div className="col-6">
@@ -60,14 +62,6 @@ function Transcribe(){
     return(
         <div>
             <h1>Transcribe</h1>
-        </div>
-    )
-}
-
-function Rekognition(){
-    return(
-        <div>
-            <h1>Rekognition</h1>
         </div>
     )
 }

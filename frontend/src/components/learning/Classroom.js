@@ -16,6 +16,7 @@ class ClassroomComponent extends Component {
         units: null,
         currentUnitIndex: null,
         currentUnitTitle: null,
+        content: null,
         steps: null,
         currentStep: null,
         language: "english",
@@ -60,7 +61,8 @@ class ClassroomComponent extends Component {
         //console.log(this.state.steps);
         //console.log(this.state.currentStep);
         const step = this.state.steps[this.state.currentStep];
-        //console.log('current step:' + step);
+        //console.log('current step content:' + step.content);
+        this.setState({ content: step.content });
         for (var i in step.dialogs) {
             const dialog = step.dialogs[i].dialog;
             if (step.dialogs[i].host == "1") {
@@ -132,6 +134,14 @@ class ClassroomComponent extends Component {
         else {
             toast.error("something wrong! try again.");
         }
+    }
+
+    onCorrect() {
+        toast.info("Good job!");
+    }
+
+    onWrong() {
+        toast.info("Sorry. Try again!");
     }
 
     selectCurrentUnit = (unit_order) => {
@@ -207,8 +217,9 @@ class ClassroomComponent extends Component {
                             <Sumerian />
                         </div>
                         <div className="col-6">
-                            <div>{this.state.steps && this.state.currentUnitTitle + ' ' + this.state.currentStep + '/' + this.state.steps.length} </div>
-                            <Whiteboard type={"textbook"} />
+                            <h5>{this.state.steps && this.state.currentUnitTitle}</h5>
+                            <hr />
+                            <Whiteboard content={this.state.content} onCorrect={this.onCorrect} onWrong={this.onWrong}/>
                         </div>
                     </div>
                     <br /><br />
