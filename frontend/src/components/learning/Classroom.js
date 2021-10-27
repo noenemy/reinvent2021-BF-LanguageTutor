@@ -20,6 +20,7 @@ class ClassroomComponent extends Component {
         content: null,
         steps: null,
         currentStep: null,
+        sumerianIsReady: false,
         loading: false
     };
 
@@ -49,11 +50,19 @@ class ClassroomComponent extends Component {
     handleChildMessage = (event) => {
         toast.info(event.data);
         if (event.data === "SUMERIAN_LOAD_COMPLETED") {
-            this.startLearning();
+            this.setState({ sumerianIsReady: true}, () => {
+                this.startLearning();
+            })
         }
     }
 
     async startLearning() {
+
+        if (this.state.sumerianIsReady === false) {
+            console.log("sumerian is not ready yet.");
+            return;
+        }
+
         const sleep = (milliseconds) => {
             return new Promise(resolve => setTimeout(resolve, milliseconds))
         }
@@ -61,6 +70,8 @@ class ClassroomComponent extends Component {
         // stop previous speaking 
         this.muteTeacher();
         this.muteGuest();
+
+        await sleep(1000);
 
         const step = this.state.steps[this.state.currentStep];
         //console.log('current step content:' + step.content);
