@@ -97,6 +97,14 @@ class HomeComponent extends Component {
                                 <h4>Amazon<br />Transcribe</h4>
                                 <p>Speech Recognition</p>
                             </div>
+                            <div data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000" data-aos-once="true"
+                                 className="col-2 text-center">
+                                <img src="../../assets/images/icon-sumerian.jpg" alt="Amazon Sumerian" height="100"
+                                     className="mx-auto"/>
+                                <br/>
+                                <h4>Amazon<br/>Sumerian</h4>
+                                <p>AR/VR Experiences</p>
+                            </div>
                         </div>
                     </div>
                     <br /><br />
