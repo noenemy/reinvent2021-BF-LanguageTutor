@@ -75,6 +75,8 @@ class ClassroomComponent extends Component {
 
         const step = this.state.steps[this.state.currentStep];
         //console.log('current step content:' + step.content);
+
+        // TODO: need to find a way to stop speaking when the user moves to other contents
         this.setState({ content: step.content });
         for (var i in step.dialogs) {
             const dialog = step.dialogs[i].dialog;
@@ -189,6 +191,7 @@ class ClassroomComponent extends Component {
         }
     }
 
+    // TODO: need to check if there's proper gesture to show more interactely
     onCorrect = () => {
         this.speakTeacher(`<speak><amazon:domain name="news"><prosody rate="110%" volume="loud"><amazon:effect name="drc">Nice!!! That's correct.</amazon:effect></prosody></amazon:domain></speak>`);
         toast.info("Nice!!! That's correct.");
@@ -224,7 +227,7 @@ class ClassroomComponent extends Component {
 
         if  (this.state.currentStep === this.state.steps.length - 1) {
             if (this.state.currentUnitIndex === this.state.units.length) {
-                toast.info("Nothing to do.");
+                console.log("onClickNext : Nothing to do.");
             } else {
                 toast.info("need to go to the next unit.");
                 this.selectCurrentUnit(this.state.currentUnitIndex + 1, true);
@@ -244,7 +247,7 @@ class ClassroomComponent extends Component {
 
         if  (this.state.currentStep === 0) {
             if (this.state.currentUnit === 1) {
-                toast.info("Nothing to do.");
+                console.log("onClickPrevious. Nothing to do.");
             } else {
                 toast.info("need to go to the previous unit.");
                 this.selectCurrentUnit(this.state.currentUnitIndex - 1, false);
@@ -257,7 +260,6 @@ class ClassroomComponent extends Component {
     }
 
     onClickUnit = (event) => {
-        // TODO: need to get which unit is clicked
         toast.info("onClickUnit:" + event.target.value);
         this.selectCurrentUnit(event.target.value, true);
     }
@@ -266,7 +268,7 @@ class ClassroomComponent extends Component {
         return (
             <div>
                 <div className="container">
-                    <TitleBar className="Basic Korean 101" lectureId="1" lectureTitle={this.state.lectureTitle} />
+                    <TitleBar className="Basic Korean 101" lectureId={this.state.lectureId} lectureTitle={this.state.lectureTitle} />
                     <div className="row"><br /></div>
                     <div className="row">
                         <div className="col-6">
