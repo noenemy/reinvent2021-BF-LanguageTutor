@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Trophy from '../../assets/images/trophy.jpeg';
+// TODO: Need to change the footer image
 import LeaderboardFooter from '../../assets/images/leaderboard-footer.jpg';
 
 class LeaderBoardComponent extends Component {
@@ -50,7 +51,7 @@ class LeaderBoardComponent extends Component {
                 </div>
             
                 <br />
-            
+                
                 <div id="footer" className="footer container navbar-fixed-bottom text-right">
                     <img src={LeaderboardFooter} alt="footer" height="150" width="800" />
                 </div>

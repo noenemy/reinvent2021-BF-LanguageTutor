@@ -85,6 +85,7 @@ class TranscribeDemo extends Component {
         const transcribeUrl = res.data.transcribeUrl;
 
         //open up Websocket connection
+        // TODO: implement to enable disconnect feature
         var websocket = new WebSocket(transcribeUrl);
         websocket.binaryType = 'arraybuffer';
 

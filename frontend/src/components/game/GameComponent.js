@@ -1,7 +1,7 @@
 import React from 'react';
 
 const GameComponent = () => {
-
+    // TODO: Migrate from the previous AngularJS project
     return(
         <div>
             <div className="row">

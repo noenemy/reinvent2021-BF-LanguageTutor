@@ -220,9 +220,9 @@ class ClassroomComponent extends Component {
     }
 
     onClickNext = () => {
-        // 현재 Unit에서 다음 Step이 있으면 -> 다음 Step으로 이동
-        // 현재 Unit에서 다음 Step이 없으면 -> 다음 Unit으로 이동.
-        // 다음 Unit이 없으면 강의 끝
+        // If there's any next steps in the current unit, then move to the next step
+        // If there's no next step in the current unit, then movo to the next unit
+        // If there's no next unit as well, then to nothing. It's the end of the course.
         //console.log(`onClickNext currentStep:${this.state.currentStep} steps.length:${this.state.steps.length} currentUnitIndex:${this.state.currentUnitIndex}`);
 
         if  (this.state.currentStep === this.state.steps.length - 1) {
@@ -240,10 +240,10 @@ class ClassroomComponent extends Component {
     }
 
     onClickPrevious = () => {
-        // 현재 Unit에서 이전 Step이 있으면 -> 이전 Step으로 이동
-        // 현재 Unit에 이전 Step이 없으면 -> 이전 Unit으로 이동
-        // 이전 Unit도 없으면 do nothing
-        console.log(`onClickPrevious currentStep:${this.state.currentStep} steps.length:${this.state.steps.length} currentUnitIndex:${this.state.currentUnitIndex}`);
+        // If there's any previous step in the current unit, then move to the previous step
+        // If there's no previous step in the current unit, then movo to the previous unit
+        // If there's no previous unit as well, then to nothing
+        //console.log(`onClickPrevious currentStep:${this.state.currentStep} steps.length:${this.state.steps.length} currentUnitIndex:${this.state.currentUnitIndex}`);
 
         if  (this.state.currentStep === 0) {
             if (this.state.currentUnit === 1) {

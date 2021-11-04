@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
 class Transcribe extends Component {
+    // TODO : implement this feature
+
     render() {
         return (
             <div>
