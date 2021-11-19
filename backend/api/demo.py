@@ -194,11 +194,12 @@ def polly():
         app.logger.error(e)
         raise BadRequest(e)
 
-@demo.route('/transcribe', methods=['GET'], strict_slashes=False)
+@demo.route('/transcribe', methods=['POST'], strict_slashes=False)
 def get_presigned_url():
     try:
 
-        presigned_url = transcribe_util.get_presigned_url()
+        languageCode = request.form['language']
+        presigned_url = transcribe_util.get_presigned_url(language_code=languageCode)
 
         app.logger.info('success!')
         res = make_response(jsonify({'transcribeUrl':presigned_url}), 200)

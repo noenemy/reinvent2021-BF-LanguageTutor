@@ -45,7 +45,7 @@ class TranscribeDemo extends Component {
     async transcribe() {
 
         if (this.state.streaming) {
-            this.socket.close();
+            this.state.socket.close();
             this.setState({ streaming: false });
             return;
         }
@@ -80,12 +80,14 @@ class TranscribeDemo extends Component {
 
         micStream.setStream(mediaStream);        
 
+        const formData = new FormData();
+        formData.append('language', this.state.selectedLanguage);
+
         const backendAPI = `${process.env.REACT_APP_BACKEND_SERVER}/demo/transcribe`;
-        const res = await axios.get(backendAPI);
+        const res = await axios.post(backendAPI, formData);
         const transcribeUrl = res.data.transcribeUrl;
 
         //open up Websocket connection
-        // TODO: implement to enable disconnect feature
         var websocket = new WebSocket(transcribeUrl);
         websocket.binaryType = 'arraybuffer';
 
@@ -201,6 +203,7 @@ class TranscribeDemo extends Component {
                                 <br/><br/>
 
                                 <button onClick={this.transcribe.bind(this)}>{!this.state.streaming ? 'Start streaming' : 'Stop streaming'}</button>
+                                streaming: {this.state.streaming ? "true": "false"} socket: {this.state.socket ? "opened": "closed"} 
                                 <br/>
                                 
                             </div>
