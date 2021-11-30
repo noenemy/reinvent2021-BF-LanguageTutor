@@ -6,23 +6,40 @@ import mic from 'microphone-stream';
 import { pcmEncode, downsampleBuffer } from '../../util/audioUtils.js';
 import { EventStreamMarshaller } from '@aws-sdk/eventstream-marshaller';
 import { toUtf8, fromUtf8 } from '@aws-sdk/util-utf8-node';
+import { ReactMic } from 'react-mic';
 
 class TranscribeDemo extends Component {
     constructor(props) {
         super(props);
         this.eventStreamMarshaller = null;
+        this.websocket = null;
         this.state = {
             selectedLanguage: 'en-US',
             languages: null,            
             text: '',
-            streaming: false,
-            socket: null
+            record: false
         };
     }
 
     componentDidMount() {
         this.getTranscribeLanguages();
     }
+
+    startRecording = () => {
+        this.setState({ text: '', record: true }, () => {
+            this.transcribe();
+        });
+    }
+
+    stopRecording = () => {
+        this.setState({ record: false }, () => {
+            this.websocket.close();    
+        });
+    }
+
+    onData(recordedBlob) {
+        console.log('chunk of real-time data is: ', recordedBlob);
+    }    
 
     async getTranscribeLanguages() {
         this.setState({ loading: true });
@@ -44,19 +61,12 @@ class TranscribeDemo extends Component {
     
     async transcribe() {
 
-        if (this.state.streaming) {
-            this.state.socket.close();
-            this.setState({ streaming: false });
-            return;
-        }
-
         var micStream = null;
         var mediaStream = null;
         var inputSampleRate = 0;
         var transcription = "";
         const transcribeSampleRate = 44100;
         const eventStreamMarshaller = new EventStreamMarshaller(toUtf8, fromUtf8);
-
 
         try {
             mediaStream = await window.navigator.mediaDevices.getUserMedia({
@@ -88,24 +98,23 @@ class TranscribeDemo extends Component {
         const transcribeUrl = res.data.transcribeUrl;
 
         //open up Websocket connection
-        var websocket = new WebSocket(transcribeUrl);
-        websocket.binaryType = 'arraybuffer';
+        this.websocket = new WebSocket(transcribeUrl);
+        this.websocket.binaryType = 'arraybuffer';
 
-        websocket.onopen = () => {
-            this.setState({ socket: websocket, streaming: true });
+        this.websocket.onopen = () => {
 
             //Make the spinner disappear
             micStream.on('data', rawAudioChunk => {
                 // the audio stream is raw audio bytes. Transcribe expects PCM with additional metadata, encoded as binary
                let binary = convertAudioToBinaryMessage(rawAudioChunk);
         
-                if (websocket.readyState === websocket.OPEN)
-                    websocket.send(binary);
+                if (this.websocket.readyState === this.websocket.OPEN)
+                    this.websocket.send(binary);
                 }
             )};
 
         // handle messages, errors, and close events
-        websocket.onmessage = async message => {
+        this.websocket.onmessage = async message => {
 
             //convert the binary event stream message to JSON
             var messageWrapper = eventStreamMarshaller.unmarshall(Buffer(message.data));
@@ -120,11 +129,12 @@ class TranscribeDemo extends Component {
                 if (results[0].Alternatives.length > 0) {
                     var transcript = results[0].Alternatives[0].Transcript;
                     transcript = decodeURIComponent(escape(transcript));
-
-                    this.setState({ text: this.state.text + transcript + '\n' });
+                    this.setState({ text: transcript });
+                    //this.setState({ text: this.state.text + transcript + '\n' });
 
                     if (!results[0].IsPartial) {
-                        transcription += transcript + '\n';
+                    //    this.setState({ text: transcript });
+                    //    transcription += transcript + '\n';
                     }
                     else {
                         console.log("isPartial is false. " + transcription);
@@ -133,15 +143,12 @@ class TranscribeDemo extends Component {
             }
         }
 
-        websocket.onerror = () => {
+        this.websocket.onerror = () => {
             toast.error("Websocket connection error. Try again.");
-            // toggle button
         }
 
-        websocket.onclose = () => {
+        this.websocket.onclose = () => {
             micStream.stop();
-            this.setState({ streaming: false, socket: null})
-            // toggle button
         }
 
         function convertAudioToBinaryMessage(audioChunk) {
@@ -201,10 +208,20 @@ class TranscribeDemo extends Component {
                                 </div>
                                 
                                 <br/><br/>
+                                <div>
+                                    <ReactMic
+                                    record={this.state.record}
+                                    className="sound-wave"
+                                    onStop={this.onStop}
+                                    onData={this.onData}
+                                    strokeColor="#000000"
+                                    backgroundColor="#FF4081" />
+                                    <button onClick={this.startRecording} type="button">Start</button>
+                                    <button onClick={this.stopRecording} type="button">Stop</button>
+                                </div>
 
-                                <button onClick={this.transcribe.bind(this)}>{!this.state.streaming ? 'Start streaming' : 'Stop streaming'}</button>
-                                streaming: {this.state.streaming ? "true": "false"} socket: {this.state.socket ? "opened": "closed"} 
-                                <br/>
+                                record: {this.state.record ? "true": "false"} websocket: {this.websocket ? "opened": "closed"} 
+                                <br/><br/><br/>
                                 
                             </div>
                         </div>
