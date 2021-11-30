@@ -216,11 +216,11 @@ class TranscribeDemo extends Component {
                                     onStop={this.onStop}
                                     onData={this.onData}
                                     strokeColor="#000000"
-                                    backgroundColor="#FF4081" />
-                                    <button onClick={this.startRecording} type="button">Start</button>
-                                    <button onClick={this.stopRecording} type="button">Stop</button>
+                                    backgroundColor="#f1f1f1" />
+                                    <button className="btn btn-primary mr-2" onClick={this.startRecording} type="button" disabled={this.state.record ? "true" : ""}>Start</button>&nbsp;
+                                    <button className="btn btn-primary mr-2" onClick={this.stopRecording} type="button" disabled={!this.state.record ? "true" : ""}>Stop</button>
                                 </div>
-
+                                <br/><br/>
                                 record: {this.state.record ? "true": "false"} websocket: {this.websocket ? "opened": "closed"} 
                                 <br/><br/><br/>
                                 
