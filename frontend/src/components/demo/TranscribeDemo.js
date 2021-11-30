@@ -33,7 +33,8 @@ class TranscribeDemo extends Component {
 
     stopRecording = () => {
         this.setState({ record: false }, () => {
-            this.websocket.close();    
+            if (this.websocket != null)
+                this.websocket.close();    
         });
     }
 
