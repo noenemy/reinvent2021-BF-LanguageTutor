@@ -23,7 +23,7 @@ class Transcribe extends Component {
 
     componentDidMount() {
         //this.getTranscribeLanguages();
-        this.setState({ expectedText: '안녕하세요' });
+        this.setState({ expectedText: this.props.content.answer });
     }
 
     startRecording = () => {
@@ -216,23 +216,15 @@ class Transcribe extends Component {
     }  
 
     render() {
-        return (
-            <div>
-                <div>
-                    <br />
-                    <h6><i className="fas fa-question-circle"></i> &nbsp; 
-                    Listen and repeat</h6>
-                </div>
-                    <div className="text-center">
-                    <br />
-                    <div className='row text-center'>
-                        <h1 className='text-primary'>안녕하세요.</h1>
-                        <h4 className='text-muted'>[annyeonghaseyo]</h4>
-                        <h4 className='text-muted'>Hello</h4>
-                    </div>
-                    <br />
 
-                </div>
+        const RAWHTML = this.props.content.body;
+        return(
+            <div>
+                <br />
+                <h6><i className="fas fa-question-circle"></i> &nbsp; Listen and repeat</h6>
+                
+                <div dangerouslySetInnerHTML={{ __html: RAWHTML.replace(/\n/g, '<br />')}} />
+            
                 <div>
                     <ReactMic
                         record={this.state.record}
@@ -249,7 +241,7 @@ class Transcribe extends Component {
                     <div>{this.state.transcribedText}</div>
                 </div>
             </div>
-        );
+        )
     }
 }
 
