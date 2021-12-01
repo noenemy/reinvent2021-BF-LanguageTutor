@@ -20,7 +20,7 @@ course = Blueprint('courses', __name__)
 def list_courses():
 
     try:
-        result_it = CourseModel.course_title_index.scan(limit=30)
+        result_it = CourseModel.course_order_index.scan(limit=30)
         courses = [course_deserialize(course) for course in result_it]
         response = make_response(jsonify({'listCourses': {'items': courses}}), 200)
         return response
@@ -57,9 +57,6 @@ def get_lecture(req_id, lec_id):
         raise InternalServerError('Something went wrong..')
 
 
-
-
-
 @course.route('/<req_id>/lectures/<lec_id>/units', methods=['GET'], strict_slashes=False)
 def list_units(req_id, lec_id):
 
@@ -87,3 +84,22 @@ def list_steps(req_id, lec_id, unit_id):
     except Exception as e:
         app.logger.error('Retrieve unit list failed: {0}'.format(e))
         raise InternalServerError('Something went wrong..')
+
+
+
+@course.route('/admin/steps/<unit_id>', methods=['GET'], strict_slashes=False)
+def get_steps(unit_id):
+
+    try:
+        steps = CourseModel.get(unit_id, 'unit')
+        data = str(steps.steps).replace('""', '"')
+
+        # json_ = json.loads(data, strict=False)
+
+        response = make_response(data, 200)
+        return response
+
+    except Exception as e:
+        app.logger.error('Retrieve unit list failed: {0}'.format(e))
+        raise InternalServerError('Something went wrong..')
+

@@ -19,6 +19,21 @@ class CourseTitleIndex(GlobalSecondaryIndex):
     course_title = UnicodeAttribute(range_key=True)
 
 
+class CourseOrderIndex(GlobalSecondaryIndex):
+    """
+    This class represents a local secondary index
+    """
+
+    class Meta:
+        # All attributes are projected
+        read_capacity_units = 10
+        write_capacity_units = 10
+        projection = AllProjection()
+
+    _type = UnicodeAttribute(hash_key=True)
+    course_order = NumberAttribute(range_key=True)
+
+
 class LectureIndex(GlobalSecondaryIndex):
     """
     This class represents a local secondary index
@@ -64,6 +79,10 @@ class CourseModel(Model):
     course_title_index = CourseTitleIndex()
     course_title = UnicodeAttribute(null=True)
 
+    course_order_index = CourseOrderIndex()
+    course_order = NumberAttribute(null=True)
+
+    icon = UnicodeAttribute(null=True)
     course_ref = UnicodeAttribute(null=True)
     lecture_title = UnicodeAttribute(null=True)
     lecture_order_index = LectureIndex()
@@ -84,6 +103,8 @@ def course_deserialize(course):
     course_json['course_title'] = course.course_title
     course_json['id'] = course.id
     course_json['type'] = course._type
+    course_json['icon'] = course.icon
+    # course_json['course_order'] = course.course_order
     return course_json
 
 
