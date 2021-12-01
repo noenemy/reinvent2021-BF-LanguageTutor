@@ -8,7 +8,7 @@ class Textbook extends Component {
     render() {
         var pictureHTML = "";
         if (this.props.content.picture != null) {
-            pictureHTML = "<img src=/assets/images/" + this.props.content.picture + " alt='' width='' />";
+            pictureHTML = "<img class='center' src=/assets/images/" + this.props.content.picture + " alt='' height='230px' />";
         }
 
         const RAWHTML = pictureHTML + this.props.content.body;
