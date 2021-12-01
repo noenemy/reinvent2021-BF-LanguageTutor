@@ -221,6 +221,7 @@ class TranscribeDemo extends Component {
                                     onData={this.onData}
                                     strokeColor="#000000"
                                     backgroundColor="#f1f1f1" />
+                                    <br/><br/>
                                     <button className="btn btn-primary mr-2" onClick={this.startRecording} type="button" disabled={this.state.record ? "true" : ""}>Start</button>&nbsp;
                                     <button className="btn btn-primary mr-2" onClick={this.stopRecording} type="button" disabled={!this.state.record ? "true" : ""}>Stop</button>
                                 </div>

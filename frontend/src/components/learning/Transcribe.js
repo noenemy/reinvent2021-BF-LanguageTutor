@@ -226,7 +226,8 @@ class Transcribe extends Component {
 
                 <div dangerouslySetInnerHTML={{ __html: RAWHTML.replace(/\n/g, '<br />')}} />
             
-                <div>
+                <br/>
+                <div className="text-center">
                     <ReactMic
                         record={this.state.record}
                         className="sound-wave"
@@ -234,11 +235,9 @@ class Transcribe extends Component {
                         onData={this.onData}
                         strokeColor="#000000"
                         backgroundColor="#f1f1f1" />
-                    <button onClick={this.startRecording} type="button">Start</button>
-                    <button onClick={this.stopRecording} type="button">Stop</button>
-                    <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="">
-                        <h1><i className="fas fa-microphone"></i></h1>
-                    </button>
+                    <button className="btn btn-primary mr-2" onClick={this.startRecording} type="button" disabled={this.state.record ? "true" : ""}><i className="fas fa-microphone"></i> Start Recording</button>&nbsp;
+                    <button className="btn btn-primary mr-2" onClick={this.stopRecording} type="button" disabled={!this.state.record ? "true" : ""}><i className="fas fa-microphone-slash"></i> Stop Recording</button>
+
                     <div>{this.state.transcribedText}</div>
                 </div>
             </div>
