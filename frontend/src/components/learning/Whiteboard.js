@@ -3,6 +3,7 @@ import Rekognition from './Rekognition';
 import Textract from './Textract';
 import Vocabulary from './Vocabulary';
 import Transcribe from './Transcribe';
+import Textbook from './Textbook';
 
 class Whiteboard extends Component {
 
@@ -12,7 +13,7 @@ class Whiteboard extends Component {
         let component;
         if (content) {
             if (content.type === "textbook") {
-                component = <Textbook content={content.body} />;
+                component = <Textbook content={content} />;
             } else if (content.type === "vocabulary") {
                 component = <Vocabulary content={content} />;
             } else if (content.type === "transcribe") {
@@ -29,15 +30,6 @@ class Whiteboard extends Component {
             </div>
         );
     }
-}
-
-function Textbook(props){
-    const RAWHTML = props.content;
-    return(
-        <div>
-            <div dangerouslySetInnerHTML={{ __html: RAWHTML.replace(/\n/g, '<br />')}} />
-        </div>
-    )
 }
 
 export default Whiteboard;
