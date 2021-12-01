@@ -93,6 +93,11 @@ class CourseModel(Model):
     unit_order_index = UnitIndex()
     unit_order = NumberAttribute(null=True)
 
+    tutor_character = UnicodeAttribute(null=True)
+    tutor_gender = UnicodeAttribute(null=True)
+    tutor_voice = UnicodeAttribute(null=True)
+    language = UnicodeAttribute(null=True)
+
     # step_order = NumberAttribute(null=True)
     # steps = MapAttribute(default={})
     steps = UnicodeAttribute(null=True)
@@ -104,7 +109,10 @@ def course_deserialize(course):
     course_json['id'] = course.id
     course_json['type'] = course._type
     course_json['icon'] = course.icon
-    # course_json['course_order'] = course.course_order
+    course_json['tutor_character'] = course.tutor_character
+    course_json['tutor_gender'] = course.tutor_gender
+    course_json['tutor_voice'] = course.tutor_voice
+    course_json['language'] = course.language
     return course_json
 
 
