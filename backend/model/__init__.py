@@ -104,6 +104,7 @@ def course_deserialize(course):
     course_json['id'] = course.id
     course_json['type'] = course._type
     course_json['icon'] = course.icon
+    # course_json['course_order'] = course.course_order
     return course_json
 
 

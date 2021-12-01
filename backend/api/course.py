@@ -20,7 +20,7 @@ course = Blueprint('courses', __name__)
 def list_courses():
 
     try:
-        result_it = CourseModel.course_title_index.scan(limit=30)
+        result_it = CourseModel.course_order_index.scan(limit=30)
         courses = [course_deserialize(course) for course in result_it]
         response = make_response(jsonify({'listCourses': {'items': courses}}), 200)
         return response
@@ -92,11 +92,11 @@ def get_steps(unit_id):
 
     try:
         steps = CourseModel.get(unit_id, 'unit')
-        print(steps.steps)
+        data = str(steps.steps).replace('""', '"')
 
-        json_ = json.loads(steps.steps, strict=False)
+        # json_ = json.loads(data, strict=False)
 
-        response = make_response(json_, 200)
+        response = make_response(data, 200)
         return response
 
     except Exception as e:
