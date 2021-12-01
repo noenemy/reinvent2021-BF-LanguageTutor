@@ -30,11 +30,11 @@ class HomeComponent extends Component {
                             <div className="text-left">
                                 <h1 data-aos="fade" data-aos-easing="linear" data-aos-duration="1000" data-aos-once="true" class="display-3 text-black-60 font-weight-bold">
                                     Welcome to<br />
-                                    1:1 Language Tutor using AWS AI/ML
+                                    Language Tutor using AWS AI/ML
                                 </h1>
                                 <div className="row">
                                     <p id="p1" data-aos="fade" data-aos-easing="linear" data-aos-duration="1000" data-aos-once="true" class="lead bg-dark text-white my-4">
-                                        &nbsp;Online tutoring service to learn languages with AWS AI/ML&nbsp;
+                                        &nbsp;Online tutoring service to learn languages using AWS AI/ML&nbsp;
                                     </p>
                                 </div>
                                 <br />

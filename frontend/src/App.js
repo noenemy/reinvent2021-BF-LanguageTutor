@@ -24,7 +24,7 @@ function App() {
     <header>
       <Router>
           { showContentOnly ? null :
-            (<Navbar title="1:1 Language Tutor using AWS AI/ML" />)
+            (<Navbar title="Language Tutor using AWS AI/ML" />)
           }
 
           <Switch>
