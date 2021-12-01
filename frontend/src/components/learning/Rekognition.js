@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Webcam from "react-webcam";
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 
@@ -49,7 +48,7 @@ class Rekognition extends Component {
             console.log(res.data.Labels);
         }
         else {
-            toast.error("something wrong! try again.");
+            console.log("something wrong! try again.");
         }        
     }
 
