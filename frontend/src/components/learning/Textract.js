@@ -98,7 +98,7 @@ class Textract extends Component {
                             />
                             
                                 <br/>
-                                <button id="buttonSnapshot" className="btn btn-primary mr-2" onClick={this.capture}>Submit</button>
+                                <button id="buttonSnapshot" className="btn btn-primary mr-2" onClick={this.capture}>Take a Snapshot</button>
                                 <br/>
                             
                             </div>

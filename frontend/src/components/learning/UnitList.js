@@ -6,7 +6,7 @@ class UnitList extends Component {
 
         return (
             <div className="row">
-                {this.props.loading ? <h3>Loading...</h3> : null}
+
                 <ul className="list-group list-group-horizontal" >
 
                 {this.props.units && this.props.units.map(( unit, index) => {
