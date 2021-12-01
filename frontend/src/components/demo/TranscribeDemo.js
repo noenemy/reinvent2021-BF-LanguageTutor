@@ -25,6 +25,11 @@ class TranscribeDemo extends Component {
         this.getTranscribeLanguages();
     }
 
+    componentWillUnmount() {
+        alert("stop recording")
+        this.stopRecording();
+    }
+
     startRecording = () => {
         this.setState({ text: '', record: true }, () => {
             this.transcribe();
