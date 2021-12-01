@@ -9,28 +9,36 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 
 class ClassroomComponent extends Component {
-
-    state = {
-        courseId: null,
-        lectureId: null,
-        lectureTitle: "",
-        units: null,
-        currentUnitIndex: null,
-        currentUnitTitle: null,
-        content: null,
-        steps: null,
-        currentStep: null,
-        sumerianIsReady: false,
-        loading: false
-    };
-
-    componentDidMount() {
+    constructor(props) {
+        super(props);
         const current = decodeURI(window.location.href);
         const search = current.split("?")[1];
         const params = new URLSearchParams(search);
-        const courseId = params.get('courseId');
-        const lectureId = params.get('lectureId');
+        this.params = new URLSearchParams(search);
+        this.language = params.get('language');
+        this.state = {
+            courseId: null,
+            course: null,
+            lectureId: null,
+            lectureTitle: "",
+            units: null,
+            currentUnitIndex: null,
+            currentUnitTitle: null,
+            content: null,
+            steps: null,
+            currentStep: null,
+            sumerianIsReady: false,
+            loading: false
+        }
+    }
+
+    componentDidMount() {
+        const courseId = this.params.get('courseId');
+        const lectureId = this.params.get('lectureId');
+        const language = this.params.get('language');
+        this.getCourseInfo(courseId);
         this.getLectureInfo(courseId, lectureId);
+        this.setState({ language: language });
         this.setState({ courseId: courseId });
         this.setState({ lectureId: lectureId }, () => {
 
@@ -143,6 +151,23 @@ class ClassroomComponent extends Component {
 
         if (res != null && res.data.listCourses != null) {
             this.setState({ lectureTitle: res.data.listCourses.items.lecture_title });
+        }
+        else {
+            toast.error("something wrong! try again.");
+        }
+    }
+
+    async getCourseInfo(courseId=1) {
+
+        this.setState({ loading: true });
+        const backendAPI = `${process.env.REACT_APP_BACKEND_SERVER}/courses/${courseId}`;
+        console.log(backendAPI);
+        const res = await axios.get(backendAPI);      
+        console.log(res);  
+        this.setState({ loading: false });
+
+        if (res != null && res.data.listCourses != null) {
+            this.setState({ course: res.data.listCourses.items });
         }
         else {
             toast.error("something wrong! try again.");
@@ -271,12 +296,12 @@ class ClassroomComponent extends Component {
                     <div className="row"><br /></div>
                     <div className="row">
                         <div className="col-6">
-                            <Sumerian />
+                            <Sumerian language={this.language} />
                         </div>
                         <div className="col-6">
                             <h5>{this.state.steps && this.state.currentUnitTitle}</h5>
                             <hr />
-                            <Whiteboard content={this.state.content} onCorrect={this.onCorrect} onWrong={this.onWrong}/>
+                            <Whiteboard content={this.state.content} language={this.language} onCorrect={this.onCorrect} onWrong={this.onWrong}/>
                         </div>
                     </div>
                     <br /><br />

@@ -9,6 +9,7 @@ class LearningComponent extends Component {
     state = {
         selectedCourseId: "ef717ea27fc4426b99e484343a493e5a", // Korean 101
         courses: null,
+        language: 'ko-KR',
         lectures: null,
         loading: false
     };
@@ -18,8 +19,8 @@ class LearningComponent extends Component {
         this.getLectures(this.state.selectedCourseId);
     }
 
-    selectCourse = (courseId) => {
-        this.setState({ selectedCourseId: courseId }, () => {
+    selectCourse = (courseId, language) => {
+        this.setState({ selectedCourseId: courseId, language: language }, () => {
             this.getLectures(courseId);
         });
     }
@@ -52,8 +53,8 @@ class LearningComponent extends Component {
         }
     }
 
-    enterClassroom = (lectureId) => {
-        window.location.href = `/classroom?courseId=${this.state.selectedCourseId}&lectureId=${lectureId}`;
+    enterClassroom = (lectureId, language) => {
+        window.location.href = `/classroom?courseId=${this.state.selectedCourseId}&lectureId=${lectureId}&language=${language}`;
     }
 
     render() {
@@ -82,7 +83,7 @@ class LearningComponent extends Component {
                             {this.state.courses && this.state.courses.map(( course, index) => {
                                     return (
                                         <Fragment>
-                                        <Button className="ml-2" key={course.id} onClick={() => this.selectCourse(course.id)}><i className={ "fas fa-globe-" + course.icon } />&nbsp;{ course.course_title }</Button>
+                                        <Button className="ml-2" key={course.id} onClick={() => this.selectCourse(course.id, course.language)}><i className={ "fas fa-globe-" + course.icon } />&nbsp;{ course.course_title }</Button>
                                         &nbsp;&nbsp;</Fragment>
                                         );
                             })}
@@ -96,7 +97,7 @@ class LearningComponent extends Component {
                                 </button>
                                 {this.state.lectures && this.state.lectures.map(( lecture, index) => {
                                     return (
-                                        <button type="button" className="list-group-item list-group-item-action" key={lecture.id} onClick={() => this.enterClassroom(lecture.id)}>
+                                        <button type="button" className="list-group-item list-group-item-action" key={lecture.id} onClick={() => this.enterClassroom(lecture.id, this.state.language)}>
                                             <i className="fas fa-book" />&nbsp;{ lecture.lecture_title }
                                         </button>
                                         );

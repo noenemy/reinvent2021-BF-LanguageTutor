@@ -14,7 +14,7 @@ class Transcribe extends Component {
         this.eventStreamMarshaller = null;
         this.websocket = null;
         this.state = {
-            language: 'ko-KR',
+            language: null,
             expectedText: '',       
             transcribedText: '',
             record: false
@@ -23,6 +23,7 @@ class Transcribe extends Component {
 
     componentDidMount() {
         //this.getTranscribeLanguages();
+        this.setState({ language: this.props.language });
         this.setState({ expectedText: this.props.content.answer });
     }
 

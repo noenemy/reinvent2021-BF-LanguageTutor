@@ -17,7 +17,7 @@ class Whiteboard extends Component {
             } else if (content.type === "vocabulary") {
                 component = <Vocabulary content={content} />;
             } else if (content.type === "transcribe") {
-                component = <Transcribe content={content} onCorrect={this.props.onCorrect} onWrong={this.props.onWrong} />;
+                component = <Transcribe content={content} language={this.props.language} onCorrect={this.props.onCorrect} onWrong={this.props.onWrong} />;
             } else if (content.type === "rekognition") {
                 component = <Rekognition content={content} onCorrect={this.props.onCorrect} onWrong={this.props.onWrong} />;
             } else if (content.type === "textract" ) {
