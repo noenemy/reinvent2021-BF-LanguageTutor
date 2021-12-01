@@ -26,7 +26,6 @@ class TranscribeDemo extends Component {
     }
 
     componentWillUnmount() {
-        alert("stop recording")
         this.stopRecording();
     }
 

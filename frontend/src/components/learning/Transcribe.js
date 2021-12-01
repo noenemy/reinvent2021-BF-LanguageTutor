@@ -159,6 +159,7 @@ class Transcribe extends Component {
                         var similarity = this.getStringSimilarity(this.state.expectedText, this.state.transcribedText);
                         if (similarity >= 0.8) {
                             this.props.onCorrect();
+                            this.stopRecording();
                         } else {
                             this.props.onWrong();
                         }
@@ -222,7 +223,7 @@ class Transcribe extends Component {
             <div>
                 <br />
                 <h6><i className="fas fa-question-circle"></i> &nbsp; Listen and repeat</h6>
-                
+
                 <div dangerouslySetInnerHTML={{ __html: RAWHTML.replace(/\n/g, '<br />')}} />
             
                 <div>
@@ -232,7 +233,7 @@ class Transcribe extends Component {
                         onStop={this.onStop}
                         onData={this.onData}
                         strokeColor="#000000"
-                        backgroundColor="#FF4081" />
+                        backgroundColor="#f1f1f1" />
                     <button onClick={this.startRecording} type="button">Start</button>
                     <button onClick={this.stopRecording} type="button">Stop</button>
                     <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="">
