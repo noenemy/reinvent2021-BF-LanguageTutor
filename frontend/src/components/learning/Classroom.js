@@ -39,7 +39,6 @@ class ClassroomComponent extends Component {
                 window.addEventListener('message', this.handleChildMessage);
             }
         });
-
     }
 
     componentWillUnmount() {
@@ -76,7 +75,6 @@ class ClassroomComponent extends Component {
         await sleep(1000);
 
         const step = this.state.steps[this.state.currentStep];
-        //console.log('current step content:' + step.content);
 
         // TODO: need to find a way to stop speaking when the user moves to other contents
         this.setState({ content: step.content });
@@ -91,7 +89,6 @@ class ClassroomComponent extends Component {
             }
             await sleep(step.dialogs[i].time);
         }
-
     }
 
     muteTeacher() {
@@ -156,7 +153,7 @@ class ClassroomComponent extends Component {
 
         this.setState({ loading: true });
         const backendAPI = `${process.env.REACT_APP_BACKEND_SERVER}/courses/${courseId}/lectures/${lectureId}/units`;
-        //console.log(backendAPI);
+
         const res = await axios.get(backendAPI);        
         this.setState({ loading: false });
 
@@ -174,7 +171,7 @@ class ClassroomComponent extends Component {
 
         this.setState({ loading: true });
         const backendAPI = `${process.env.REACT_APP_BACKEND_SERVER}/courses/${courseId}/lectures/${lectureId}/units/${unitId}/steps`;
-        console.log(backendAPI);
+        //console.log(backendAPI);
         const res = await axios.get(backendAPI);        
         this.setState({ loading: false });
 
@@ -231,7 +228,7 @@ class ClassroomComponent extends Component {
             if (this.state.currentUnitIndex === this.state.units.length) {
                 console.log("onClickNext : Nothing to do.");
             } else {
-                toast.info("need to go to the next unit.");
+                console.info("need to go to the next unit.");
                 this.selectCurrentUnit(this.state.currentUnitIndex + 1, true);
             }
         } else {
@@ -251,7 +248,7 @@ class ClassroomComponent extends Component {
             if (this.state.currentUnit === 1) {
                 console.log("onClickPrevious. Nothing to do.");
             } else {
-                toast.info("need to go to the previous unit.");
+                console.log("need to go to the previous unit.");
                 this.selectCurrentUnit(this.state.currentUnitIndex - 1, false);
             }
         } else {
@@ -262,7 +259,7 @@ class ClassroomComponent extends Component {
     }
 
     onClickUnit = (event) => {
-        toast.info("onClickUnit:" + event.target.value);
+        console.log("onClickUnit:" + event.target.value);
         this.selectCurrentUnit(event.target.value, true);
     }
 
