@@ -57,9 +57,6 @@ def get_lecture(req_id, lec_id):
         raise InternalServerError('Something went wrong..')
 
 
-
-
-
 @course.route('/<req_id>/lectures/<lec_id>/units', methods=['GET'], strict_slashes=False)
 def list_units(req_id, lec_id):
 
@@ -87,3 +84,22 @@ def list_steps(req_id, lec_id, unit_id):
     except Exception as e:
         app.logger.error('Retrieve unit list failed: {0}'.format(e))
         raise InternalServerError('Something went wrong..')
+
+
+
+@course.route('/admin/steps/<unit_id>', methods=['GET'], strict_slashes=False)
+def get_steps(unit_id):
+
+    try:
+        steps = CourseModel.get(unit_id, 'unit')
+        print(steps.steps)
+
+        json_ = json.loads(steps.steps, strict=False)
+
+        response = make_response(json_, 200)
+        return response
+
+    except Exception as e:
+        app.logger.error('Retrieve unit list failed: {0}'.format(e))
+        raise InternalServerError('Something went wrong..')
+
