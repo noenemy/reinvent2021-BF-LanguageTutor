@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
@@ -14,11 +14,14 @@ class LearningComponent extends Component {
     };
 
     componentDidMount() {
+        this.getCourses();
         this.getLectures(this.state.selectedCourseId);
     }
 
     selectCourse = (courseId) => {
-        this.setState({ selectedCourseId: courseId });
+        this.setState({ selectedCourseId: courseId }, () => {
+            this.getLectures(courseId);
+        });
     }
 
     async getCourses() {
@@ -76,15 +79,14 @@ class LearningComponent extends Component {
                             <br /><br />
     
                             <h2>Which language do you want to learn?</h2>
-                            <Button onClick={this.selectCourse}><i className="fas fa-globe-asia" />&nbsp;Korean</Button> 
-                            &nbsp;                            
-                            <Button onClick={this.selectCourse} disabled className="btn-secondary"><i className="fas fa-globe-americas" />&nbsp;English</Button> 
-                            &nbsp;
-                            <Button onClick={this.selectCourse} disabled className="btn-secondary"><i className="fas fa-globe-europe" />&nbsp;Spanish</Button> 
-                            &nbsp; 
-                            <Button onClick={this.selectCourse} disabled className="btn-secondary"><i className="fas fa-globe-asia" />&nbsp;Chinese</Button> 
-                            &nbsp;
-                            <Button onClick={this.selectCourse} disabled className="btn-secondary"><i className="fas fa-globe-asia" />&nbsp;Japanese</Button>     
+                            {this.state.courses && this.state.courses.map(( course, index) => {
+                                    return (
+                                        <Fragment>
+                                        <Button className="ml-2" key={course.id} onClick={() => this.selectCourse(course.id)}><i className={ "fas fa-globe-" + course.icon } />&nbsp;{ course.course_title }</Button>
+                                        &nbsp;&nbsp;</Fragment>
+                                        );
+                            })}
+                            
                             <br /><br />
                             <h2>Which subject do you want to learn today?</h2>
 
