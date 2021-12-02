@@ -292,7 +292,7 @@ class ClassroomComponent extends Component {
         return (
             <div>
                 <div className="container">
-                    <TitleBar className="Basic Korean 101" lectureId={this.state.lectureId} lectureTitle={this.state.lectureTitle} />
+                    <TitleBar className="re:Invent 2021" lectureId={this.state.lectureId} lectureTitle={this.state.lectureTitle} />
                     <div className="row"><br /></div>
                     <div className="row">
                         <div className="col-6">
